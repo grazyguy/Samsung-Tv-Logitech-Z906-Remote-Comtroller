@@ -2,8 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <meta name="theme-color" content="#080a0f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,37 +21,34 @@
   --accent:#4da3ff;
   --green:#35d07f;
   --danger:#ff526b;
-  --blur:0px;
+  --blur:0px
 }
 
 *{
   box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+  -webkit-tap-highlight-color:transparent
 }
 
 html,body{
   margin:0;
-  padding:0;
   min-height:100%;
   background:var(--bg);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
-              "Segoe UI",sans-serif;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif
 }
 
 body{
-  overflow-x:hidden;
+  overflow-x:hidden
 }
 
-button,
-input{
-  font:inherit;
+button,input,select{
+  font:inherit
 }
 
 button{
   border:0;
-  color:white;
-  cursor:pointer;
+  color:#fff;
+  cursor:pointer
 }
 
 #backgroundLayer{
@@ -66,7 +62,7 @@ button{
   background-size:cover;
   background-position:center;
   filter:blur(var(--blur));
-  transform:scale(1.04);
+  transform:scale(1.04)
 }
 
 .app{
@@ -78,7 +74,7 @@ button{
     16px
     calc(105px + env(safe-area-inset-bottom));
   max-width:900px;
-  margin:auto;
+  margin:auto
 }
 
 /* HEADER */
@@ -87,7 +83,7 @@ button{
   display:flex;
   align-items:center;
   gap:13px;
-  margin-bottom:20px;
+  margin-bottom:20px
 }
 
 .logo{
@@ -99,40 +95,39 @@ button{
   justify-content:center;
   font-size:27px;
   background:linear-gradient(145deg,#1c293d,#111722);
-  border:1px solid var(--line);
-  box-shadow:0 12px 35px rgba(0,0,0,.35);
+  border:1px solid var(--line)
 }
 
 .header h1{
   margin:0;
-  font-size:23px;
+  font-size:23px
 }
 
 .header p{
   margin:3px 0 0;
   color:var(--muted);
-  font-size:13px;
+  font-size:13px
 }
 
 /* PAGES */
 
 .page{
-  display:none;
+  display:none
 }
 
 .page.active{
   display:block;
-  animation:fadeIn .18s ease;
+  animation:fadeIn .18s ease
 }
 
 @keyframes fadeIn{
   from{
     opacity:0;
-    transform:translateY(5px);
+    transform:translateY(5px)
   }
   to{
     opacity:1;
-    transform:none;
+    transform:none
   }
 }
 
@@ -145,23 +140,17 @@ button{
   padding:17px;
   margin-bottom:14px;
   backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
-  box-shadow:0 15px 45px rgba(0,0,0,.18);
+  -webkit-backdrop-filter:blur(18px)
 }
 
 .card h2{
   margin:0 0 13px;
-  font-size:17px;
-}
-
-.card h3{
-  margin:0 0 10px;
-  font-size:15px;
+  font-size:17px
 }
 
 .small{
   color:var(--muted);
-  font-size:13px;
+  font-size:13px
 }
 
 /* DEVICES */
@@ -169,29 +158,29 @@ button{
 .deviceGrid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
+  gap:12px
 }
 
 .device{
   padding:17px;
   border-radius:18px;
   background:var(--card2);
-  border:1px solid var(--line);
+  border:1px solid var(--line)
 }
 
 .deviceIcon{
   font-size:30px;
-  margin-bottom:8px;
+  margin-bottom:8px
 }
 
 .deviceName{
-  font-weight:700;
+  font-weight:700
 }
 
 .deviceStatus{
   margin-top:5px;
   color:var(--green);
-  font-size:12px;
+  font-size:12px
 }
 
 /* BUTTONS */
@@ -202,34 +191,27 @@ button{
   padding:11px 14px;
   background:rgba(255,255,255,.09);
   border:1px solid var(--line);
-  transition:.15s;
+  transition:.15s
 }
 
 .btn:active{
-  transform:scale(.96);
-  background:rgba(255,255,255,.17);
+  transform:scale(.96)
 }
 
 .btn.primary{
   background:var(--accent);
-  color:white;
-  border-color:transparent;
+  border-color:transparent
 }
 
 .btn.danger{
   background:rgba(255,82,107,.15);
-  color:#ff8394;
-}
-
-.btn.green{
-  background:rgba(53,208,127,.15);
-  color:#62e79d;
+  color:#ff8394
 }
 
 .btnGrid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:9px;
+  gap:9px
 }
 
 /* APP GRID */
@@ -237,7 +219,7 @@ button{
 .appGrid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:10px;
+  gap:10px
 }
 
 .appBtn{
@@ -250,30 +232,30 @@ button{
   align-items:center;
   justify-content:center;
   gap:6px;
-  font-weight:600;
+  font-weight:600
 }
 
 .appBtn span{
-  font-size:28px;
+  font-size:28px
 }
 
 .appBtn small{
   font-size:11px;
-  color:#ddd;
+  color:#ddd
 }
 
-/* TV REMOTE */
+/* TV */
 
 .remote{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
   max-width:420px;
-  margin:auto;
+  margin:auto
 }
 
 .remote .wide{
-  grid-column:span 3;
+  grid-column:span 3
 }
 
 .remote button{
@@ -281,20 +263,16 @@ button{
   border-radius:15px;
   background:rgba(255,255,255,.09);
   border:1px solid var(--line);
-  font-size:16px;
+  font-size:16px
 }
 
 .remote .power{
   background:rgba(255,82,107,.16);
-  color:#ff7284;
+  color:#ff7284
 }
 
 .remote .ok{
-  background:rgba(77,163,255,.18);
-}
-
-.remote .volume{
-  font-size:14px;
+  background:rgba(77,163,255,.18)
 }
 
 /* Z906 */
@@ -302,11 +280,11 @@ button{
 .knobGrid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:14px;
+  gap:14px
 }
 
 .knobBox{
-  text-align:center;
+  text-align:center
 }
 
 .knob{
@@ -315,12 +293,13 @@ button{
   margin:auto;
   padding:6px;
   border-radius:50%;
-  background:conic-gradient(
-    var(--accent) 0deg,
-    var(--accent) 110deg,
-    #273044 110deg,
-    #273044 360deg
-  );
+  background:
+    conic-gradient(
+      var(--accent) 0deg,
+      var(--accent) 110deg,
+      #273044 110deg,
+      #273044 360deg
+    )
 }
 
 .dial{
@@ -331,62 +310,54 @@ button{
   align-items:center;
   justify-content:center;
   background:#111722;
-  border:1px solid rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.1)
 }
 
 .dialInner{
   font-size:23px;
-  font-weight:700;
+  font-weight:700
 }
 
 .knobName{
   margin-top:8px;
   color:var(--muted);
-  font-size:13px;
+  font-size:13px
 }
+
+/* RANGE */
 
 .range{
   width:100%;
-  accent-color:var(--accent);
+  accent-color:var(--accent)
 }
-
-.sceneGrid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:9px;
-}
-
-/* SELECT */
 
 .select{
   width:100%;
   background:#151b26;
-  color:white;
+  color:#fff;
   border:1px solid var(--line);
   border-radius:13px;
-  padding:12px;
+  padding:12px
 }
 
-/* SETTINGS */
-
 .settingRow{
-  margin-bottom:18px;
+  margin-bottom:18px
 }
 
 .settingRow label{
   display:flex;
   justify-content:space-between;
-  margin-bottom:8px;
+  margin-bottom:8px
 }
 
-input[type="text"]{
+input[type=text]{
   width:100%;
   padding:13px;
   border-radius:13px;
   border:1px solid var(--line);
   background:rgba(255,255,255,.07);
-  color:white;
-  outline:none;
+  color:#fff;
+  outline:none
 }
 
 /* NAVIGATION */
@@ -407,8 +378,7 @@ input[type="text"]{
   background:rgba(15,18,26,.88);
   border:1px solid var(--line);
   backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  box-shadow:0 15px 50px rgba(0,0,0,.45);
+  -webkit-backdrop-filter:blur(22px)
 }
 
 .nav{
@@ -421,49 +391,40 @@ input[type="text"]{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:3px;
+  gap:3px
 }
 
 .nav.active{
-  color:white;
-  background:rgba(77,163,255,.17);
+  color:#fff;
+  background:rgba(77,163,255,.17)
 }
 
 /* MIXER */
-
-#mixerPage{
-  padding-bottom:15px;
-}
 
 .mixerTop{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:10px;
-  margin-bottom:14px;
+  margin-bottom:14px
 }
 
 .mixerTitle{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:10px
 }
 
 .mixerTitle .icon{
-  font-size:31px;
+  font-size:31px
 }
 
 .mixerTitle h2{
-  margin:0;
+  margin:0
 }
 
 .mixerTitle small{
-  color:var(--muted);
-}
-
-.mixerActions{
-  display:flex;
-  gap:7px;
+  color:var(--muted)
 }
 
 .iconBtn{
@@ -471,13 +432,13 @@ input[type="text"]{
   height:42px;
   border-radius:13px;
   background:rgba(255,255,255,.09);
-  border:1px solid var(--line);
+  border:1px solid var(--line)
 }
 
 .modeGrid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:7px;
+  gap:7px
 }
 
 .modeBtn{
@@ -485,35 +446,37 @@ input[type="text"]{
   border-radius:12px;
   background:rgba(255,255,255,.07);
   border:1px solid var(--line);
-  font-size:12px;
+  font-size:12px
 }
 
 .modeBtn.active{
-  background:var(--accent);
+  background:var(--accent)
 }
+
+/* DECKS */
 
 .deckGrid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
+  gap:12px
 }
 
 .deck{
   background:rgba(255,255,255,.055);
   border:1px solid var(--line);
   border-radius:18px;
-  padding:13px;
+  padding:13px
 }
 
 .deckHead{
   display:flex;
   justify-content:space-between;
-  margin-bottom:9px;
+  margin-bottom:9px
 }
 
 .deckLetter{
   font-size:20px;
-  font-weight:800;
+  font-weight:800
 }
 
 .track{
@@ -526,50 +489,46 @@ input[type="text"]{
   font-size:12px;
   overflow:hidden;
   white-space:nowrap;
-  text-overflow:ellipsis;
+  text-overflow:ellipsis
 }
 
 .deckButtons{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:6px;
-  margin-top:9px;
+  margin-top:9px
 }
 
 .deckButtons button{
   padding:9px 4px;
   border-radius:10px;
   background:rgba(255,255,255,.09);
-  font-size:11px;
+  font-size:11px
 }
+
+/* FILE BUTTON */
 
 .fileLabel{
   display:block;
   margin-top:9px;
   text-align:center;
-  padding:10px;
+  padding:12px;
   border-radius:11px;
   background:rgba(77,163,255,.14);
   color:#8fc8ff;
-  font-size:11px;
+  font-size:12px
 }
 
 .fileLabel input{
-  display:none;
+  display:none
 }
 
-.crossWrap{
-  margin-top:14px;
-}
-
-.cross{
-  width:100%;
-}
+/* AI */
 
 .aiGrid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:8px;
+  gap:8px
 }
 
 .aiOption{
@@ -577,24 +536,50 @@ input[type="text"]{
   border-radius:13px;
   background:rgba(255,255,255,.07);
   border:1px solid var(--line);
-  text-align:left;
+  text-align:left
 }
 
 .aiOption.active{
   border-color:var(--accent);
-  background:rgba(77,163,255,.12);
+  background:rgba(77,163,255,.12)
 }
 
+/* MUSIC */
+
+.musicRow,
 .queueItem{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
   padding:10px 0;
-  border-bottom:1px solid rgba(255,255,255,.07);
+  border-bottom:1px solid rgba(255,255,255,.07)
 }
 
+.musicRow:last-child,
 .queueItem:last-child{
-  border-bottom:0;
+  border-bottom:0
+}
+
+.musicName{
+  flex:1;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:13px
+}
+
+.musicActions{
+  display:flex;
+  gap:5px
+}
+
+.miniBtn{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  background:rgba(255,255,255,.09);
+  border:1px solid var(--line)
 }
 
 /* TOAST */
@@ -611,40 +596,41 @@ input[type="text"]{
   border-radius:14px;
   background:rgba(20,24,34,.94);
   border:1px solid var(--line);
-  box-shadow:0 15px 40px rgba(0,0,0,.4);
   transition:.22s;
-  font-size:13px;
+  font-size:13px
 }
 
 #toast.show{
   opacity:1;
-  transform:translate(-50%,0);
+  transform:translate(-50%,0)
 }
 
-/* RESPONSIVE */
+/* MOBILE */
 
 @media(max-width:600px){
+
   .appGrid{
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr)
   }
 
   .deckGrid{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr
   }
 
   .knob{
     width:105px;
-    height:105px;
+    height:105px
   }
 
   .nav{
-    font-size:9px;
+    font-size:9px
   }
 }
 
 @media(min-width:700px){
+
   .knobGrid{
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(4,1fr)
   }
 }
 </style>
@@ -658,6 +644,7 @@ input[type="text"]{
 
 <header class="header">
   <div class="logo">📺🔊</div>
+
   <div>
     <h1>Smart Remote</h1>
     <p>Samsung TV • Logitech Z906</p>
@@ -665,740 +652,997 @@ input[type="text"]{
 </header>
 
 
-<!-- ================= HOME ================= -->
+<!-- HOME -->
 
 <section id="home" class="page active">
 
-  <div class="card">
-    <h2>Meine Geräte</h2>
+<div class="card">
 
-    <div class="deviceGrid">
+<h2>Meine Geräte</h2>
 
-      <div class="device">
-        <div class="deviceIcon">📺</div>
-        <div class="deviceName">Samsung TV</div>
-        <div class="deviceStatus">● Bereit</div>
-      </div>
+<div class="deviceGrid">
 
-      <div class="device">
-        <div class="deviceIcon">🔊</div>
-        <div class="deviceName">Logitech Z906</div>
-        <div class="deviceStatus">● Bereit</div>
-      </div>
+<div class="device">
+  <div class="deviceIcon">📺</div>
+  <div class="deviceName">Samsung TV</div>
+  <div class="deviceStatus">● Bereit</div>
+</div>
 
-    </div>
-  </div>
+<div class="device">
+  <div class="deviceIcon">🔊</div>
+  <div class="deviceName">Logitech Z906</div>
+  <div class="deviceStatus">● Bereit</div>
+</div>
 
-
-  <div class="card">
-    <h2>Apps & Entertainment</h2>
-
-    <div class="appGrid">
-
-      <button class="appBtn" onclick="tvApp('Netflix')">
-        <span>🎬</span>
-        <small>Netflix</small>
-      </button>
-
-      <button class="appBtn" onclick="tvApp('YouTube')">
-        <span>▶️</span>
-        <small>YouTube</small>
-      </button>
-
-      <button class="appBtn" onclick="tvApp('Prime Video')">
-        <span>📦</span>
-        <small>Prime Video</small>
-      </button>
-
-      <button class="appBtn" onclick="tvApp('Spotify')">
-        <span>🎵</span>
-        <small>Spotify</small>
-      </button>
-
-      <button class="appBtn" onclick="showPage('z906')">
-        <span>🔊</span>
-        <small>Z906</small>
-      </button>
-
-      <button class="appBtn" onclick="openMixer()">
-        <span>🎧</span>
-        <small>AI DJ Mixer</small>
-      </button>
-
-    </div>
-  </div>
+</div>
+</div>
 
 
-  <div class="card">
-    <h2>Z906 Schnellzugriff</h2>
+<div class="card">
 
-    <div class="btnGrid">
+<h2>Apps & Entertainment</h2>
 
-      <button class="btn" onclick="z906Volume(-5)">
-        🔉 Leiser
-      </button>
+<div class="appGrid">
 
-      <button class="btn" onclick="z906Volume(5)">
-        🔊 Lauter
-      </button>
+<button class="appBtn" onclick="tvApp('Netflix')">
+<span>🎬</span>
+<small>Netflix</small>
+</button>
 
-      <button class="btn" onclick="sendCommand('Z906_MUTE')">
-        🔇 Mute
-      </button>
+<button class="appBtn" onclick="tvApp('YouTube')">
+<span>▶️</span>
+<small>YouTube</small>
+</button>
 
-      <button class="btn" onclick="sendCommand('Z906_3D')">
-        🌐 3D
-      </button>
+<button class="appBtn" onclick="tvApp('Prime Video')">
+<span>📦</span>
+<small>Prime Video</small>
+</button>
 
-    </div>
-  </div>
+<button class="appBtn" onclick="tvApp('Spotify')">
+<span>🎵</span>
+<small>Spotify</small>
+</button>
+
+<button class="appBtn" onclick="showPage('z906')">
+<span>🔊</span>
+<small>Z906</small>
+</button>
+
+<button class="appBtn" onclick="showPage('mixerPage')">
+<span>🎧</span>
+<small>AI DJ Mixer</small>
+</button>
+
+</div>
+</div>
 
 
-  <div class="card">
-    <h2>Status</h2>
-    <div class="small">
-      🟢 System bereit
-    </div>
-    <div class="small" style="margin-top:5px">
-      IR-Verbindung: Demo-Modus
-    </div>
-  </div>
+<div class="card">
+
+<h2>Z906 Schnellzugriff</h2>
+
+<div class="btnGrid">
+
+<button class="btn" onclick="z906Volume(-5)">
+🔉 Leiser
+</button>
+
+<button class="btn" onclick="z906Volume(5)">
+🔊 Lauter
+</button>
+
+<button class="btn" onclick="sendCommand('Z906_MUTE')">
+🔇 Mute
+</button>
+
+<button class="btn" onclick="sendCommand('Z906_3D')">
+🌐 3D
+</button>
+
+</div>
+</div>
+
+
+<div class="card">
+
+<h2>Status</h2>
+
+<div class="small">
+🟢 System bereit
+</div>
+
+<div class="small" style="margin-top:5px">
+IR-Verbindung: Demo-Modus
+</div>
+
+</div>
 
 </section>
 
 
-<!-- ================= TV ================= -->
+<!-- TV -->
 
 <section id="tv" class="page">
 
-  <div class="card">
-    <h2>📺 Samsung TV</h2>
-    <p class="small">
-      Fernbedienung
-    </p>
+<div class="card">
 
-    <div class="remote">
+<h2>📺 Samsung TV</h2>
 
-      <button class="power"
-              onclick="sendCommand('TV_POWER')">
-        ⏻
-      </button>
+<p class="small">
+Fernbedienung
+</p>
 
-      <button onclick="sendCommand('TV_SOURCE')">
-        SOURCE
-      </button>
+<div class="remote">
 
-      <button onclick="sendCommand('TV_MENU')">
-        MENU
-      </button>
+<button class="power"
+onclick="sendCommand('TV_POWER')">
+⏻
+</button>
 
-      <button onclick="sendCommand('TV_UP')">▲</button>
+<button onclick="sendCommand('TV_SOURCE')">
+SOURCE
+</button>
 
-      <button class="ok"
-              onclick="sendCommand('TV_OK')">
-        OK
-      </button>
-
-      <button onclick="sendCommand('TV_DOWN')">▼</button>
-
-      <button onclick="sendCommand('TV_LEFT')">◀</button>
-
-      <button onclick="sendCommand('TV_HOME')">⌂</button>
-
-      <button onclick="sendCommand('TV_RIGHT')">▶</button>
-
-      <button class="volume"
-              onclick="sendCommand('TV_VOL_DOWN')">
-        VOL −
-      </button>
-
-      <button onclick="sendCommand('TV_MUTE')">
-        🔇
-      </button>
-
-      <button class="volume"
-              onclick="sendCommand('TV_VOL_UP')">
-        VOL +
-      </button>
-
-      <button class="wide"
-              onclick="sendCommand('TV_BACK')">
-        ↩ Zurück
-      </button>
-
-    </div>
-  </div>
+<button onclick="sendCommand('TV_MENU')">
+MENU
+</button>
 
 
-  <div class="card">
-    <h2>Apps</h2>
+<button onclick="sendCommand('TV_UP')">
+▲
+</button>
 
-    <div class="appGrid">
+<button class="ok"
+onclick="sendCommand('TV_OK')">
+OK
+</button>
 
-      <button class="appBtn" onclick="tvApp('Netflix')">
-        <span>🎬</span>
-        <small>Netflix</small>
-      </button>
+<button onclick="sendCommand('TV_DOWN')">
+▼
+</button>
 
-      <button class="appBtn" onclick="tvApp('YouTube')">
-        <span>▶️</span>
-        <small>YouTube</small>
-      </button>
 
-      <button class="appBtn" onclick="tvApp('Prime Video')">
-        <span>📦</span>
-        <small>Prime</small>
-      </button>
+<button onclick="sendCommand('TV_LEFT')">
+◀
+</button>
 
-      <button class="appBtn" onclick="tvApp('Spotify')">
-        <span>🎵</span>
-        <small>Spotify</small>
-      </button>
+<button onclick="sendCommand('TV_HOME')">
+⌂
+</button>
 
-    </div>
-  </div>
+<button onclick="sendCommand('TV_RIGHT')">
+▶
+</button>
+
+
+<button onclick="sendCommand('TV_VOL_DOWN')">
+VOL −
+</button>
+
+<button onclick="sendCommand('TV_MUTE')">
+🔇
+</button>
+
+<button onclick="sendCommand('TV_VOL_UP')">
+VOL +
+</button>
+
+
+<button class="wide"
+onclick="sendCommand('TV_BACK')">
+↩ Zurück
+</button>
+
+</div>
+</div>
+
+
+<div class="card">
+
+<h2>Apps</h2>
+
+<div class="appGrid">
+
+<button class="appBtn"
+onclick="tvApp('Netflix')">
+<span>🎬</span>
+<small>Netflix</small>
+</button>
+
+<button class="appBtn"
+onclick="tvApp('YouTube')">
+<span>▶️</span>
+<small>YouTube</small>
+</button>
+
+<button class="appBtn"
+onclick="tvApp('Prime Video')">
+<span>📦</span>
+<small>Prime</small>
+</button>
+
+<button class="appBtn"
+onclick="tvApp('Spotify')">
+<span>🎵</span>
+<small>Spotify</small>
+</button>
+
+</div>
+</div>
 
 </section>
 
 
-<!-- ================= Z906 ================= -->
+<!-- Z906 -->
 
 <section id="z906" class="page">
 
-  <div class="card">
-    <h2>🔊 Logitech Z906</h2>
+<div class="card">
 
-    <div class="knobGrid">
+<h2>🔊 Logitech Z906</h2>
 
-      <div class="knobBox">
-        <button class="knob"
-                onclick="changeZ('volume',5)">
-          <div class="dial">
-            <div id="volumeDial" class="dialInner">40</div>
-          </div>
-        </button>
-        <div class="knobName">Volume</div>
-      </div>
-
-      <div class="knobBox">
-        <button class="knob"
-                onclick="changeZ('bass',1)">
-          <div class="dial">
-            <div id="bassDial" class="dialInner">0</div>
-          </div>
-        </button>
-        <div class="knobName">Bass</div>
-      </div>
-
-      <div class="knobBox">
-        <button class="knob"
-                onclick="changeZ('center',1)">
-          <div class="dial">
-            <div id="centerDial" class="dialInner">0</div>
-          </div>
-        </button>
-        <div class="knobName">Center</div>
-      </div>
-
-      <div class="knobBox">
-        <button class="knob"
-                onclick="changeZ('rear',1)">
-          <div class="dial">
-            <div id="rearDial" class="dialInner">0</div>
-          </div>
-        </button>
-        <div class="knobName">Rear</div>
-      </div>
-
-    </div>
-  </div>
+<div class="knobGrid">
 
 
-  <div class="card">
-    <h2>Direktsteuerung</h2>
+<div class="knobBox">
 
-    <div class="btnGrid">
+<button id="volumeKnob"
+class="knob"
+onclick="changeZ('volume',5)">
 
-      <button class="btn"
-              onclick="z906Volume(-5)">
-        🔉 Leiser
-      </button>
+<div class="dial">
 
-      <button class="btn"
-              onclick="z906Volume(5)">
-        🔊 Lauter
-      </button>
+<div id="volumeDial"
+class="dialInner">
+40
+</div>
 
-      <button class="btn"
-              onclick="sendCommand('Z906_MUTE')">
-        🔇 Mute
-      </button>
+</div>
 
-      <button class="btn"
-              onclick="sendCommand('Z906_3D')">
-        🌐 3D
-      </button>
+</button>
 
-    </div>
-  </div>
+<div class="knobName">
+Volume
+</div>
+
+</div>
 
 
-  <div class="card">
-    <h2>Eingang</h2>
+<div class="knobBox">
 
-    <select class="select"
-            onchange="setInput(this.value)">
+<button id="bassKnob"
+class="knob"
+onclick="changeZ('bass',1)">
 
-      <option value="optical">Optical</option>
-      <option value="coax">Coax</option>
-      <option value="6ch">6 Channel</option>
-      <option value="stereo">Stereo</option>
+<div class="dial">
 
-    </select>
-  </div>
+<div id="bassDial"
+class="dialInner">
+0
+</div>
+
+</div>
+
+</button>
+
+<div class="knobName">
+Bass
+</div>
+
+</div>
 
 
-  <div class="card">
-    <h2>🎛️ Szenen</h2>
+<div class="knobBox">
 
-    <div class="sceneGrid">
+<button id="centerKnob"
+class="knob"
+onclick="changeZ('center',1)">
 
-      <button class="btn"
-              onclick="scene('Movie')">
-        🎬 Movie
-      </button>
+<div class="dial">
 
-      <button class="btn"
-              onclick="scene('Music')">
-        🎵 Music
-      </button>
+<div id="centerDial"
+class="dialInner">
+0
+</div>
 
-      <button class="btn"
-              onclick="scene('Gaming')">
-        🎮 Gaming
-      </button>
+</div>
 
-      <button class="btn"
-              onclick="scene('Night')">
-        🌙 Night
-      </button>
+</button>
 
-    </div>
-  </div>
+<div class="knobName">
+Center
+</div>
+
+</div>
+
+
+<div class="knobBox">
+
+<button id="rearKnob"
+class="knob"
+onclick="changeZ('rear',1)">
+
+<div class="dial">
+
+<div id="rearDial"
+class="dialInner">
+0
+</div>
+
+</div>
+
+</button>
+
+<div class="knobName">
+Rear
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<div class="card">
+
+<h2>Direktsteuerung</h2>
+
+<div class="btnGrid">
+
+<button class="btn"
+onclick="z906Volume(-5)">
+🔉 Leiser
+</button>
+
+<button class="btn"
+onclick="z906Volume(5)">
+🔊 Lauter
+</button>
+
+<button class="btn"
+onclick="sendCommand('Z906_MUTE')">
+🔇 Mute
+</button>
+
+<button class="btn"
+onclick="sendCommand('Z906_3D')">
+🌐 3D
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Eingang</h2>
+
+<select id="inputSelect"
+class="select"
+onchange="setInput(this.value)">
+
+<option value="optical">
+Optical
+</option>
+
+<option value="coax">
+Coax
+</option>
+
+<option value="6ch">
+6 Channel
+</option>
+
+<option value="stereo">
+Stereo
+</option>
+
+</select>
+
+</div>
+
+
+<div class="card">
+
+<h2>🎛️ Szenen</h2>
+
+<div class="sceneGrid">
+
+<button class="btn"
+onclick="scene('Movie')">
+🎬 Movie
+</button>
+
+<button class="btn"
+onclick="scene('Music')">
+🎵 Music
+</button>
+
+<button class="btn"
+onclick="scene('Gaming')">
+🎮 Gaming
+</button>
+
+<button class="btn"
+onclick="scene('Night')">
+🌙 Night
+</button>
+
+</div>
+
+</div>
 
 </section>
 
 
-<!-- ================= MIXER ================= -->
+<!-- MIXER -->
 
 <section id="mixerPage" class="page">
 
-  <div class="mixerTop">
+<div class="mixerTop">
 
-    <div class="mixerTitle">
-      <div class="icon">🎧</div>
+<div class="mixerTitle">
 
-      <div>
-        <h2>Smart AI DJ</h2>
-        <small>Dual Deck Mixer</small>
-      </div>
-    </div>
+<div class="icon">
+🎧
+</div>
 
-    <div class="mixerActions">
+<div>
 
-      <button class="iconBtn"
-              onclick="showPage('home')">
-        ←
-      </button>
+<h2>
+Smart AI DJ
+</h2>
 
-    </div>
+<small>
+Dual Deck Mixer
+</small>
 
-  </div>
+</div>
 
+</div>
 
-  <div class="card">
+<button class="iconBtn"
+onclick="showPage('home')">
+←
+</button>
 
-    <div class="modeGrid">
+</div>
 
-      <button class="modeBtn active"
-              data-mode="manual"
-              onclick="setMixerMode('manual')">
-        Manual
-      </button>
 
-      <button class="modeBtn"
-              data-mode="ai"
-              onclick="setMixerMode('ai')">
-        AI Assist
-      </button>
+<div class="card">
 
-      <button class="modeBtn"
-              data-mode="auto"
-              onclick="setMixerMode('auto')">
-        Auto DJ
-      </button>
+<div class="modeGrid">
 
-      <button class="modeBtn"
-              data-mode="player"
-              onclick="setMixerMode('player')">
-        Player
-      </button>
+<button class="modeBtn active"
+data-mode="manual"
+onclick="setMixerMode('manual')">
+Manual
+</button>
 
-    </div>
+<button class="modeBtn"
+data-mode="ai"
+onclick="setMixerMode('ai')">
+AI Assist
+</button>
 
-  </div>
+<button class="modeBtn"
+data-mode="auto"
+onclick="setMixerMode('auto')">
+Auto DJ
+</button>
 
+<button class="modeBtn"
+data-mode="player"
+onclick="setMixerMode('player')">
+Player
+</button>
 
-  <div class="card">
+</div>
 
-    <h2>🤖 AI Steuerung</h2>
+</div>
 
-    <div class="settingRow">
 
-      <label>
-        <span>AI Level</span>
-        <span id="aiLevelText">70%</span>
-      </label>
+<!-- AI -->
 
-      <input id="aiLevel"
-             class="range"
-             type="range"
-             min="0"
-             max="100"
-             value="70"
-             oninput="setAILevel(this.value)">
+<div class="card">
 
-    </div>
+<h2>
+🤖 AI Steuerung
+</h2>
 
+<div class="settingRow">
 
-    <div class="aiGrid">
+<label>
 
-      <button class="aiOption active"
-              onclick="toggleAI(this)">
-        🥁 Beat Match
-      </button>
+<span>
+AI Level
+</span>
 
-      <button class="aiOption active"
-              onclick="toggleAI(this)">
-        🎚️ Auto Gain
-      </button>
+<span id="aiLevelText">
+70%
+</span>
 
-      <button class="aiOption active"
-              onclick="toggleAI(this)">
-        🎵 Key Match
-      </button>
+</label>
 
-      <button class="aiOption"
-              onclick="toggleAI(this)">
-        🔥 Energy Boost
-      </button>
+<input
+id="aiLevel"
+class="range"
+type="range"
+min="0"
+max="100"
+value="70"
+oninput="setAILevel(this.value)"
+>
 
-      <button class="aiOption"
-              onclick="toggleAI(this)">
-        🎧 Smooth Mix
-      </button>
+</div>
 
-      <button class="aiOption"
-              onclick="toggleAI(this)">
-        💥 Bass Drop
-      </button>
 
-    </div>
+<div class="aiGrid">
 
-  </div>
+<button class="aiOption active"
+onclick="toggleAI(this)">
+🥁 Beat Match
+</button>
 
+<button class="aiOption active"
+onclick="toggleAI(this)">
+🎚️ Auto Gain
+</button>
 
-  <div class="deckGrid">
+<button class="aiOption active"
+onclick="toggleAI(this)">
+🎵 Key Match
+</button>
 
-    <!-- DECK A -->
+<button class="aiOption"
+onclick="toggleAI(this)">
+🔥 Energy Boost
+</button>
 
-    <div class="deck">
+<button class="aiOption"
+onclick="toggleAI(this)">
+🎧 Smooth Mix
+</button>
 
-      <div class="deckHead">
-        <div class="deckLetter">A</div>
-        <div class="small" id="deckAStatus">
-          STOP
-        </div>
-      </div>
+<button class="aiOption"
+onclick="toggleAI(this)">
+💥 Bass Drop
+</button>
 
-      <div id="trackA"
-           class="track">
-        Keine Musik geladen
-      </div>
+</div>
 
-      <label class="fileLabel">
-        📁 Musik auswählen
-        <input type="file"
-               accept="audio/*"
-               onchange="loadDeckFile('A',this)">
-      </label>
+</div>
 
-      <div class="deckButtons">
 
-        <button onclick="deckCue('A')">
-          CUE
-        </button>
+<!-- MUSIC LIBRARY -->
 
-        <button onclick="deckPlay('A')">
-          ▶
-        </button>
+<div class="card">
 
-        <button onclick="deckSync('A')">
-          SYNC
-        </button>
+<h2>
+🎵 Meine Musik
+</h2>
 
-      </div>
+<p class="small">
+Musik direkt aus „Dateien“ auf dem iPhone auswählen.
+Mehrere Titel möglich.
+</p>
 
-      <div style="margin-top:12px">
 
-        <div class="small">Gain</div>
+<label class="fileLabel">
 
-        <input class="range"
-               type="range"
-               min="-12"
-               max="12"
-               value="0"
-               oninput="deckGain('A',this.value)">
+📂 Musik aus „Dateien“ auswählen
 
-      </div>
+<input
+id="musicLibraryInput"
+type="file"
+accept="audio/*,.mp3,.m4a,.wav,.aac,.flac,.ogg"
+multiple
+onchange="addMusicFiles(this)"
+>
 
-      <div style="margin-top:9px">
+</label>
 
-        <div class="small">Filter</div>
 
-        <input class="range"
-               type="range"
-               min="-100"
-               max="100"
-               value="0"
-               oninput="deckFilter('A',this.value)">
+<div id="musicLibrary"
+style="margin-top:12px">
 
-      </div>
+<div class="small">
+Noch keine Musik ausgewählt.
+</div>
 
-    </div>
+</div>
 
+</div>
 
-    <!-- DECK B -->
 
-    <div class="deck">
+<!-- DECKS -->
 
-      <div class="deckHead">
-        <div class="deckLetter">B</div>
-        <div class="small" id="deckBStatus">
-          STOP
-        </div>
-      </div>
+<div class="deckGrid">
 
-      <div id="trackB"
-           class="track">
-        Keine Musik geladen
-      </div>
 
-      <label class="fileLabel">
-        📁 Musik auswählen
-        <input type="file"
-               accept="audio/*"
-               onchange="loadDeckFile('B',this)">
-      </label>
+<!-- DECK A -->
 
-      <div class="deckButtons">
+<div class="deck">
 
-        <button onclick="deckCue('B')">
-          CUE
-        </button>
+<div class="deckHead">
 
-        <button onclick="deckPlay('B')">
-          ▶
-        </button>
+<div class="deckLetter">
+A
+</div>
 
-        <button onclick="deckSync('B')">
-          SYNC
-        </button>
+<div class="small"
+id="deckAStatus">
+STOP
+</div>
 
-      </div>
+</div>
 
-      <div style="margin-top:12px">
 
-        <div class="small">Gain</div>
+<div id="trackA"
+class="track">
+Keine Musik geladen
+</div>
 
-        <input class="range"
-               type="range"
-               min="-12"
-               max="12"
-               value="0"
-               oninput="deckGain('B',this.value)">
 
-      </div>
+<label class="fileLabel">
 
-      <div style="margin-top:9px">
+📁 Datei direkt auf Deck A
 
-        <div class="small">Filter</div>
+<input
+type="file"
+accept="audio/*"
+onchange="loadDeckFile('A',this)"
+>
 
-        <input class="range"
-               type="range"
-               min="-100"
-               max="100"
-               value="0"
-               oninput="deckFilter('B',this.value)">
+</label>
 
-      </div>
 
-    </div>
+<div class="deckButtons">
 
-  </div>
+<button onclick="deckCue('A')">
+CUE
+</button>
 
+<button onclick="deckPlay('A')">
+▶
+</button>
 
-  <div class="card crossWrap">
+<button onclick="deckSync('A')">
+SYNC
+</button>
 
-    <h2>↔️ Crossfader</h2>
+</div>
 
-    <input id="crossfader"
-           class="cross"
-           type="range"
-           min="0"
-           max="100"
-           value="50"
-           oninput="crossfade(this.value)">
 
-    <div style="
-      display:flex;
-      justify-content:space-between;
-      margin-top:5px;
-      color:#777;
-      font-size:11px;
-    ">
-      <span>A</span>
-      <span>B</span>
-    </div>
+<div style="margin-top:12px">
 
-  </div>
+<div class="small">
+Gain
+</div>
 
+<input
+class="range"
+type="range"
+min="-12"
+max="12"
+value="0"
+oninput="deckGain('A',this.value)"
+>
 
-  <div class="card">
+</div>
 
-    <h2>🧠 AI Transition</h2>
 
-    <p class="small">
-      Automatische Übergänge können später mit echter
-      Beat-/BPM-Erkennung erweitert werden.
-    </p>
+<div style="margin-top:9px">
 
-    <button class="btn primary"
-            style="width:100%"
-            onclick="planTransition()">
-      ✨ Übergang planen
-    </button>
+<div class="small">
+Filter
+</div>
 
-  </div>
+<input
+class="range"
+type="range"
+min="-100"
+max="100"
+value="0"
+oninput="deckFilter('A',this.value)"
+>
 
+</div>
 
-  <div class="card">
+</div>
 
-    <h2>📋 Queue</h2>
 
-    <div class="queueItem">
-      <span>1</span>
-      <span class="small">Track A</span>
-    </div>
+<!-- DECK B -->
 
-    <div class="queueItem">
-      <span>2</span>
-      <span class="small">Track B</span>
-    </div>
+<div class="deck">
 
-    <div class="queueItem">
-      <span>3</span>
-      <span class="small">Nächster Track</span>
-    </div>
+<div class="deckHead">
 
-  </div>
+<div class="deckLetter">
+B
+</div>
+
+<div class="small"
+id="deckBStatus">
+STOP
+</div>
+
+</div>
+
+
+<div id="trackB"
+class="track">
+Keine Musik geladen
+</div>
+
+
+<label class="fileLabel">
+
+📁 Datei direkt auf Deck B
+
+<input
+type="file"
+accept="audio/*"
+onchange="loadDeckFile('B',this)"
+>
+
+</label>
+
+
+<div class="deckButtons">
+
+<button onclick="deckCue('B')">
+CUE
+</button>
+
+<button onclick="deckPlay('B')">
+▶
+</button>
+
+<button onclick="deckSync('B')">
+SYNC
+</button>
+
+</div>
+
+
+<div style="margin-top:12px">
+
+<div class="small">
+Gain
+</div>
+
+<input
+class="range"
+type="range"
+min="-12"
+max="12"
+value="0"
+oninput="deckGain('B',this.value)"
+>
+
+</div>
+
+
+<div style="margin-top:9px">
+
+<div class="small">
+Filter
+</div>
+
+<input
+class="range"
+type="range"
+min="-100"
+max="100"
+value="0"
+oninput="deckFilter('B',this.value)"
+>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CROSSFADER -->
+
+<div class="card">
+
+<h2>
+↔️ Crossfader
+</h2>
+
+<input
+id="crossfader"
+class="range"
+type="range"
+min="0"
+max="100"
+value="50"
+oninput="crossfade(this.value)"
+>
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-top:5px;
+color:#777;
+font-size:11px">
+
+<span>
+A
+</span>
+
+<span>
+B
+</span>
+
+</div>
+
+</div>
+
+
+<!-- AI TRANSITION -->
+
+<div class="card">
+
+<h2>
+🧠 AI Transition
+</h2>
+
+<p class="small">
+Automatische Übergänge können später mit echter
+BPM-/Beat-Erkennung erweitert werden.
+</p>
+
+<button
+class="btn primary"
+style="width:100%"
+onclick="planTransition()">
+
+✨ Übergang planen
+
+</button>
+
+</div>
+
+
+<!-- QUEUE -->
+
+<div class="card">
+
+<h2>
+📋 Queue
+</h2>
+
+<div id="queue">
+
+<div class="small">
+Noch keine Titel in der Queue
+</div>
+
+</div>
+
+</div>
 
 </section>
 
 
-<!-- ================= SETTINGS ================= -->
+<!-- SETTINGS -->
 
 <section id="settings" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h2>⚙️ Einstellungen</h2>
-
-    <div class="settingRow">
-
-      <label>
-        <span>XIAO IP-Adresse</span>
-      </label>
-
-      <input id="xiaoIP"
-             type="text"
-             placeholder="z.B. 192.168.1.50"
-             onchange="saveSettings()">
-
-    </div>
+<h2>
+⚙️ Einstellungen
+</h2>
 
 
-    <div class="settingRow">
+<div class="settingRow">
 
-      <label>
-        <span>Hintergrund Blur</span>
-        <span id="blurText">0 px</span>
-      </label>
+<label>
+<span>
+XIAO IP-Adresse
+</span>
+</label>
 
-      <input id="blurRange"
-             class="range"
-             type="range"
-             min="0"
-             max="20"
-             value="0"
-             oninput="applyBlur(this.value)">
+<input
+id="xiaoIP"
+type="text"
+placeholder="z.B. 192.168.1.50"
+onchange="saveSettings()"
+>
 
-    </div>
-
-
-    <div class="settingRow">
-
-      <label>
-        <span>Hintergrundbild</span>
-      </label>
-
-      <label class="fileLabel">
-        🖼️ Bild auswählen
-        <input type="file"
-               accept="image/*"
-               onchange="setWallpaper(this)">
-      </label>
-
-    </div>
-
-  </div>
+</div>
 
 
-  <div class="card">
+<div class="settingRow">
 
-    <h2>ℹ️ Verbindung</h2>
+<label>
 
-    <p class="small">
-      Aktuell läuft die App im Demo-Modus.
-    </p>
+<span>
+Hintergrund Blur
+</span>
 
-    <p class="small">
-      Die eigentliche IR-Steuerung wird später über
-      den XIAO Smart IR Mate eingebaut.
-    </p>
+<span id="blurText">
+0 px
+</span>
 
-  </div>
+</label>
+
+<input
+id="blurRange"
+class="range"
+type="range"
+min="0"
+max="20"
+value="0"
+oninput="applyBlur(this.value)"
+>
+
+</div>
 
 
-  <div class="card">
+<div class="settingRow">
 
-    <button class="btn danger"
-            style="width:100%"
-            onclick="resetApp()">
-      🗑️ Einstellungen zurücksetzen
-    </button>
+<label>
+<span>
+Hintergrundbild
+</span>
+</label>
 
-  </div>
+<label class="fileLabel">
+
+🖼️ Bild auswählen
+
+<input
+type="file"
+accept="image/*"
+onchange="setWallpaper(this)"
+>
+
+</label>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+ℹ️ Verbindung
+</h2>
+
+<p class="small">
+Aktuell läuft die App im Demo-Modus.
+</p>
+
+<p class="small">
+Die echte IR-Steuerung wird später über den
+XIAO Smart IR Mate eingebaut.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<button
+class="btn danger"
+style="width:100%"
+onclick="resetApp()">
+
+🗑️ Einstellungen zurücksetzen
+
+</button>
+
+</div>
 
 </section>
 
@@ -1409,40 +1653,69 @@ input[type="text"]{
 
 <nav class="navGrid">
 
-  <button class="nav active"
-          data-page="home"
-          onclick="showPage('home')">
-    🏠
-    <span>Home</span>
-  </button>
+<button
+class="nav active"
+data-page="home"
+onclick="showPage('home')">
 
-  <button class="nav"
-          data-page="tv"
-          onclick="showPage('tv')">
-    📺
-    <span>TV</span>
-  </button>
+🏠
+<span>
+Home
+</span>
 
-  <button class="nav"
-          data-page="z906"
-          onclick="showPage('z906')">
-    🔊
-    <span>Z906</span>
-  </button>
+</button>
 
-  <button class="nav"
-          data-page="mixer"
-          onclick="showPage('mixerPage')">
-    🎵
-    <span>Mixer</span>
-  </button>
 
-  <button class="nav"
-          data-page="settings"
-          onclick="showPage('settings')">
-    ⚙️
-    <span>Einstellungen</span>
-  </button>
+<button
+class="nav"
+data-page="tv"
+onclick="showPage('tv')">
+
+📺
+<span>
+TV
+</span>
+
+</button>
+
+
+<button
+class="nav"
+data-page="z906"
+onclick="showPage('z906')">
+
+🔊
+<span>
+Z906
+</span>
+
+</button>
+
+
+<button
+class="nav"
+data-page="mixer"
+onclick="showPage('mixerPage')">
+
+🎵
+<span>
+Mixer
+</span>
+
+</button>
+
+
+<button
+class="nav"
+data-page="settings"
+onclick="showPage('settings')">
+
+⚙️
+<span>
+Einstellungen
+</span>
+
+</button>
 
 </nav>
 
@@ -1452,20 +1725,18 @@ input[type="text"]{
 
 <script>
 
-/* =========================================================
-   SMART REMOTE
-   ========================================================= */
+/* =========================
+   APP STATE
+========================= */
 
-const STORAGE_KEY = "smartRemoteV3";
+const STORAGE_KEY="smartRemoteV5";
 
-let state = {
+let state={
   page:"home",
   volume:40,
   bass:0,
   center:0,
   rear:0,
-  sub:0,
-  mode:"3D",
   input:"optical",
   xiaoIP:"",
   blur:0,
@@ -1475,11 +1746,11 @@ let state = {
 };
 
 
-/* =========================================================
+/* =========================
    MIXER
-   ========================================================= */
+========================= */
 
-const mixer = {
+const mixer={
 
   A:{
     audio:null,
@@ -1500,55 +1771,60 @@ const mixer = {
 };
 
 
-/* =========================================================
-   HELPERS
-   ========================================================= */
+/* =========================
+   MUSIC
+========================= */
 
-function $(id){
-  return document.getElementById(id);
-}
+const musicLibrary=[];
+const musicQueue=[];
 
 
-/* =========================================================
+/* =========================
+   SHORTCUT
+========================= */
+
+const $=id=>document.getElementById(id);
+
+
+/* =========================
    TOAST
-   ========================================================= */
+========================= */
 
-let toastTimer;
+function toast(msg){
 
-function toast(message){
+  const e=$("toast");
 
-  const el = $("toast");
+  if(!e)return;
 
-  if(!el) return;
+  e.textContent=msg;
 
-  el.textContent = message;
+  e.classList.add("show");
 
-  el.classList.add("show");
+  clearTimeout(window._toast);
 
-  clearTimeout(toastTimer);
+  window._toast=setTimeout(()=>{
 
-  toastTimer = setTimeout(()=>{
-    el.classList.remove("show");
+    e.classList.remove("show");
+
   },1800);
+
 }
 
 
-/* =========================================================
+/* =========================
    STORAGE
-   ========================================================= */
+========================= */
 
 function saveState(){
 
   try{
+
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify(state)
     );
-  }catch(e){
 
-    console.warn("Speichern fehlgeschlagen",e);
-
-  }
+  }catch(e){}
 
 }
 
@@ -1557,60 +1833,33 @@ function loadState(){
 
   try{
 
-    const saved =
-      JSON.parse(
-        localStorage.getItem(STORAGE_KEY)
-      );
+    const s=JSON.parse(
+      localStorage.getItem(STORAGE_KEY)
+    );
 
-    if(saved){
+    if(s){
 
-      state = {
+      state={
         ...state,
-        ...saved
+        ...s
       };
 
     }
 
-  }catch(e){
-
-    console.warn("Laden fehlgeschlagen",e);
-
-  }
+  }catch(e){}
 
 }
 
 
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-function updateNav(page){
-
-  document
-    .querySelectorAll(".nav")
-    .forEach(btn=>{
-
-      btn.classList.toggle(
-        "active",
-        btn.dataset.page === page
-      );
-
-    });
-
-}
-
+/* =========================
+   PAGE NAVIGATION
+========================= */
 
 function showPage(page){
 
-  const target = $(page);
+  const target=$(page);
 
-  if(!target){
-
-    console.warn("Seite nicht gefunden:",page);
-
-    return;
-
-  }
+  if(!target)return;
 
   document
     .querySelectorAll(".page")
@@ -1620,17 +1869,21 @@ function showPage(page){
 
   target.classList.add("active");
 
-  /*
-   * mixerPage ist intern die Seite.
-   * Für die Navigation speichern wir trotzdem "mixer".
-   */
+  state.page=
+    page==="mixerPage"
+    ?"mixer"
+    :page;
 
-  state.page =
-    page === "mixerPage"
-      ? "mixer"
-      : page;
+  document
+    .querySelectorAll(".nav")
+    .forEach(b=>{
 
-  updateNav(state.page);
+      b.classList.toggle(
+        "active",
+        b.dataset.page===state.page
+      );
+
+    });
 
   saveState();
 
@@ -1642,43 +1895,32 @@ function showPage(page){
 }
 
 
-/* =========================================================
-   COMMAND SYSTEM
-   ========================================================= */
+/* =========================
+   IR DEMO
+========================= */
 
 function sendCommand(command){
 
-  console.log("IR COMMAND:",command);
+  console.log(
+    "IR COMMAND:",
+    command
+  );
 
-  /*
-   * HIER kommt später die echte XIAO-Verbindung hin.
-   *
-   * Beispiel später:
-   *
-   * fetch("http://" + state.xiaoIP + "/ir", {
-   *   method:"POST",
-   *   headers:{
-   *     "Content-Type":"application/json"
-   *   },
-   *   body:JSON.stringify({
-   *     command:command
-   *   })
-   * });
-   */
-
-  toast("📡 " + command);
+  toast(
+    "📡 "+command
+  );
 
 }
 
 
-/* =========================================================
+/* =========================
    TV
-   ========================================================= */
+========================= */
 
 function tvApp(app){
 
   sendCommand(
-    "TV_APP_" +
+    "TV_APP_"+
     app
       .toUpperCase()
       .replaceAll(" ","_")
@@ -1687,38 +1929,26 @@ function tvApp(app){
 }
 
 
-function tvVolume(delta){
-
-  sendCommand(
-    delta > 0
-      ? "TV_VOL_UP"
-      : "TV_VOL_DOWN"
-  );
-
-}
-
-
-/* =========================================================
+/* =========================
    Z906
-   ========================================================= */
+========================= */
 
 function z906Volume(delta){
 
-  state.volume =
-    Math.max(
-      0,
-      Math.min(
-        100,
-        state.volume + delta
-      )
-    );
+  state.volume=Math.max(
+    0,
+    Math.min(
+      100,
+      state.volume+delta
+    )
+  );
 
   updateUI();
 
   sendCommand(
-    delta > 0
-      ? "Z906_VOL_UP"
-      : "Z906_VOL_DOWN"
+    delta>0
+    ?"Z906_VOL_UP"
+    :"Z906_VOL_DOWN"
   );
 
 }
@@ -1726,27 +1956,24 @@ function z906Volume(delta){
 
 function changeZ(type,delta){
 
-  if(type === "volume"){
+  if(type==="volume"){
 
-    z906Volume(delta);
-
-    return;
+    return z906Volume(delta);
 
   }
 
-  state[type] =
-    Math.max(
-      -10,
-      Math.min(
-        10,
-        state[type] + delta
-      )
-    );
+  state[type]=Math.max(
+    -10,
+    Math.min(
+      10,
+      state[type]+delta
+    )
+  );
 
   updateUI();
 
   sendCommand(
-    "Z906_" +
+    "Z906_"+
     type.toUpperCase()
   );
 
@@ -1755,12 +1982,12 @@ function changeZ(type,delta){
 
 function setInput(value){
 
-  state.input = value;
+  state.input=value;
 
   saveState();
 
   sendCommand(
-    "Z906_INPUT_" +
+    "Z906_INPUT_"+
     value.toUpperCase()
   );
 
@@ -1770,51 +1997,47 @@ function setInput(value){
 function scene(name){
 
   sendCommand(
-    "Z906_SCENE_" +
+    "Z906_SCENE_"+
     name.toUpperCase()
   );
 
-  toast("🎬 Szene: " + name);
+  toast(
+    "🎬 Szene: "+name
+  );
 
 }
 
 
-/* =========================================================
-   DIALS
-   ========================================================= */
+/* =========================
+   KNOBS
+========================= */
 
 function updateDial(
-  dialId,
+  id,
   value,
   min,
   max
 ){
 
-  const dial =
-    $(dialId);
+  const e=$(id);
 
-  if(!dial) return;
+  if(!e)return;
 
-  dial.textContent =
-    value;
+  e.textContent=value;
 
-  const percentage =
-    (value-min) /
-    (max-min);
+  const deg=
+    ((value-min)/(max-min))*270;
 
-  const degrees =
-    percentage * 270;
-
-  const knob =
-    dial.closest(".knob");
+  const knob=
+    e.closest(".knob");
 
   if(knob){
 
-    knob.style.background =
+    knob.style.background=
       `conic-gradient(
         var(--accent) 0deg,
-        var(--accent) ${degrees}deg,
-        #273044 ${degrees}deg,
+        var(--accent) ${deg}deg,
+        #273044 ${deg}deg,
         #273044 360deg
       )`;
 
@@ -1823,9 +2046,9 @@ function updateDial(
 }
 
 
-/* =========================================================
-   UI UPDATE
-   ========================================================= */
+/* =========================
+   UPDATE UI
+========================= */
 
 function updateUI(){
 
@@ -1857,28 +2080,40 @@ function updateUI(){
     10
   );
 
+
   if($("xiaoIP"))
-    $("xiaoIP").value =
-      state.xiaoIP || "";
+    $("xiaoIP").value=
+      state.xiaoIP||"";
+
 
   if($("blurRange"))
-    $("blurRange").value =
-      state.blur || 0;
+    $("blurRange").value=
+      state.blur||0;
+
 
   if($("blurText"))
-    $("blurText").textContent =
-      state.blur + " px";
+    $("blurText").textContent=
+      (state.blur||0)+" px";
+
+
+  if($("inputSelect"))
+    $("inputSelect").value=
+      state.input||"optical";
+
 
   document.documentElement
     .style
     .setProperty(
       "--blur",
-      state.blur + "px"
+      (state.blur||0)+"px"
     );
+
 
   if(state.wallpaper){
 
-    $("backgroundLayer").style.backgroundImage =
+    $("backgroundLayer")
+      .style
+      .backgroundImage=
       `url(${state.wallpaper})`;
 
   }
@@ -1886,56 +2121,52 @@ function updateUI(){
 }
 
 
-/* =========================================================
-   BLUR
-   ========================================================= */
+/* =========================
+   SETTINGS
+========================= */
 
 function applyBlur(value){
 
-  state.blur =
-    Number(value);
+  state.blur=Number(value);
 
   document.documentElement
     .style
     .setProperty(
       "--blur",
-      state.blur + "px"
+      state.blur+"px"
     );
 
-  if($("blurText"))
-    $("blurText").textContent =
-      state.blur + " px";
+  $("blurText").textContent=
+    state.blur+" px";
 
   saveState();
 
 }
 
 
-/* =========================================================
-   WALLPAPER
-   ========================================================= */
-
 function setWallpaper(input){
 
-  const file =
+  const file=
     input.files &&
     input.files[0];
 
-  if(!file) return;
+  if(!file)return;
 
-  const reader =
+  const reader=
     new FileReader();
 
-  reader.onload = function(e){
+  reader.onload=function(e){
 
-    state.wallpaper =
+    state.wallpaper=
       e.target.result;
 
     updateUI();
 
     saveState();
 
-    toast("🖼️ Hintergrund geändert");
+    toast(
+      "🖼️ Hintergrund geändert"
+    );
 
   };
 
@@ -1944,39 +2175,35 @@ function setWallpaper(input){
 }
 
 
-/* =========================================================
-   SETTINGS
-   ========================================================= */
-
 function saveSettings(){
 
-  state.xiaoIP =
+  state.xiaoIP=
     $("xiaoIP").value.trim();
 
   saveState();
 
-  toast("💾 Gespeichert");
+  toast(
+    "💾 Gespeichert"
+  );
 
 }
 
 
-/* =========================================================
-   MIXER NAVIGATION
-   ========================================================= */
+/* =========================
+   MIXER MODE
+========================= */
 
 function setMixerMode(mode){
 
-  mixer.mode = mode;
-
-  state.mixerMode = mode;
+  state.mixerMode=mode;
 
   document
     .querySelectorAll(".modeBtn")
-    .forEach(btn=>{
+    .forEach(button=>{
 
-      btn.classList.toggle(
+      button.classList.toggle(
         "active",
-        btn.dataset.mode === mode
+        button.dataset.mode===mode
       );
 
     });
@@ -1984,24 +2211,24 @@ function setMixerMode(mode){
   saveState();
 
   toast(
-    "🎧 Modus: " +
-    mode
+    "🎧 Modus: "+mode
   );
 
 }
 
 
-/* =========================================================
+/* =========================
    AI
-   ========================================================= */
+========================= */
 
 function setAILevel(value){
 
-  state.ai =
+  state.ai=
     Number(value);
 
-  $("aiLevelText").textContent =
-    value + "%";
+  $("aiLevelText")
+    .textContent=
+    value+"%";
 
   saveState();
 
@@ -2017,87 +2244,110 @@ function toggleAI(button){
 }
 
 
-/* =========================================================
+/* =========================
    DECK FILE
-   ========================================================= */
+========================= */
 
-function loadDeckFile(deck,input){
+function loadDeckFile(
+  deck,
+  input
+){
 
-  const file =
+  const file=
     input.files &&
     input.files[0];
 
-  if(!file) return;
+  if(!file)return;
 
-  const d =
-    mixer[deck];
-
-  if(d.audio){
-
-    d.audio.pause();
-
-    URL.revokeObjectURL(
-      d.audio.src
-    );
-
-  }
-
-  const url =
-    URL.createObjectURL(file);
-
-  const audio =
-    new Audio(url);
-
-  audio.preload =
-    "metadata";
-
-  audio.volume =
-    deck === "A"
-      ? .7
-      : .7;
-
-  audio.addEventListener(
-    "ended",
-    ()=>{
-      d.playing=false;
-
-      const status =
-        $("deck"+deck+"Status");
-
-      if(status)
-        status.textContent =
-          "STOP";
-    }
-  );
-
-  d.audio = audio;
-  d.file = file;
-  d.playing = false;
-
-  $("track"+deck).textContent =
-    file.name;
-
-  $("deck"+deck+"Status").textContent =
-    "READY";
-
-  toast(
-    "🎵 " +
-    deck +
-    ": " +
-    file.name
+  loadFileToDeck(
+    deck,
+    file
   );
 
 }
 
 
-/* =========================================================
-   DECK PLAY
-   ========================================================= */
+/* =========================
+   LOAD FILE TO DECK
+========================= */
+
+function loadFileToDeck(
+  deck,
+  file
+){
+
+  const d=mixer[deck];
+
+  if(d.audio){
+
+    d.audio.pause();
+
+    try{
+
+      URL.revokeObjectURL(
+        d.audio.src
+      );
+
+    }catch(e){}
+
+  }
+
+
+  const url=
+    URL.createObjectURL(file);
+
+  const audio=
+    new Audio(url);
+
+  audio.preload="metadata";
+
+  audio.volume=.7;
+
+
+  audio.addEventListener(
+    "ended",
+    ()=>{
+
+      d.playing=false;
+
+      $("deck"+deck+"Status")
+        .textContent=
+        "STOP";
+
+    }
+  );
+
+
+  d.audio=audio;
+  d.file=file;
+  d.playing=false;
+
+
+  $("track"+deck)
+    .textContent=
+    file.name;
+
+
+  $("deck"+deck+"Status")
+    .textContent=
+    "READY";
+
+
+  toast(
+    "🎵 Deck "+deck+
+    ": "+file.name
+  );
+
+}
+
+
+/* =========================
+   PLAY
+========================= */
 
 async function deckPlay(deck){
 
-  const d =
-    mixer[deck];
+  const d=mixer[deck];
 
   if(!d.audio){
 
@@ -2109,18 +2359,21 @@ async function deckPlay(deck){
 
   }
 
+
   if(d.playing){
 
     d.audio.pause();
 
     d.playing=false;
 
-    $("deck"+deck+"Status").textContent =
+    $("deck"+deck+"Status")
+      .textContent=
       "PAUSE";
 
     return;
 
   }
+
 
   try{
 
@@ -2128,12 +2381,11 @@ async function deckPlay(deck){
 
     d.playing=true;
 
-    $("deck"+deck+"Status").textContent =
+    $("deck"+deck+"Status")
+      .textContent=
       "PLAY";
 
-  }catch(error){
-
-    console.error(error);
+  }catch(e){
 
     toast(
       "⚠️ Wiedergabe nicht möglich"
@@ -2144,44 +2396,43 @@ async function deckPlay(deck){
 }
 
 
-/* =========================================================
+/* =========================
    CUE
-   ========================================================= */
+========================= */
 
 function deckCue(deck){
 
-  const d =
-    mixer[deck];
+  const d=mixer[deck];
 
   if(!d.audio){
 
-    toast("📁 Kein Track geladen");
+    toast(
+      "📁 Kein Track geladen"
+    );
 
     return;
 
   }
 
-  d.audio.currentTime =
-    0;
+  d.audio.currentTime=0;
 
   toast(
-    "🎧 CUE Deck " +
-    deck
+    "🎧 CUE Deck "+deck
   );
 
 }
 
 
-/* =========================================================
+/* =========================
    SYNC
-   ========================================================= */
+========================= */
 
 function deckSync(deck){
 
-  const other =
-    deck === "A"
-      ? "B"
-      : "A";
+  const other=
+    deck==="A"
+    ?"B"
+    :"A";
 
   if(
     !mixer[deck].audio ||
@@ -2196,89 +2447,89 @@ function deckSync(deck){
 
   }
 
-  mixer[deck].audio.currentTime =
-    mixer[other].audio.currentTime;
+
+  mixer[deck]
+    .audio
+    .currentTime=
+    mixer[other]
+      .audio
+      .currentTime;
+
 
   toast(
-    "🔄 Deck " +
-    deck +
+    "🔄 Deck "+
+    deck+
     " synchronisiert"
   );
 
 }
 
 
-/* =========================================================
+/* =========================
    GAIN
-   ========================================================= */
+========================= */
 
-function deckGain(deck,value){
+function deckGain(
+  deck,
+  value
+){
 
-  const d =
-    mixer[deck];
-
-  d.gain =
+  mixer[deck].gain=
     Number(value);
-
-  /*
-   * Ein echter Gain-Effekt kommt
-   * später über Web Audio API.
-   */
 
 }
 
 
-/* =========================================================
+/* =========================
    FILTER
-   ========================================================= */
+========================= */
 
-function deckFilter(deck,value){
+function deckFilter(
+  deck,
+  value
+){
 
-  mixer[deck].filter =
+  mixer[deck].filter=
     Number(value);
 
 }
 
 
-/* =========================================================
-   CROSSFADE
-   ========================================================= */
+/* =========================
+   CROSSFADER
+========================= */
 
 function crossfade(value){
 
-  const x =
-    Number(value) / 100;
+  const x=
+    Number(value)/100;
 
-  const a =
-    mixer.A.audio;
 
-  const b =
-    mixer.B.audio;
+  if(mixer.A.audio){
 
-  if(a){
-
-    a.volume =
+    mixer.A.audio.volume=
       Math.cos(
-        x * Math.PI / 2
-      );
+        x*Math.PI/2
+      )*.7;
 
   }
 
-  if(b){
 
-    b.volume =
+  if(mixer.B.audio){
+
+    mixer.B.audio.volume=
       Math.cos(
-        (1-x) * Math.PI / 2
-      );
+        (1-x)*Math.PI/2
+      )*.7;
 
   }
 
 }
 
 
-/* =========================================================
+/* =========================
    AI TRANSITION
-   ========================================================= */
+========================= */
 
 function planTransition(){
 
@@ -2286,20 +2537,353 @@ function planTransition(){
     "🧠 AI analysiert Übergang..."
   );
 
-  setTimeout(()=>{
 
-    toast(
-      "✨ Übergang bereit"
-    );
+  setTimeout(
+    ()=>{
 
-  },900);
+      toast(
+        "✨ Übergang bereit"
+      );
+
+    },
+    900
+  );
 
 }
 
 
-/* =========================================================
+/* =========================
+   HTML SECURITY
+========================= */
+
+function escapeHTML(text){
+
+  return String(text)
+    .replace(
+      /[&<>"']/g,
+      char=>({
+
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+
+      }[char])
+    );
+
+}
+
+
+/* =========================
+   ADD MUSIC
+========================= */
+
+function addMusicFiles(input){
+
+  const files=
+    [
+      ...input.files || []
+    ];
+
+  if(!files.length)return;
+
+
+  files.forEach(file=>{
+
+    const valid=
+      file.type.startsWith("audio/") ||
+      /\.(mp3|m4a|wav|aac|flac|ogg)$/i
+        .test(file.name);
+
+
+    if(!valid)return;
+
+
+    const exists=
+      musicLibrary.some(
+        track=>
+          track.name===file.name &&
+          track.size===file.size
+      );
+
+
+    if(!exists){
+
+      musicLibrary.push({
+
+        file:file,
+
+        url:
+          URL.createObjectURL(
+            file
+          ),
+
+        name:file.name,
+
+        size:file.size
+
+      });
+
+    }
+
+  });
+
+
+  input.value="";
+
+  renderMusicLibrary();
+
+  toast(
+    "🎵 "+
+    files.length+
+    " Datei(en) geladen"
+  );
+
+}
+
+
+/* =========================
+   MUSIC LIBRARY
+========================= */
+
+function renderMusicLibrary(){
+
+  const box=
+    $("musicLibrary");
+
+  if(!box)return;
+
+
+  if(!musicLibrary.length){
+
+    box.innerHTML=
+      '<div class="small">'+
+      'Noch keine Musik ausgewählt.'+
+      '</div>';
+
+    return;
+
+  }
+
+
+  box.innerHTML=
+    musicLibrary
+      .map(
+        (track,index)=>`
+
+        <div class="musicRow">
+
+          <div class="musicName">
+            🎵
+            ${escapeHTML(track.name)}
+          </div>
+
+          <div class="musicActions">
+
+            <button
+              class="miniBtn"
+              onclick="libraryToDeck(${index},'A')">
+              A
+            </button>
+
+            <button
+              class="miniBtn"
+              onclick="libraryToDeck(${index},'B')">
+              B
+            </button>
+
+            <button
+              class="miniBtn"
+              onclick="addToQueue(${index})">
+              ＋
+            </button>
+
+          </div>
+
+        </div>
+
+        `
+      )
+      .join("");
+
+}
+
+
+/* =========================
+   LIBRARY -> DECK
+========================= */
+
+function libraryToDeck(
+  index,
+  deck
+){
+
+  const track=
+    musicLibrary[index];
+
+  if(track){
+
+    loadFileToDeck(
+      deck,
+      track.file
+    );
+
+  }
+
+}
+
+
+/* =========================
+   QUEUE
+========================= */
+
+function addToQueue(index){
+
+  const track=
+    musicLibrary[index];
+
+  if(!track)return;
+
+  musicQueue.push(
+    track
+  );
+
+  renderQueue();
+
+  toast(
+    "➕ Zur Queue hinzugefügt"
+  );
+
+}
+
+
+function removeQueueTrack(index){
+
+  musicQueue.splice(
+    index,
+    1
+  );
+
+  renderQueue();
+
+}
+
+
+function playQueueTrack(index){
+
+  const track=
+    musicQueue[index];
+
+  if(!track)return;
+
+  loadFileToDeck(
+    "A",
+    track.file
+  );
+
+  toast(
+    "▶️ Queue → Deck A"
+  );
+
+}
+
+
+function queueToDeck(
+  index,
+  deck
+){
+
+  const track=
+    musicQueue[index];
+
+  if(track){
+
+    loadFileToDeck(
+      deck,
+      track.file
+    );
+
+  }
+
+}
+
+
+/* =========================
+   RENDER QUEUE
+========================= */
+
+function renderQueue(){
+
+  const box=
+    $("queue");
+
+  if(!box)return;
+
+
+  if(!musicQueue.length){
+
+    box.innerHTML=
+      '<div class="small">'+
+      'Noch keine Titel in der Queue'+
+      '</div>';
+
+    return;
+
+  }
+
+
+  box.innerHTML=
+    musicQueue
+      .map(
+        (track,index)=>`
+
+        <div class="queueItem">
+
+          <span>
+            ${index+1}
+          </span>
+
+          <div class="musicName">
+            ${escapeHTML(track.name)}
+          </div>
+
+          <button
+            class="miniBtn"
+            onclick="queueToDeck(${index},'A')">
+            A
+          </button>
+
+          <button
+            class="miniBtn"
+            onclick="queueToDeck(${index},'B')">
+            B
+          </button>
+
+          <button
+            class="miniBtn"
+            onclick="playQueueTrack(${index})">
+            ▶
+          </button>
+
+          <button
+            class="miniBtn"
+            onclick="removeQueueTrack(${index})">
+            ×
+          </button>
+
+        </div>
+
+        `
+      )
+      .join("");
+
+}
+
+
+/* =========================
    RESET
-   ========================================================= */
+========================= */
 
 function resetApp(){
 
@@ -2322,54 +2906,61 @@ function resetApp(){
 }
 
 
-/* =========================================================
-   START
-   ========================================================= */
+/* =========================
+   START APP
+========================= */
 
 loadState();
 
 updateUI();
 
-if(state.ai !== undefined){
 
-  $("aiLevel").value =
+if($("aiLevel")){
+
+  $("aiLevel").value=
     state.ai;
 
-  $("aiLevelText").textContent =
-    state.ai + "%";
-
-}
-
-if(state.mixerMode){
-
-  document
-    .querySelectorAll(".modeBtn")
-    .forEach(btn=>{
-
-      btn.classList.toggle(
-        "active",
-        btn.dataset.mode === state.mixerMode
-      );
-
-    });
+  $("aiLevelText")
+    .textContent=
+    state.ai+"%";
 
 }
 
 
-/*
- * Richtige Startseite
- */
+document
+  .querySelectorAll(".modeBtn")
+  .forEach(button=>{
 
-let startPage =
-  state.page || "home";
+    button.classList.toggle(
+      "active",
+      button.dataset.mode===
+      state.mixerMode
+    );
 
-if(startPage === "mixer")
-  startPage = "mixerPage";
+  });
 
-if(!$(startPage))
-  startPage = "home";
 
-showPage(startPage);
+renderMusicLibrary();
+
+renderQueue();
+
+
+let startPage=
+  state.page==="mixer"
+  ?"mixerPage"
+  :state.page;
+
+
+if(!$(startPage)){
+
+  startPage="home";
+
+}
+
+
+showPage(
+  startPage
+);
 
 </script>
 
