@@ -2,865 +2,683 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover">
-
-<meta name="theme-color" content="#08090d">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080a0f">
 
 <title>Smart Remote</title>
 
 <style>
+:root{
+  --bg:#080a0f;
+  --card:rgba(24,28,38,.86);
+  --line:rgba(255,255,255,.10);
+  --text:#f5f7fb;
+  --muted:#9aa3b2;
+  --accent:#5b8cff;
+  --good:#35d07f;
+  --danger:#ff5b6e;
+}
+
 *{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
+  box-sizing:border-box;
 }
 
 html,body{
-    margin:0;
-    padding:0;
-    width:100%;
-    min-height:100%;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-    background:#08090d;
-    color:#fff;
+  margin:0;
+  min-height:100%;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Arial,sans-serif;
+  background:
+    radial-gradient(circle at 20% 0%,#1a2340 0,#080a0f 45%);
+  color:var(--text);
 }
 
 body{
-    --bg:#08090d;
-    --card:rgba(24,26,34,.82);
-    --card2:rgba(35,38,48,.82);
-    --line:rgba(255,255,255,.09);
-    --text:#fff;
-    --muted:#9ca3af;
-    --accent:#3b82f6;
-    --danger:#ef4444;
-
-    background:
-        linear-gradient(
-            rgba(0,0,0,var(--overlay,0.35)),
-            rgba(0,0,0,var(--overlay,0.35))
-        ),
-        var(--wallpaper,linear-gradient(135deg,#08090d,#111827));
-
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
-
-    min-height:100vh;
-    overflow-x:hidden;
+  padding-bottom:calc(90px + env(safe-area-inset-bottom));
+  overflow-x:hidden;
 }
 
-body::before{
-    content:"";
-    position:fixed;
-    inset:-20px;
-    z-index:-2;
-    background:inherit;
-    filter:blur(var(--blur,0px));
-}
-
-body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:-1;
-    pointer-events:none;
-}
-
-button,
-input,
-select{
-    font:inherit;
+button,input{
+  font:inherit;
 }
 
 button{
-    border:0;
-    color:white;
-    cursor:pointer;
+  border:0;
+  color:var(--text);
+  cursor:pointer;
 }
 
 .app{
-    max-width:650px;
-    margin:auto;
-    min-height:100vh;
-    padding-bottom:100px;
+  max-width:1000px;
+  margin:auto;
+  padding:18px 14px 25px;
 }
+
+/* HEADER */
 
 header{
-    padding:
-        calc(env(safe-area-inset-top) + 18px)
-        18px
-        12px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
 }
 
-.logo{
-    display:flex;
-    align-items:center;
-    gap:11px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
 .logoIcon{
-    width:42px;
-    height:42px;
-    border-radius:14px;
-    background:linear-gradient(135deg,#3b82f6,#8b5cf6);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    box-shadow:0 8px 30px rgba(59,130,246,.25);
+  width:50px;
+  height:50px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#26375f,#111827);
+  display:grid;
+  place-items:center;
+  font-size:21px;
+  box-shadow:0 10px 30px #0006;
 }
 
-.logoText{
-    font-weight:800;
-    font-size:19px;
+.brand h1{
+  font-size:20px;
+  margin:0;
 }
 
-.logoSub{
-    font-size:11px;
-    color:var(--muted);
-    margin-top:2px;
+.brand small{
+  color:var(--muted);
 }
 
 .status{
-    display:flex;
-    align-items:center;
-    gap:7px;
-    background:rgba(255,255,255,.07);
-    border:1px solid var(--line);
-    border-radius:999px;
-    padding:7px 11px;
-    font-size:11px;
-    color:#bbb;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--muted);
+  font-size:12px;
 }
 
-.statusDot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#f59e0b;
-    box-shadow:0 0 10px #f59e0b;
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--good);
+  box-shadow:0 0 12px var(--good);
 }
+
+/* PAGES */
 
 .page{
-    display:none;
-    padding:0 15px;
+  display:none;
 }
 
 .page.active{
-    display:block;
-    animation:fade .2s ease;
+  display:block;
 }
 
-@keyframes fade{
-    from{
-        opacity:0;
-        transform:translateY(6px);
-    }
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-h1{
-    font-size:30px;
-    margin:10px 4px 4px;
-}
-
-.subtitle{
-    color:var(--muted);
-    margin:0 4px 20px;
-    font-size:14px;
-}
+/* CARDS */
 
 .card{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:22px;
-    padding:16px;
-    margin-bottom:14px;
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-    box-shadow:0 15px 40px rgba(0,0,0,.16);
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:16px;
+  margin-bottom:14px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 15px 45px #0004;
 }
 
-.cardTitle{
-    font-size:14px;
-    color:#bbb;
-    margin-bottom:12px;
-    font-weight:700;
+.title{
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+.sub{
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* HOME */
+
+.deviceGrid,
+.quickGrid,
+.appGrid,
+.levelGrid{
+  display:grid;
+  gap:10px;
 }
 
 .deviceGrid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-
-.device{
-    min-height:145px;
-    border-radius:20px;
-    padding:17px;
-    text-align:left;
-    background:linear-gradient(
-        145deg,
-        rgba(59,130,246,.24),
-        rgba(139,92,246,.16)
-    );
-    border:1px solid rgba(255,255,255,.1);
-    transition:.15s;
-}
-
-.device:active{
-    transform:scale(.97);
-}
-
-.deviceIcon{
-    font-size:34px;
-    margin-bottom:20px;
-}
-
-.deviceName{
-    font-weight:800;
-    font-size:17px;
-}
-
-.deviceInfo{
-    font-size:11px;
-    color:#aaa;
-    margin-top:4px;
+  grid-template-columns:repeat(2,1fr);
 }
 
 .quickGrid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:9px;
+  grid-template-columns:repeat(3,1fr);
+}
+
+.appGrid{
+  grid-template-columns:repeat(4,1fr);
+}
+
+.device,
+.quick,
+.appBtn,
+.scene,
+.mode,
+.input,
+.eqBtn{
+  padding:14px;
+  border-radius:16px;
+  background:#ffffff09;
+  border:1px solid var(--line);
+  transition:.15s;
+}
+
+.device:active,
+.quick:active,
+.appBtn:active,
+.scene:active,
+.mode:active,
+.input:active,
+.eqBtn:active{
+  transform:scale(.97);
+  background:#ffffff14;
+}
+
+.device strong{
+  display:block;
+  margin-top:8px;
+}
+
+.device span{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.icon{
+  font-size:25px;
 }
 
 .quick{
-    min-height:72px;
-    border-radius:17px;
-    background:var(--card2);
-    border:1px solid var(--line);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:6px;
+  font-weight:700;
 }
 
-.quick span:first-child{
-    font-size:22px;
+.appBtn{
+  min-height:80px;
 }
 
-.quick span:last-child{
-    color:#bbb;
-    font-size:11px;
+.appBtn b{
+  display:block;
+  margin-top:5px;
+  font-size:12px;
+}
+
+/* TV REMOTE */
+
+.remote{
+  max-width:390px;
+  margin:auto;
+}
+
+.remoteBody{
+  padding:16px;
+  border-radius:30px;
+  background:linear-gradient(180deg,#171b25,#0d1017);
+  border:1px solid var(--line);
+  box-shadow:0 20px 60px #0007;
 }
 
 .remoteTop{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
 }
 
-.back{
-    background:rgba(255,255,255,.08);
-    width:40px;
-    height:40px;
-    border-radius:13px;
-    font-size:20px;
+.remoteTop b{
+  font-size:14px;
 }
 
-.remoteTitle{
-    font-size:17px;
-    font-weight:800;
+.pill{
+  font-size:11px;
+  color:var(--muted);
+  background:#fff1;
+  padding:6px 9px;
+  border-radius:99px;
 }
 
-.remoteActions{
-    display:flex;
-    gap:7px;
+.rbtn{
+  height:48px;
+  border-radius:15px;
+  background:#ffffff0b;
+  border:1px solid var(--line);
+  font-weight:700;
 }
 
-.circleBtn{
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    background:rgba(255,255,255,.08);
-    border:1px solid var(--line);
+.rbtn.power{
+  background:#ff314d22;
+  color:#ff7584;
 }
 
-.tvRemote{
-    padding:18px;
+.rbtn.wide{
+  width:100%;
 }
 
-.power{
-    width:62px;
-    height:62px;
-    border-radius:50%;
-    background:rgba(239,68,68,.16);
-    color:#ff6b6b;
-    border:1px solid rgba(239,68,68,.3);
-    font-size:27px;
+.remoteRows{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
 }
 
-.tvHeader{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:20px;
-}
-
-.tvScreen{
-    height:105px;
-    border-radius:17px;
-    background:
-        radial-gradient(circle at 50% 40%,rgba(59,130,246,.35),transparent 45%),
-        #050609;
-    border:1px solid var(--line);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:17px;
-}
-
-.tvScreenIcon{
-    font-size:30px;
-}
-
-.tvScreenText{
-    font-size:12px;
-    color:#aaa;
-    margin-top:5px;
+.remoteRows .full{
+  grid-column:1/-1;
 }
 
 .dpad{
-    width:220px;
-    height:220px;
-    margin:10px auto 20px;
-    position:relative;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  max-width:220px;
+  margin:15px auto;
 }
 
 .dpad button{
-    position:absolute;
-    width:70px;
-    height:70px;
-    background:#242731;
-    border:1px solid var(--line);
-}
-
-.dpad button:active,
-.remoteButton:active,
-.zbtn:active,
-.scene:active{
-    transform:scale(.94);
-    background:#303442;
-}
-
-.dpad .up{
-    top:0;
-    left:75px;
-    border-radius:18px 18px 10px 10px;
-}
-
-.dpad .down{
-    bottom:0;
-    left:75px;
-    border-radius:10px 10px 18px 18px;
-}
-
-.dpad .left{
-    left:0;
-    top:75px;
-    border-radius:18px 10px 10px 18px;
-}
-
-.dpad .right{
-    right:0;
-    top:75px;
-    border-radius:10px 18px 18px 10px;
+  height:52px;
+  border-radius:50%;
+  background:#ffffff0b;
+  border:1px solid var(--line);
 }
 
 .dpad .ok{
-    top:75px;
-    left:75px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#3b82f6,#6366f1);
-    font-weight:800;
+  background:#26324c;
 }
 
-.remoteGrid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:9px;
-}
-
-.remoteButton{
-    min-height:48px;
-    border-radius:14px;
-    background:#20232c;
-    border:1px solid var(--line);
-    font-size:12px;
-}
-
-.remoteButton.big{
-    grid-column:span 2;
-}
-
-.remoteButton.red{
-    color:#ff6b6b;
-}
-
-.remoteButton.blue{
-    color:#60a5fa;
-}
-
-.z906Hero{
-    text-align:center;
-    padding:5px 0 20px;
-}
-
-.z906Logo{
-    font-size:28px;
-    font-weight:900;
-    letter-spacing:1px;
-}
-
-.z906State{
-    color:#aaa;
-    font-size:12px;
-    margin-top:5px;
-}
+/* Z906 */
 
 .knobRow{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:18px;
-}
-
-.knobBox{
-    text-align:center;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
 }
 
 .knob{
-    width:155px;
-    height:155px;
-    margin:5px auto 10px;
-    border-radius:50%;
-    position:relative;
-    touch-action:none;
-    user-select:none;
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            #424652 0 38%,
-            #242832 39% 55%,
-            #101217 56% 100%
-        );
-    box-shadow:
-        inset 0 2px 8px rgba(255,255,255,.08),
-        inset 0 -12px 20px rgba(0,0,0,.7),
-        0 15px 30px rgba(0,0,0,.35);
-    border:3px solid #171920;
+  height:150px;
+  border-radius:24px;
+  background:#10141d;
+  border:1px solid var(--line);
+  display:grid;
+  place-items:center;
 }
 
-.knob::before{
-    content:"";
-    position:absolute;
-    inset:9px;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,.08);
+.dial{
+  width:92px;
+  height:92px;
+  border-radius:50%;
+  background:conic-gradient(
+    var(--accent) 0deg,
+    #273044 0deg 360deg
+  );
+  padding:9px;
 }
 
-.knobPointer{
-    position:absolute;
-    width:5px;
-    height:46px;
-    background:#fff;
-    border-radius:4px;
-    left:50%;
-    top:16px;
-    transform-origin:50% 61px;
-    transform:translateX(-50%) rotate(0deg);
-    box-shadow:0 0 8px rgba(255,255,255,.4);
-}
-
-.knobCenter{
-    position:absolute;
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    background:#292c35;
-    border:1px solid rgba(255,255,255,.1);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:17px;
-    font-weight:900;
-}
-
-.knobLabel{
-    color:#aaa;
-    font-size:12px;
-}
-
-.knobValue{
-    font-size:19px;
-    font-weight:800;
-    margin-top:3px;
-}
-
-.knobControls{
-    display:flex;
-    gap:8px;
-    justify-content:center;
-    margin-top:10px;
-}
-
-.zbtn{
-    width:48px;
-    height:43px;
-    border-radius:13px;
-    background:#242731;
-    border:1px solid var(--line);
-    font-size:21px;
-}
-
-.zbtn.main{
-    width:80px;
-    font-size:12px;
+.dialInner{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  background:#11151e;
+  display:grid;
+  place-items:center;
+  font-size:20px;
+  font-weight:800;
 }
 
 .levelGrid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
+  grid-template-columns:repeat(4,1fr);
 }
 
-.level{
-    text-align:center;
-    background:#1c1f27;
-    border:1px solid var(--line);
-    border-radius:17px;
-    padding:11px 5px;
+.levelGrid button,
+.inputGrid button{
+  padding:11px;
+  border-radius:13px;
+  background:#fff1;
+  border:1px solid var(--line);
 }
 
-.levelName{
-    font-size:11px;
-    color:#aaa;
-    margin-bottom:9px;
-}
-
-.levelValue{
-    font-size:18px;
-    font-weight:800;
-    margin-bottom:9px;
-}
-
-.levelBtns{
-    display:flex;
-    justify-content:center;
-    gap:6px;
-}
-
-.levelBtns button{
-    width:35px;
-    height:32px;
-    border-radius:9px;
-    background:#292d37;
-}
-
-.modeGrid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:9px;
-}
-
-.mode{
-    padding:14px 5px;
-    border-radius:15px;
-    background:#1d2028;
-    border:1px solid var(--line);
-    font-size:12px;
-    color:#bbb;
-}
-
-.mode.active{
-    background:linear-gradient(135deg,#2563eb,#7c3aed);
-    color:#fff;
-    border-color:transparent;
-}
-
-.inputGrid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:9px;
-}
-
-.input{
-    min-height:52px;
-    border-radius:14px;
-    background:#1d2028;
-    border:1px solid var(--line);
-    color:#bbb;
-}
-
-.input.active{
-    background:#2563eb;
-    color:#fff;
-    border-color:#60a5fa;
-}
-
-.sceneGrid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
-}
-
-.scene{
-    padding:16px;
-    text-align:left;
-    border-radius:16px;
-    background:#1d2028;
-    border:1px solid var(--line);
-}
-
-.sceneIcon{
-    font-size:25px;
-    margin-bottom:9px;
-}
-
-.sceneName{
-    font-weight:800;
-    font-size:14px;
-}
-
-.sceneDesc{
-    color:#888;
-    font-size:10px;
-    margin-top:4px;
-}
-
-.eq{
-    display:grid;
-    gap:12px;
-}
-
-.eqRow{
-    display:grid;
-    grid-template-columns:42px 1fr 42px;
-    align-items:center;
-    gap:8px;
-}
-
-.eqRow label{
-    font-size:11px;
-    color:#aaa;
-}
-
-.eqRow output{
-    font-size:10px;
-    text-align:right;
-    color:#aaa;
-}
-
-input[type=range]{
-    width:100%;
-    accent-color:#3b82f6;
-}
-
-.settingRow{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    padding:13px 0;
-    border-bottom:1px solid var(--line);
-}
-
-.settingRow:last-child{
-    border-bottom:0;
-}
-
-.settingLabel{
-    font-weight:700;
-    font-size:14px;
-}
-
-.settingDesc{
-    color:#888;
-    font-size:11px;
-    margin-top:4px;
-}
-
-.textInput{
-    width:100%;
-    background:#15171d;
-    border:1px solid var(--line);
-    border-radius:13px;
-    padding:13px;
-    color:#fff;
-    outline:none;
-}
-
-.textInput:focus{
-    border-color:#3b82f6;
-}
-
-.select{
-    background:#15171d;
-    color:#fff;
-    border:1px solid var(--line);
-    border-radius:11px;
-    padding:9px;
-}
-
-.primary{
-    width:100%;
-    padding:14px;
-    border-radius:15px;
-    background:linear-gradient(135deg,#2563eb,#7c3aed);
-    font-weight:800;
-}
-
-.secondary{
-    width:100%;
-    padding:14px;
-    border-radius:15px;
-    background:#20232c;
-    border:1px solid var(--line);
-    margin-top:9px;
-}
-
-.danger{
-    width:100%;
-    padding:14px;
-    border-radius:15px;
-    background:rgba(239,68,68,.13);
-    color:#ff7070;
-    border:1px solid rgba(239,68,68,.2);
-}
-
-.bottomNav{
-    position:fixed;
-    left:50%;
-    bottom:0;
-    transform:translateX(-50%);
-    width:min(650px,100%);
-    padding:
-        8px
-        12px
-        calc(env(safe-area-inset-bottom) + 8px);
-    z-index:20;
-    background:rgba(8,9,13,.85);
-    backdrop-filter:blur(25px);
-    -webkit-backdrop-filter:blur(25px);
-    border-top:1px solid var(--line);
-}
+/* NAVIGATION */
 
 .navGrid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:5px;
+  position:fixed;
+  z-index:120;
+  left:10px;
+  right:10px;
+  bottom:calc(8px + env(safe-area-inset-bottom));
+  max-width:880px;
+  margin:auto;
+
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+
+  padding:7px;
+
+  background:#10141dcc;
+  border:1px solid var(--line);
+  border-radius:20px;
+
+  backdrop-filter:blur(20px);
+  box-shadow:0 15px 45px #0008;
 }
 
 .nav{
-    height:58px;
-    border-radius:16px;
-    background:transparent;
-    color:#777;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:3px;
-    font-size:10px;
+  padding:8px 3px;
+  border-radius:14px;
+  background:transparent;
+  color:var(--muted);
+  font-size:10px;
 }
 
 .navIcon{
-    font-size:21px;
+  font-size:18px;
+  margin-bottom:2px;
 }
 
 .nav.active{
-    background:rgba(59,130,246,.13);
-    color:#60a5fa;
+  background:#ffffff12;
+  color:#fff;
 }
 
-.toast{
-    position:fixed;
-    left:50%;
-    bottom:95px;
-    transform:translateX(-50%) translateY(20px);
-    background:#fff;
-    color:#111;
-    padding:12px 16px;
-    border-radius:14px;
-    font-size:12px;
-    font-weight:700;
-    opacity:0;
-    pointer-events:none;
-    transition:.25s;
-    z-index:100;
-    box-shadow:0 10px 30px rgba(0,0,0,.3);
-    max-width:90%;
-    text-align:center;
+/* SETTINGS */
+
+.settingsRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid var(--line);
 }
 
-.toast.show{
-    opacity:1;
-    transform:translateX(-50%) translateY(0);
+.settingsRow:last-child{
+  border:0;
 }
 
-.uploadLabel{
-    display:block;
-    padding:14px;
-    text-align:center;
-    border-radius:14px;
-    background:#20232c;
-    border:1px solid var(--line);
-    cursor:pointer;
+.settingsRow input[type=text]{
+  width:180px;
+  max-width:50%;
+  background:#fff0;
+  border:1px solid var(--line);
+  color:#fff;
+  padding:10px;
+  border-radius:12px;
 }
 
-input[type=file]{
-    display:none;
+.danger{
+  background:#ff405522;
+  color:#ff8090;
+  padding:11px 14px;
+  border-radius:12px;
 }
 
-.info{
-    font-size:11px;
-    line-height:1.5;
-    color:#888;
+/* MIXER */
+
+.mixerOverlay{
+  display:none;
+
+  position:fixed;
+  inset:0;
+  z-index:200;
+
+  background:#080a0f;
+
+  overflow:auto;
+
+  padding:
+    calc(12px + env(safe-area-inset-top))
+    12px
+    calc(20px + env(safe-area-inset-bottom));
 }
 
-@media(max-width:400px){
-    .knob{
-        width:135px;
-        height:135px;
-    }
+.mixerOverlay.active{
+  display:block;
+}
 
-    .knobPointer{
-        height:40px;
-        transform-origin:50% 54px;
-    }
+.mixer{
+  max-width:1200px;
+  margin:auto;
+}
 
-    .knobCenter{
-        width:58px;
-        height:58px;
-    }
+.mixerHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:12px;
+}
 
-    .dpad{
-        transform:scale(.9);
-        margin-top:-2px;
-        margin-bottom:-2px;
-    }
+.mixerHead h2{
+  margin:0;
+  font-size:18px;
+}
+
+.mixerActions{
+  display:flex;
+  gap:7px;
+}
+
+.circleBtn{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#fff1;
+  border:1px solid var(--line);
+}
+
+.mixerModes{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin-bottom:12px;
+}
+
+.mixerMode{
+  padding:10px;
+  border-radius:12px;
+  background:#fff1;
+  border:1px solid var(--line);
+  font-size:12px;
+}
+
+.mixerMode.active{
+  background:#26385f;
+}
+
+.range{
+  width:100%;
+  accent-color:var(--accent);
+}
+
+.toggleGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px;
+}
+
+.toggle{
+  padding:9px;
+  border-radius:11px;
+  background:#fff1;
+  border:1px solid var(--line);
+  font-size:11px;
+}
+
+.toggle.on{
+  background:#294a35;
+}
+
+/* DECKS */
+
+.decks{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.deck{
+  background:#11151e;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:13px;
+}
+
+.deckHead{
+  display:flex;
+  justify-content:space-between;
+}
+
+.wave{
+  height:70px;
+  margin:10px 0;
+  border-radius:12px;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #ffffff12 0 2px,
+      transparent 2px 7px
+    );
+
+  overflow:hidden;
+  position:relative;
+}
+
+.wave:after{
+  content:"";
+  position:absolute;
+  inset:50% 0 auto;
+  height:2px;
+  background:#5b8cff66;
+}
+
+.deckButtons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+}
+
+.deckButtons button{
+  padding:11px;
+  border-radius:12px;
+  background:#fff1;
+  border:1px solid var(--line);
+}
+
+.sliderRow{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:10px;
+}
+
+.sliderBox{
+  background:#fff1;
+  padding:10px;
+  border-radius:12px;
+}
+
+.cross{
+  margin:14px 0;
+}
+
+.cross input{
+  width:100%;
+}
+
+.aiPanel{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.queue{
+  min-height:80px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* TOAST */
+
+#toast{
+  position:fixed;
+  z-index:500;
+  left:50%;
+  bottom:100px;
+
+  transform:translateX(-50%) translateY(20px);
+  opacity:0;
+
+  background:#202632ee;
+  border:1px solid var(--line);
+
+  padding:11px 15px;
+  border-radius:14px;
+
+  font-size:12px;
+
+  transition:.2s;
+  pointer-events:none;
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+  .deviceGrid{
+    grid-template-columns:1fr;
+  }
+
+  .appGrid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .quickGrid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .levelGrid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .decks,
+  .aiPanel{
+    grid-template-columns:1fr;
+  }
+
+  .mixerModes{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+/* LANDSCAPE */
+
+@media(orientation:landscape) and (max-height:600px){
+
+  .app{
+    padding-top:10px;
+  }
+
+  .navGrid{
+    bottom:4px;
+  }
+
+  .mixerOverlay{
+    padding-top:8px;
+  }
+
+  .decks{
+    grid-template-columns:1fr 1fr;
+  }
+
 }
 </style>
 </head>
@@ -870,1518 +688,1966 @@ input[type=file]{
 <div class="app">
 
 <header>
-    <div class="logo">
-        <div class="logoIcon">⌁</div>
-        <div>
-            <div class="logoText">Smart Remote</div>
-            <div class="logoSub">Samsung TV • Logitech Z906</div>
-        </div>
+
+  <div class="brand">
+
+    <div class="logoIcon">
+      📺🔊
     </div>
 
-    <div class="status">
-        <span class="statusDot" id="statusDot"></span>
-        <span id="statusText">Bereit</span>
+    <div>
+      <h1>Smart Remote</h1>
+      <small>Samsung TV • Logitech Z906</small>
     </div>
+
+  </div>
+
+  <div class="status">
+    <span class="dot"></span>
+    Bereit
+  </div>
+
 </header>
 
 
 <!-- HOME -->
+
 <section id="home" class="page active">
 
-    <h1>Fernbedienung</h1>
-    <p class="subtitle">Alle Geräte zentral steuern</p>
+  <div class="card">
+
+    <div class="title">
+      Geräte
+    </div>
 
     <div class="deviceGrid">
 
-        <button class="device" onclick="showPage('tv')">
-            <div class="deviceIcon">📺</div>
-            <div class="deviceName">Samsung TV</div>
-            <div class="deviceInfo">Fernbedienung</div>
-        </button>
+      <button
+        class="device"
+        onclick="showPage('tv')">
 
-        <button class="device" onclick="showPage('z906')">
-            <div class="deviceIcon">🔊</div>
-            <div class="deviceName">Logitech Z906</div>
-            <div class="deviceInfo">5.1 Surround</div>
-        </button>
+        <div class="icon">📺</div>
+
+        <strong>
+          Samsung TV
+        </strong>
+
+        <span>
+          Fernbedienung
+        </span>
+
+      </button>
+
+
+      <button
+        class="device"
+        onclick="showPage('z906')">
+
+        <div class="icon">🔊</div>
+
+        <strong>
+          Logitech Z906
+        </strong>
+
+        <span>
+          Audio & Surround
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- APPS -->
+
+  <div class="card">
+
+    <div class="title">
+      Apps & Entertainment
+    </div>
+
+    <div class="appGrid">
+
+      <button
+        class="appBtn"
+        onclick="tvApp('netflix')">
+
+        🔴
+
+        <b>
+          Netflix
+        </b>
+
+      </button>
+
+
+      <button
+        class="appBtn"
+        onclick="tvApp('youtube')">
+
+        ▶️
+
+        <b>
+          YouTube
+        </b>
+
+      </button>
+
+
+      <button
+        class="appBtn"
+        onclick="tvApp('prime')">
+
+        🔵
+
+        <b>
+          Prime Video
+        </b>
+
+      </button>
+
+
+      <button
+        class="appBtn"
+        onclick="tvApp('spotify')">
+
+        🟢
+
+        <b>
+          Spotify
+        </b>
+
+      </button>
+
+
+      <button
+        class="appBtn"
+        onclick="showPage('z906')">
+
+        🔊
+
+        <b>
+          Z906
+        </b>
+
+      </button>
+
+
+      <button
+        class="appBtn"
+        onclick="openMixer()">
+
+        🎧
+
+        <b>
+          AI DJ Mixer
+        </b>
+
+      </button>
 
     </div>
 
-    <div class="card" style="margin-top:15px">
-        <div class="cardTitle">Schnellzugriff</div>
+  </div>
 
-        <div class="quickGrid">
 
-            <button class="quick" onclick="sendCommand('z_power')">
-                <span>⏻</span>
-                <span>Z906 Power</span>
-            </button>
+  <!-- QUICK -->
 
-            <button class="quick" onclick="zVolume(1)">
-                <span>🔊</span>
-                <span>Lauter</span>
-            </button>
+  <div class="card">
 
-            <button class="quick" onclick="zVolume(-1)">
-                <span>🔉</span>
-                <span>Leiser</span>
-            </button>
-
-            <button class="quick" onclick="zMute()">
-                <span>🔇</span>
-                <span>Mute</span>
-            </button>
-
-            <button class="quick" onclick="zMode('3D')">
-                <span>🎬</span>
-                <span>3D</span>
-            </button>
-
-            <button class="quick" onclick="zInput('optical')">
-                <span>🔌</span>
-                <span>Optical</span>
-            </button>
-
-        </div>
+    <div class="title">
+      Schnellzugriff Z906
     </div>
 
-    <div class="card">
-        <div class="cardTitle">Aktueller Status</div>
+    <div class="quickGrid">
 
-        <div class="settingRow">
-            <div>
-                <div class="settingLabel">Lautstärke</div>
-                <div class="settingDesc">Logitech Z906</div>
-            </div>
-            <strong id="homeVolume">40</strong>
-        </div>
+      <button
+        class="quick"
+        onclick="zcmd('power')">
+        ⏻ Power
+      </button>
 
-        <div class="settingRow">
-            <div>
-                <div class="settingLabel">Bass</div>
-                <div class="settingDesc">Subwoofer</div>
-            </div>
-            <strong id="homeBass">0</strong>
-        </div>
+      <button
+        class="quick"
+        onclick="zcmd('vol_up')">
+        🔊 Lauter
+      </button>
 
-        <div class="settingRow">
-            <div>
-                <div class="settingLabel">Modus</div>
-                <div class="settingDesc">Surround</div>
-            </div>
-            <strong id="homeMode">3D</strong>
-        </div>
+      <button
+        class="quick"
+        onclick="zcmd('vol_down')">
+        🔉 Leiser
+      </button>
+
+      <button
+        class="quick"
+        onclick="zcmd('mute')">
+        🔇 Mute
+      </button>
+
+      <button
+        class="quick"
+        onclick="zcmd('3d')">
+        🌀 3D
+      </button>
+
+      <button
+        class="quick"
+        onclick="zcmd('optical')">
+        🔌 Optical
+      </button>
 
     </div>
+
+  </div>
+
+
+  <!-- STATUS -->
+
+  <div class="card">
+
+    <div class="title">
+      Status
+    </div>
+
+    <div class="sub">
+
+      Lautstärke
+      <b id="homeVol">40%</b>
+
+      · Bass
+      <b id="homeBass">0</b>
+
+      · Modus
+      <b id="homeMode">3D</b>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- TV -->
+
+<!-- SAMSUNG TV -->
+
 <section id="tv" class="page">
 
-    <div class="remoteTop">
-        <button class="back" onclick="showPage('home')">‹</button>
+  <div class="card">
 
-        <div class="remoteTitle">Samsung TV</div>
-
-        <div class="remoteActions">
-            <button class="circleBtn" onclick="sendCommand('tv_mute')">🔇</button>
-        </div>
+    <div class="title">
+      Samsung TV
     </div>
 
-    <div class="card tvRemote">
+    <div class="sub">
+      Smart Remote
+    </div>
 
-        <div class="tvHeader">
+  </div>
 
-            <div>
-                <div style="font-weight:800">Samsung</div>
-                <div style="font-size:11px;color:#888">
-                    Smart TV
-                </div>
-            </div>
 
-            <button class="power"
-                    onclick="sendCommand('tv_power')">
-                ⏻
-            </button>
+  <div class="remote">
 
-        </div>
+    <div class="remoteBody">
 
-        <div class="tvScreen">
-            <div class="tvScreenIcon">📺</div>
-            <div class="tvScreenText">Samsung TV</div>
-        </div>
+      <div class="remoteTop">
 
-        <div class="dpad">
+        <b>
+          Samsung
+        </b>
 
-            <button class="up"
-                    onclick="sendCommand('tv_up')">▲</button>
+        <span class="pill">
+          TV
+        </span>
 
-            <button class="left"
-                    onclick="sendCommand('tv_left')">◀</button>
+      </div>
 
-            <button class="ok"
-                    onclick="sendCommand('tv_ok')">OK</button>
 
-            <button class="right"
-                    onclick="sendCommand('tv_right')">▶</button>
+      <div class="remoteRows">
 
-            <button class="down"
-                    onclick="sendCommand('tv_down')">▼</button>
+        <button
+          class="rbtn power"
+          onclick="sendCommand('tv_power')">
+          ⏻
+        </button>
 
-        </div>
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_mute')">
+          🔇 MUTE
+        </button>
 
-        <div class="remoteGrid">
+      </div>
 
-            <button class="remoteButton"
-                    onclick="sendCommand('tv_home')">
-                HOME
-            </button>
 
-            <button class="remoteButton"
-                    onclick="sendCommand('tv_back')">
-                ZURÜCK
-            </button>
+      <!-- D-PAD -->
 
-            <button class="remoteButton"
-                    onclick="sendCommand('tv_menu')">
-                MENU
-            </button>
+      <div class="dpad">
 
-            <button class="remoteButton"
-                    onclick="sendCommand('tv_source')">
-                SOURCE
-            </button>
+        <div></div>
 
-            <button class="remoteButton"
-                    onclick="sendCommand('tv_vol_down')">
-                VOL −
-            </button>
+        <button onclick="sendCommand('tv_up')">
+          ▲
+        </button>
 
-            <button class="remoteButton"
-                    onclick="sendCommand('tv_vol_up')">
-                VOL +
-            </button>
+        <div></div>
 
-            <button class="remoteButton"
-                    onclick="sendCommand('tv_ch_down')">
-                CH −
-            </button>
+        <button onclick="sendCommand('tv_left')">
+          ◀
+        </button>
 
-            <button class="remoteButton"
-                    onclick="sendCommand('tv_ch_up')">
-                CH +
-            </button>
+        <button
+          class="ok"
+          onclick="sendCommand('tv_ok')">
+          OK
+        </button>
 
-            <button class="remoteButton"
-                    onclick="sendCommand('tv_guide')">
-                GUIDE
-            </button>
+        <button onclick="sendCommand('tv_right')">
+          ▶
+        </button>
 
-            <button class="remoteButton"
-                    onclick="sendCommand('tv_info')">
-                INFO
-            </button>
+        <div></div>
 
-            <button class="remoteButton red"
-                    onclick="sendCommand('tv_red')">
-                RED
-            </button>
+        <button onclick="sendCommand('tv_down')">
+          ▼
+        </button>
 
-            <button class="remoteButton blue"
-                    onclick="sendCommand('tv_blue')">
-                BLUE
-            </button>
+        <div></div>
 
-            <button class="remoteButton big"
-                    onclick="sendCommand('tv_apps')">
-                APPS
-            </button>
+      </div>
 
-            <button class="remoteButton big"
-                    onclick="sendCommand('tv_exit')">
-                EXIT
-            </button>
 
-        </div>
+      <div class="remoteRows">
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_home')">
+          ⌂ HOME
+        </button>
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_back')">
+          ↩ BACK
+        </button>
+
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_menu')">
+          ☰ MENU
+        </button>
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_source')">
+          ▣ SOURCE
+        </button>
+
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_vol_down')">
+          − VOL
+        </button>
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_vol_up')">
+          VOL +
+        </button>
+
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_ch_down')">
+          − CH
+        </button>
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_ch_up')">
+          CH +
+        </button>
+
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_guide')">
+          GUIDE
+        </button>
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_info')">
+          INFO
+        </button>
+
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_red')">
+          🔴
+        </button>
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_blue')">
+          🔵
+        </button>
+
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_apps')">
+          APPS
+        </button>
+
+        <button
+          class="rbtn"
+          onclick="sendCommand('tv_exit')">
+          EXIT
+        </button>
+
+
+        <button
+          class="rbtn full"
+          onclick="tvApp('netflix')">
+          🔴 Netflix
+        </button>
+
+        <button
+          class="rbtn full"
+          onclick="tvApp('youtube')">
+          ▶️ YouTube
+        </button>
+
+        <button
+          class="rbtn full"
+          onclick="tvApp('prime')">
+          🔵 Prime Video
+        </button>
+
+        <button
+          class="rbtn full"
+          onclick="tvApp('spotify')">
+          🟢 Spotify
+        </button>
+
+      </div>
 
     </div>
+
+  </div>
 
 </section>
+
 
 
 <!-- Z906 -->
+
 <section id="z906" class="page">
 
-    <div class="remoteTop">
+  <div class="card">
 
-        <button class="back" onclick="showPage('home')">
-            ‹
+    <div class="title">
+      Logitech Z906
+    </div>
+
+    <div class="sub">
+      Lautstärke, Bass, Surround & Eingänge
+    </div>
+
+  </div>
+
+
+  <!-- KNOBS -->
+
+  <div class="card">
+
+    <div class="knobRow">
+
+      <button
+        class="knob"
+        onclick="adjust('volume',5)">
+
+        <div class="dial">
+
+          <div
+            class="dialInner"
+            id="volDial">
+            40
+          </div>
+
+        </div>
+
+      </button>
+
+
+      <button
+        class="knob"
+        onclick="adjust('bass',1)">
+
+        <div class="dial">
+
+          <div
+            class="dialInner"
+            id="bassDial">
+            0
+          </div>
+
+        </div>
+
+      </button>
+
+    </div>
+
+
+    <div
+      class="sub"
+      style="
+      display:flex;
+      justify-content:space-around;
+      margin-top:8px">
+
+      <span>
+        VOLUME
+      </span>
+
+      <span>
+        BASS
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- PEGEL -->
+
+  <div class="card">
+
+    <div class="title">
+      Pegel
+    </div>
+
+    <div class="levelGrid">
+
+      <button onclick="adjust('center',1)">
+        CENTER +
+      </button>
+
+      <button onclick="adjust('center',-1)">
+        CENTER −
+      </button>
+
+      <button onclick="adjust('rear',1)">
+        REAR +
+      </button>
+
+      <button onclick="adjust('rear',-1)">
+        REAR −
+      </button>
+
+      <button onclick="adjust('sub',1)">
+        SUB +
+      </button>
+
+      <button onclick="adjust('sub',-1)">
+        SUB −
+      </button>
+
+      <button onclick="adjust('volume',5)">
+        VOL +
+      </button>
+
+      <button onclick="adjust('volume',-5)">
+        VOL −
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- SURROUND -->
+
+  <div class="card">
+
+    <div class="title">
+      Surround
+    </div>
+
+    <div class="quickGrid">
+
+      <button
+        class="quick"
+        onclick="setMode('2.1')">
+        2.1
+      </button>
+
+      <button
+        class="quick"
+        onclick="setMode('4.1')">
+        4.1
+      </button>
+
+      <button
+        class="quick"
+        onclick="setMode('3D')">
+        3D
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- INPUT -->
+
+  <div class="card">
+
+    <div class="title">
+      Eingang
+    </div>
+
+    <div class="quickGrid">
+
+      <button
+        class="quick"
+        onclick="setInput('optical')">
+        Optical
+      </button>
+
+      <button
+        class="quick"
+        onclick="setInput('coax')">
+        Coax
+      </button>
+
+      <button
+        class="quick"
+        onclick="setInput('aux')">
+        AUX
+      </button>
+
+      <button
+        class="quick"
+        onclick="setInput('6ch')">
+        6CH
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- SCENES -->
+
+  <div class="card">
+
+    <div class="title">
+      Szenen
+    </div>
+
+    <div class="quickGrid">
+
+      <button
+        class="quick"
+        onclick="scene('film')">
+        🎬 Film
+      </button>
+
+      <button
+        class="quick"
+        onclick="scene('music')">
+        🎵 Music
+      </button>
+
+      <button
+        class="quick"
+        onclick="scene('gaming')">
+        🎮 Gaming
+      </button>
+
+      <button
+        class="quick"
+        onclick="scene('night')">
+        🌙 Night
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- EQ -->
+
+  <div class="card">
+
+    <div class="title">
+      8-Band EQ
+    </div>
+
+    <div
+      id="eqGrid"
+      style="
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px">
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- SETTINGS -->
+
+<section id="settings" class="page">
+
+  <div class="card">
+
+    <div class="title">
+      XIAO Smart IR Mate
+    </div>
+
+
+    <div class="settingsRow">
+
+      <span>
+        XIAO IP-Adresse
+      </span>
+
+      <input
+        id="xiaoIP"
+        type="text"
+        placeholder="192.168.1.50"
+        onchange="
+        state.xiaoIP=this.value;
+        saveState()
+        ">
+
+    </div>
+
+
+    <div class="settingsRow">
+
+      <span>
+        Hintergrund-Blur
+      </span>
+
+      <input
+        id="blur"
+        type="range"
+        min="0"
+        max="20"
+        value="0"
+        onchange="
+        state.blur=this.value;
+        applyBlur();
+        saveState()
+        ">
+
+    </div>
+
+
+    <div class="settingsRow">
+
+      <span>
+        Hintergrund
+      </span>
+
+      <input
+        id="wallpaper"
+        type="file"
+        accept="image/*"
+        onchange="setWallpaper(this)">
+
+    </div>
+
+
+    <div class="settingsRow">
+
+      <span>
+        Alles zurücksetzen
+      </span>
+
+      <button
+        class="danger"
+        onclick="resetAll()">
+        Reset
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="title">
+      XIAO Verbindung
+    </div>
+
+    <div class="sub">
+
+      Die App-Oberfläche ist vorbereitet.
+      Die echte IR-Kommunikation wird in
+      <b>sendCommand()</b> aktiviert,
+      sobald die genaue XIAO-Firmware/API
+      feststeht.
+
+    </div>
+
+  </div>
+
+</section>
+
+</div>
+
+
+
+<!-- BOTTOM NAVIGATION -->
+
+<nav class="navGrid">
+
+  <button
+    class="nav active"
+    data-page="home"
+    onclick="showPage('home')">
+
+    <div class="navIcon">
+      🏠
+    </div>
+
+    Home
+
+  </button>
+
+
+  <button
+    class="nav"
+    data-page="tv"
+    onclick="showPage('tv')">
+
+    <div class="navIcon">
+      📺
+    </div>
+
+    TV
+
+  </button>
+
+
+  <button
+    class="nav"
+    data-page="z906"
+    onclick="showPage('z906')">
+
+    <div class="navIcon">
+      🔊
+    </div>
+
+    Z906
+
+  </button>
+
+
+  <button
+    class="nav"
+    data-page="mixer"
+    onclick="openMixer()">
+
+    <div class="navIcon">
+      🎵
+    </div>
+
+    Mixer
+
+  </button>
+
+
+  <button
+    class="nav"
+    data-page="settings"
+    onclick="showPage('settings')">
+
+    <div class="navIcon">
+      ⚙️
+    </div>
+
+    Einstellungen
+
+  </button>
+
+</nav>
+
+
+
+<!-- MIXER -->
+
+<div
+  id="mixerOverlay"
+  class="mixerOverlay">
+
+  <div class="mixer">
+
+
+    <!-- MIXER HEADER -->
+
+    <div class="mixerHead">
+
+      <div>
+
+        <h2>
+          🎧 Smart Remote AI DJ
+        </h2>
+
+        <span class="sub">
+          Lokaler DJ-Mixer
+        </span>
+
+      </div>
+
+
+      <div class="mixerActions">
+
+        <button
+          class="circleBtn"
+          onclick="minimizeMixer()">
+          −
         </button>
 
-        <div class="remoteTitle">
-            Logitech Z906
-        </div>
-
-        <div class="remoteActions">
-            <button class="circleBtn"
-                    onclick="zMute()">🔇</button>
-
-            <button class="circleBtn"
-                    onclick="sendCommand('z_power')">⏻</button>
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="z906Hero">
-
-            <div class="z906Logo">
-                Z906
-            </div>
-
-            <div class="z906State">
-                Logitech 5.1 Surround Sound
-            </div>
-
-        </div>
-
-
-        <!-- KNOBS -->
-
-        <div class="knobRow">
-
-            <div class="knobBox">
-
-                <div class="knob"
-                     id="volKnob"
-                     data-type="volume">
-
-                    <div class="knobPointer"></div>
-
-                    <div class="knobCenter"
-                         id="volValue">
-                        40
-                    </div>
-
-                </div>
-
-                <div class="knobLabel">
-                    LAUTSTÄRKE
-                </div>
-
-                <div class="knobValue">
-                    <span id="volText">40</span>
-                </div>
-
-                <div class="knobControls">
-
-                    <button class="zbtn"
-                            onclick="zVolume(-1)">
-                        −
-                    </button>
-
-                    <button class="zbtn main"
-                            onclick="sendCommand('z_mute')">
-                        MUTE
-                    </button>
-
-                    <button class="zbtn"
-                            onclick="zVolume(1)">
-                        +
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="knobBox">
-
-                <div class="knob"
-                     id="bassKnob"
-                     data-type="bass">
-
-                    <div class="knobPointer"></div>
-
-                    <div class="knobCenter"
-                         id="bassValue">
-                        0
-                    </div>
-
-                </div>
-
-                <div class="knobLabel">
-                    BASS / SUB
-                </div>
-
-                <div class="knobValue">
-                    <span id="bassText">0</span>
-                </div>
-
-                <div class="knobControls">
-
-                    <button class="zbtn"
-                            onclick="zBass(-1)">
-                        −
-                    </button>
-
-                    <button class="zbtn main"
-                            onclick="sendCommand('z_sub_reset')">
-                        RESET
-                    </button>
-
-                    <button class="zbtn"
-                            onclick="zBass(1)">
-                        +
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- LEVELS -->
-
-    <div class="card">
-
-        <div class="cardTitle">
-            Lautsprecher-Pegel
-        </div>
-
-        <div class="levelGrid">
-
-            <div class="level">
-
-                <div class="levelName">
-                    CENTER
-                </div>
-
-                <div class="levelValue"
-                     id="centerValue">
-                    0
-                </div>
-
-                <div class="levelBtns">
-
-                    <button onclick="zLevel('center',-1)">
-                        −
-                    </button>
-
-                    <button onclick="zLevel('center',1)">
-                        +
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="level">
-
-                <div class="levelName">
-                    REAR
-                </div>
-
-                <div class="levelValue"
-                     id="rearValue">
-                    0
-                </div>
-
-                <div class="levelBtns">
-
-                    <button onclick="zLevel('rear',-1)">
-                        −
-                    </button>
-
-                    <button onclick="zLevel('rear',1)">
-                        +
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="level">
-
-                <div class="levelName">
-                    SUB
-                </div>
-
-                <div class="levelValue"
-                     id="subValue">
-                    0
-                </div>
-
-                <div class="levelBtns">
-
-                    <button onclick="zLevel('sub',-1)">
-                        −
-                    </button>
-
-                    <button onclick="zLevel('sub',1)">
-                        +
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
+        <button
+          class="circleBtn"
+          onclick="closeMixer()">
+          →
+        </button>
+
+      </div>
 
     </div>
 
 
     <!-- MODES -->
 
-    <div class="card">
+    <div class="mixerModes">
 
-        <div class="cardTitle">
-            Surround-Modus
-        </div>
+      <button
+        class="mixerMode active"
+        data-dj="manual"
+        onclick="setDJMode('manual')">
+        Manual
+      </button>
 
-        <div class="modeGrid">
+      <button
+        class="mixerMode"
+        data-dj="ai"
+        onclick="setDJMode('ai')">
+        AI Assist
+      </button>
 
-            <button class="mode"
-                    data-mode="2.1"
-                    onclick="zMode('2.1')">
-                🔊<br><br>
-                Stereo 2.1
-            </button>
+      <button
+        class="mixerMode"
+        data-dj="auto"
+        onclick="setDJMode('auto')">
+        Auto DJ
+      </button>
 
-            <button class="mode"
-                    data-mode="4.1"
-                    onclick="zMode('4.1')">
-                🔊<br><br>
-                Stereo 4.1
-            </button>
-
-            <button class="mode active"
-                    data-mode="3D"
-                    onclick="zMode('3D')">
-                🎬<br><br>
-                Stereo 3D
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- INPUT -->
-
-    <div class="card">
-
-        <div class="cardTitle">
-            Eingang
-        </div>
-
-        <div class="inputGrid">
-
-            <button class="input active"
-                    data-input="optical"
-                    onclick="zInput('optical')">
-                OPTICAL
-            </button>
-
-            <button class="input"
-                    data-input="coax"
-                    onclick="zInput('coax')">
-                COAX
-            </button>
-
-            <button class="input"
-                    data-input="aux"
-                    onclick="zInput('aux')">
-                AUX / 3.5 mm
-            </button>
-
-            <button class="input"
-                    data-input="6ch"
-                    onclick="zInput('6ch')">
-                6CH DIRECT
-            </button>
-
-        </div>
+      <button
+        class="mixerMode"
+        data-dj="player"
+        onclick="setDJMode('player')">
+        Player
+      </button>
 
     </div>
 
 
-    <!-- SCENES -->
+    <!-- AI -->
 
     <div class="card">
 
-        <div class="cardTitle">
-            Szenen
-        </div>
+      <div class="title">
 
-        <div class="sceneGrid">
+        🤖 AI Einsatz
 
-            <button class="scene"
-                    onclick="scene('film')">
+        <span id="aiValue">
+          70%
+        </span>
 
-                <div class="sceneIcon">🎬</div>
-                <div class="sceneName">Film</div>
-                <div class="sceneDesc">
-                    3D • kräftiger Bass
-                </div>
-
-            </button>
+      </div>
 
 
-            <button class="scene"
-                    onclick="scene('music')">
-
-                <div class="sceneIcon">🎵</div>
-                <div class="sceneName">Musik</div>
-                <div class="sceneDesc">
-                    4.1 • ausgewogen
-                </div>
-
-            </button>
+      <input
+        id="aiLevel"
+        class="range"
+        type="range"
+        min="0"
+        max="100"
+        value="70"
+        oninput="updateAILevel(this.value)">
 
 
-            <button class="scene"
-                    onclick="scene('gaming')">
+      <div
+        class="toggleGrid"
+        style="margin-top:10px">
 
-                <div class="sceneIcon">🎮</div>
-                <div class="sceneName">Gaming</div>
-                <div class="sceneDesc">
-                    3D • mehr Rear
-                </div>
-
-            </button>
-
-
-            <button class="scene"
-                    onclick="scene('night')">
-
-                <div class="sceneIcon">🌙</div>
-                <div class="sceneName">Nacht</div>
-                <div class="sceneDesc">
-                    leise • weniger Bass
-                </div>
-
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- EQ -->
-
-    <div class="card">
-
-        <div class="cardTitle">
-            EQ-Preset
-        </div>
-
-        <p class="info">
-            Der Z906 besitzt keinen echten mehrbandigen EQ.
-            Diese Einstellungen werden deshalb als App-Preset
-            gespeichert und können später mit deinen IR-Befehlen
-            verknüpft werden.
-        </p>
-
-        <div class="eq" id="eqContainer"></div>
-
-        <button class="secondary"
-                onclick="resetEQ()">
-            EQ zurücksetzen
+        <button
+          class="toggle on"
+          onclick="toggleAI(this)">
+          BPM Auto
         </button>
 
+        <button
+          class="toggle on"
+          onclick="toggleAI(this)">
+          Key Auto
+        </button>
+
+        <button
+          class="toggle on"
+          onclick="toggleAI(this)">
+          EQ Auto
+        </button>
+
+        <button
+          class="toggle on"
+          onclick="toggleAI(this)">
+          Bass Swap
+        </button>
+
+        <button
+          class="toggle on"
+          onclick="toggleAI(this)">
+          Gain Auto
+        </button>
+
+        <button
+          class="toggle on"
+          onclick="toggleAI(this)">
+          FX Auto
+        </button>
+
+        <button
+          class="toggle on"
+          onclick="toggleAI(this)">
+          Loop Auto
+        </button>
+
+        <button
+          class="toggle on"
+          onclick="toggleAI(this)">
+          Energy Auto
+        </button>
+
+        <button
+          class="toggle on"
+          onclick="toggleAI(this)">
+          Next Song Auto
+        </button>
+
+        <button
+          class="toggle on"
+          onclick="toggleAI(this)">
+          Vocal Protect
+        </button>
+
+      </div>
+
     </div>
 
-</section>
+
+    <!-- DECKS -->
+
+    <div class="decks">
 
 
-<!-- SETTINGS -->
-<section id="settings" class="page">
+      <!-- DECK A -->
 
-    <h1>Einstellungen</h1>
-    <p class="subtitle">
-        Smart Remote konfigurieren
-    </p>
+      <div class="deck">
 
+        <div class="deckHead">
 
-    <div class="card">
+          <b>
+            DECK A
+          </b>
 
-        <div class="cardTitle">
-            XIAO Smart IR Mate
+          <span
+            id="bpmA"
+            class="pill">
+            128 BPM
+          </span>
+
         </div>
 
-        <div class="settingRow"
-             style="display:block">
 
-            <div class="settingLabel">
-                XIAO IP-Adresse
-            </div>
+        <div
+          id="fileA"
+          class="fileName">
+          Kein Track geladen
+        </div>
 
-            <div class="settingDesc"
-                 style="margin-bottom:10px">
-                IP-Adresse deines XIAO im Netzwerk
-            </div>
+
+        <div class="wave"></div>
+
+
+        <div class="deckButtons">
+
+          <button onclick="deckCue('A')">
+            CUE
+          </button>
+
+          <button onclick="deckPlay('A')">
+            ▶ PLAY
+          </button>
+
+          <button onclick="deckSync('A')">
+            SYNC
+          </button>
+
+        </div>
+
+
+        <div class="sliderRow">
+
+          <div class="sliderBox">
+
+            GAIN
 
             <input
-                id="xiaoIP"
-                class="textInput"
-                type="text"
-                placeholder="z.B. 192.168.1.50"
-                autocomplete="off"
-            >
+              class="range"
+              type="range"
+              min="-12"
+              max="12"
+              value="0"
+              oninput="deckGain('A',this.value)">
 
-        </div>
-
-        <button class="primary"
-                onclick="saveSettings()">
-            Einstellungen speichern
-        </button>
-
-    </div>
+          </div>
 
 
-    <div class="card">
+          <div class="sliderBox">
 
-        <div class="cardTitle">
-            Hintergrund
-        </div>
-
-        <div class="settingRow">
-
-            <div>
-                <div class="settingLabel">
-                    Hintergrund-Effekt
-                </div>
-
-                <div class="settingDesc">
-                    Unschärfe des Hintergrundbildes
-                </div>
-            </div>
-
-            <select class="select"
-                    id="blurSelect"
-                    onchange="setBlur(this.value)">
-
-                <option value="0">0 px</option>
-                <option value="4">4 px</option>
-                <option value="8">8 px</option>
-                <option value="12">12 px</option>
-                <option value="18">18 px</option>
-
-            </select>
-
-        </div>
-
-
-        <div style="margin-top:14px">
-
-            <label class="uploadLabel"
-                   for="wallpaperInput">
-
-                🖼️ Eigenes Hintergrundbild auswählen
-
-            </label>
+            FILTER
 
             <input
-                id="wallpaperInput"
-                type="file"
-                accept="image/*"
-                onchange="setWallpaper(event)"
-            >
+              class="range"
+              type="range"
+              min="-100"
+              max="100"
+              value="0"
+              oninput="deckFilter('A',this.value)">
+
+          </div>
 
         </div>
 
-        <button class="secondary"
-                onclick="backgroundDefault()">
-            Standard-Hintergrund
+
+        <button
+          class="rbtn wide"
+          style="margin-top:9px"
+          onclick="loadDeckFile('A')">
+
+          📁 Musik für Deck A
+
         </button>
+
+      </div>
+
+
+
+      <!-- DECK B -->
+
+      <div class="deck">
+
+        <div class="deckHead">
+
+          <b>
+            DECK B
+          </b>
+
+          <span
+            id="bpmB"
+            class="pill">
+            128 BPM
+          </span>
+
+        </div>
+
+
+        <div
+          id="fileB"
+          class="fileName">
+          Kein Track geladen
+        </div>
+
+
+        <div class="wave"></div>
+
+
+        <div class="deckButtons">
+
+          <button onclick="deckCue('B')">
+            CUE
+          </button>
+
+          <button onclick="deckPlay('B')">
+            ▶ PLAY
+          </button>
+
+          <button onclick="deckSync('B')">
+            SYNC
+          </button>
+
+        </div>
+
+
+        <div class="sliderRow">
+
+          <div class="sliderBox">
+
+            GAIN
+
+            <input
+              class="range"
+              type="range"
+              min="-12"
+              max="12"
+              value="0"
+              oninput="deckGain('B',this.value)">
+
+          </div>
+
+
+          <div class="sliderBox">
+
+            FILTER
+
+            <input
+              class="range"
+              type="range"
+              min="-100"
+              max="100"
+              value="0"
+              oninput="deckFilter('B',this.value)">
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="rbtn wide"
+          style="margin-top:9px"
+          onclick="loadDeckFile('B')">
+
+          📁 Musik für Deck B
+
+        </button>
+
+      </div>
 
     </div>
 
+
+    <!-- CROSSFADER -->
+
+    <div class="card cross">
+
+      <div class="title">
+        Crossfader
+      </div>
+
+      <input
+        id="crossfader"
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+        oninput="crossfade(this.value)">
+
+      <div
+        style="
+        display:flex;
+        justify-content:space-between"
+        class="sub">
+
+        <span>A</span>
+
+        <span>
+          50 / 50
+        </span>
+
+        <span>B</span>
+
+      </div>
+
+    </div>
+
+
+    <!-- AI PANELS -->
+
+    <div class="aiPanel">
+
+
+      <div class="card">
+
+        <div class="title">
+          🧠 AI Transition Planner
+        </div>
+
+        <div
+          class="sub"
+          id="transitionText">
+
+          Bereit für Analyse.
+
+        </div>
+
+        <button
+          class="rbtn wide"
+          style="margin-top:10px"
+          onclick="aiPlanTransition()">
+
+          ✨ Übergang planen
+
+        </button>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="title">
+          🔥 AI Remix Setup
+        </div>
+
+        <div
+          class="sub"
+          id="remixText">
+
+          Bass, EQ, FX und Energie
+          werden vorbereitet.
+
+        </div>
+
+        <button
+          class="rbtn wide"
+          style="margin-top:10px"
+          onclick="aiRemixSetup()">
+
+          🤖 Remix vorbereiten
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- QUEUE -->
 
     <div class="card">
 
-        <div class="cardTitle">
-            App-Daten
-        </div>
+      <div class="title">
+        Warteschlange
+      </div>
 
-        <div class="settingRow">
+      <div
+        id="queue"
+        class="queue">
 
-            <div>
-                <div class="settingLabel">
-                    Speicherung
-                </div>
+        Noch keine Titel.
 
-                <div class="settingDesc">
-                    Einstellungen werden automatisch
-                    auf diesem Gerät gespeichert.
-                </div>
-            </div>
+      </div>
 
-            <span style="font-size:22px">
-                💾
-            </span>
+      <button
+        class="rbtn wide"
+        style="margin-top:10px"
+        onclick="addQueueFile()">
 
-        </div>
+        ＋ Titel zur Queue
 
-        <button class="danger"
-                onclick="resetAll()">
-            Alle Einstellungen zurücksetzen
-        </button>
+      </button>
 
     </div>
 
 
-    <div class="card">
-
-        <div class="cardTitle">
-            Über die App
-        </div>
-
-        <div class="info">
-            Smart Remote<br>
-            Samsung TV + Logitech Z906<br>
-            XIAO Smart IR Mate vorbereitet
-            <br><br>
-            Version 1.0
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- NAVIGATION -->
-<nav class="bottomNav">
-
-    <div class="navGrid">
-
-        <button class="nav active"
-                data-page="home"
-                onclick="showPage('home')">
-
-            <div class="navIcon">⌂</div>
-            Home
-
-        </button>
-
-
-        <button class="nav"
-                data-page="tv"
-                onclick="showPage('tv')">
-
-            <div class="navIcon">📺</div>
-            TV
-
-        </button>
-
-
-        <button class="nav"
-                data-page="z906"
-                onclick="showPage('z906')">
-
-            <div class="navIcon">🔊</div>
-            Z906
-
-        </button>
-
-
-        <button class="nav"
-                data-page="settings"
-                onclick="showPage('settings')">
-
-            <div class="navIcon">⚙️</div>
-            Einstellungen
-
-        </button>
-
-    </div>
-
-</nav>
+  </div>
 
 </div>
 
-<div class="toast" id="toast"></div>
+
+
+<!-- TOAST -->
+
+<div id="toast"></div>
+
 
 
 <script>
 
-/* =========================================================
-   SMART REMOTE
-   ========================================================= */
+/* =========================
+   APP STATE
+========================= */
 
-const STORAGE_KEY = "smartRemoteV1";
-
+const STORAGE_KEY = "smartRemoteV2";
 
 let state = {
 
-    page: "home",
+  page:"home",
 
-    volume: 40,
+  volume:40,
 
-    bass: 0,
+  bass:0,
 
-    center: 0,
+  center:0,
 
-    rear: 0,
+  rear:0,
 
-    sub: 0,
+  sub:0,
 
-    mode: "3D",
+  mode:"3D",
 
-    input: "optical",
+  input:"optical",
 
-    xiaoIP: "",
+  xiaoIP:"",
 
-    blur: 0,
+  blur:0,
 
-    wallpaper: "",
+  wallpaper:"",
 
-    eq: [0,0,0,0,0,0,0,0]
+  eq:[0,0,0,0,0,0,0,0]
 
 };
 
 
-const defaultState = JSON.parse(
-    JSON.stringify(state)
-);
+/* =========================
+   MIXER STATE
+========================= */
+
+const mixer = {
+
+  A:{
+    audio:null,
+    file:null,
+    playing:false,
+    gain:0,
+    filter:0
+  },
+
+  B:{
+    audio:null,
+    file:null,
+    playing:false,
+    gain:0,
+    filter:0
+  },
+
+  ai:70,
+
+  mode:"manual"
+
+};
 
 
-/* =========================================================
-   LOAD / SAVE
-   ========================================================= */
+/* =========================
+   HELPER
+========================= */
 
-function loadState(){
+function $(id){
 
-    try{
-
-        const saved =
-            localStorage.getItem(STORAGE_KEY);
-
-        if(saved){
-
-            const parsed =
-                JSON.parse(saved);
-
-            state = {
-                ...state,
-                ...parsed
-            };
-
-        }
-
-    }catch(e){
-
-        console.log(e);
-
-    }
+  return document.getElementById(id);
 
 }
 
+
+/* =========================
+   TOAST
+========================= */
+
+function toast(message){
+
+  const t = $("toast");
+
+  t.textContent = message;
+
+  t.style.opacity = "1";
+
+  t.style.transform =
+    "translateX(-50%) translateY(0)";
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(()=>{
+
+    t.style.opacity = "0";
+
+    t.style.transform =
+      "translateX(-50%) translateY(20px)";
+
+  },1700);
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
 
 function saveState(){
 
-    try{
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(state)
-        );
-
-    }catch(e){
-
-        console.log(e);
-
-    }
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(state)
+  );
 
 }
 
 
-/* =========================================================
-   PAGE NAVIGATION
-   ========================================================= */
+/* =========================
+   LOAD
+========================= */
+
+function loadState(){
+
+  try{
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(STORAGE_KEY)
+      );
+
+    if(saved){
+
+      state = {
+        ...state,
+        ...saved
+      };
+
+    }
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+/* =========================
+   PAGE
+========================= */
 
 function showPage(page){
 
-    document
-        .querySelectorAll(".page")
-        .forEach(el=>{
-            el.classList.remove("active");
-        });
+  closeMixer();
 
-    const target =
-        document.getElementById(page);
+  document
+    .querySelectorAll(".page")
+    .forEach(p =>
+      p.classList.remove("active")
+    );
 
-    if(target){
-        target.classList.add("active");
-    }
+  const target = $(page);
+
+  if(target){
+
+    target.classList.add("active");
+
+  }
+
+  state.page = page;
+
+  saveState();
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(nav=>{
+
+      nav.classList.toggle(
+        "active",
+        nav.dataset.page === page
+      );
+
+    });
+
+  updateUI();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
 
 
-    document
-        .querySelectorAll(".nav")
-        .forEach(el=>{
-            el.classList.toggle(
-                "active",
-                el.dataset.page === page
-            );
-        });
+/* =========================
+   MIXER OPEN
+========================= */
 
+function openMixer(){
 
-    state.page = page;
+  $("mixerOverlay")
+    .classList.add("active");
 
-    saveState();
+  document.body.style.overflow =
+    "hidden";
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
+  document
+    .querySelectorAll(".nav")
+    .forEach(nav=>{
+
+      nav.classList.toggle(
+        "active",
+        nav.dataset.page === "mixer"
+      );
+
     });
 
 }
 
 
-/* =========================================================
-   TOAST
-   ========================================================= */
+/* =========================
+   MIXER CLOSE
+========================= */
 
-let toastTimer;
+function closeMixer(){
 
+  const mixerElement =
+    $("mixerOverlay");
 
-function toast(message){
+  if(!mixerElement){
+    return;
+  }
 
-    const el =
-        document.getElementById("toast");
+  mixerElement.classList.remove("active");
 
-    el.textContent = message;
+  document.body.style.overflow = "";
 
-    el.classList.add("show");
+  document
+    .querySelectorAll(".nav")
+    .forEach(nav=>{
 
-    clearTimeout(toastTimer);
+      nav.classList.toggle(
+        "active",
+        nav.dataset.page === state.page
+      );
 
-    toastTimer =
-        setTimeout(()=>{
-            el.classList.remove("show");
-        },1800);
-
-}
-
-
-/* =========================================================
-   XIAO COMMAND
-   ========================================================= */
-
-/*
-   HIER WIRD SPÄTER DIE ECHTE IR-ÜBERTRAGUNG EINGEBAUT.
-
-   Beispiel:
-
-   fetch(`http://${state.xiaoIP}/api/ir`, {
-       method:"POST",
-       headers:{
-           "Content-Type":"application/json"
-       },
-       body:JSON.stringify({
-           command:command
-       })
-   });
-
-   Die genaue URL hängt von deiner Firmware auf dem
-   XIAO Smart IR Mate ab.
-*/
-
-
-async function sendCommand(command){
-
-    console.log("IR COMMAND:",command);
-
-
-    /*
-       Wenn noch keine IP eingetragen ist,
-       zeigen wir nur eine Info.
-    */
-
-    if(!state.xiaoIP){
-
-        toast("IR-Befehl: " + command);
-
-        return;
-    }
-
-
-    /*
-       VORBEREITUNG FÜR XIAO
-
-       Sobald dein XIAO-API feststeht,
-       wird dieser Bereich angepasst.
-    */
-
-    try{
-
-        /*
-        const response = await fetch(
-            `http://${state.xiaoIP}/api/ir`,
-            {
-                method:"POST",
-
-                headers:{
-                    "Content-Type":"application/json"
-                },
-
-                body:JSON.stringify({
-                    command:command
-                })
-            }
-        );
-
-        if(!response.ok){
-            throw new Error("XIAO Fehler");
-        }
-        */
-
-        toast("Gesendet: " + command);
-
-    }catch(error){
-
-        console.error(error);
-
-        toast("XIAO nicht erreichbar");
-
-    }
+    });
 
 }
 
 
-/* =========================================================
-   Z906 VOLUME
-   ========================================================= */
+/* =========================
+   MINIMIZE
+========================= */
 
-function zVolume(direction){
+function minimizeMixer(){
 
-    const old =
-        state.volume;
+  closeMixer();
 
-    state.volume += direction;
+  toast("Mixer minimiert");
+
+}
+
+
+/* =========================
+   IR COMMAND
+========================= */
+
+function sendCommand(command){
+
+  console.log(
+    "IR COMMAND:",
+    command
+  );
+
+  toast(
+    "IR: " + command
+  );
+
+
+  /*
+    HIER WIRD SPÄTER DAS XIAO
+    ANGESCHLOSSEN.
+
+    Beispiel:
+
+    fetch(
+      `http://${state.xiaoIP}/api/ir`,
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+          "application/json"
+        },
+
+        body:JSON.stringify({
+          command:command
+        })
+      }
+    )
+    .then(...)
+  */
+
+}
+
+
+/* =========================
+   Z906
+========================= */
+
+function zcmd(command){
+
+  sendCommand(
+    "z906_" + command
+  );
+
+}
+
+
+/* =========================
+   SAMSUNG APP
+========================= */
+
+function tvApp(app){
+
+  sendCommand(
+    "tv_" + app
+  );
+
+  toast(
+    "Samsung TV: " + app
+  );
+
+}
+
+
+/* =========================
+   Z906 ADJUST
+========================= */
+
+function adjust(key,delta){
+
+  if(key === "volume"){
 
     state.volume =
-        Math.max(
-            0,
-            Math.min(
-                100,
-                state.volume
-            )
-        );
+      Math.max(
+        0,
+        Math.min(
+          100,
+          state.volume + delta
+        )
+      );
 
+  }else{
 
-    if(state.volume !== old){
+    state[key] =
+      Math.max(
+        -10,
+        Math.min(
+          10,
+          state[key] + delta
+        )
+      );
 
-        sendCommand(
-            direction > 0
-            ? "z_volume_up"
-            : "z_volume_down"
-        );
+  }
 
-    }
+  sendCommand(
+    "z906_" +
+    key +
+    "_" +
+    (delta > 0 ? "up" : "down")
+  );
 
-    updateUI();
+  saveState();
 
-}
-
-
-/* =========================================================
-   Z906 BASS
-   ========================================================= */
-
-function zBass(direction){
-
-    const old =
-        state.bass;
-
-    state.bass += direction;
-
-    state.bass =
-        Math.max(
-            -10,
-            Math.min(
-                10,
-                state.bass
-            )
-        );
-
-
-    if(state.bass !== old){
-
-        sendCommand(
-            direction > 0
-            ? "z_bass_up"
-            : "z_bass_down"
-        );
-
-    }
-
-    updateUI();
+  updateUI();
 
 }
 
 
-/* =========================================================
-   Z906 LEVELS
-   ========================================================= */
+/* =========================
+   SURROUND
+========================= */
 
-function zLevel(type,direction){
+function setMode(mode){
 
-    let value;
+  state.mode = mode;
 
-    if(type === "center"){
-        state.center += direction;
-        value = state.center;
-    }
+  sendCommand(
+    "z906_mode_" + mode
+  );
 
-    if(type === "rear"){
-        state.rear += direction;
-        value = state.rear;
-    }
+  saveState();
 
-    if(type === "sub"){
-        state.sub += direction;
-        value = state.sub;
-    }
+  updateUI();
 
-
-    value =
-        Math.max(
-            -10,
-            Math.min(
-                10,
-                value
-            )
-        );
-
-
-    if(type === "center")
-        state.center = value;
-
-    if(type === "rear")
-        state.rear = value;
-
-    if(type === "sub")
-        state.sub = value;
-
-
-    sendCommand(
-        "z_" +
-        type +
-        "_" +
-        (direction > 0 ? "up" : "down")
-    );
-
-
-    updateUI();
+  toast(
+    "Surround: " + mode
+  );
 
 }
 
 
-/* =========================================================
-   MUTE
-   ========================================================= */
+/* =========================
+   INPUT
+========================= */
 
-function zMute(){
+function setInput(input){
 
-    sendCommand("z_mute");
+  state.input = input;
 
-    toast("Z906 Mute");
+  sendCommand(
+    "z906_input_" + input
+  );
 
-}
+  saveState();
 
-
-/* =========================================================
-   Z906 MODE
-   ========================================================= */
-
-function zMode(mode){
-
-    state.mode = mode;
-
-    sendCommand(
-        "z_mode_" +
-        mode.replace(".","_")
-    );
-
-    updateUI();
+  toast(
+    "Input: " + input
+  );
 
 }
 
 
-/* =========================================================
-   Z906 INPUT
-   ========================================================= */
-
-function zInput(input){
-
-    state.input = input;
-
-    sendCommand(
-        "z_input_" + input
-    );
-
-    updateUI();
-
-}
-
-
-/* =========================================================
-   SCENES
-   ========================================================= */
+/* =========================
+   SCENE
+========================= */
 
 function scene(name){
 
-    if(name === "film"){
+  sendCommand(
+    "z906_scene_" + name
+  );
 
-        state.mode = "3D";
-
-        state.bass = 5;
-
-        state.rear = 2;
-
-        sendCommand("z_mode_3D");
-
-        sendCommand("z_bass_scene_film");
-
-    }
-
-
-    if(name === "music"){
-
-        state.mode = "4.1";
-
-        state.bass = 2;
-
-        state.rear = 0;
-
-        sendCommand("z_mode_4_1");
-
-        sendCommand("z_bass_scene_music");
-
-    }
-
-
-    if(name === "gaming"){
-
-        state.mode = "3D";
-
-        state.bass = 4;
-
-        state.rear = 3;
-
-        sendCommand("z_mode_3D");
-
-        sendCommand("z_scene_gaming");
-
-    }
-
-
-    if(name === "night"){
-
-        state.mode = "2.1";
-
-        state.bass = -4;
-
-        state.rear = -2;
-
-        sendCommand("z_mode_2_1");
-
-        sendCommand("z_scene_night");
-
-    }
-
-
-    updateUI();
-
-    toast(
-        "Szene aktiviert: " +
-        name
-    );
+  toast(
+    "Szene: " + name
+  );
 
 }
 
 
-/* =========================================================
-   ROTARY KNOBS
-   ========================================================= */
+/* =========================
+   UI UPDATE
+========================= */
 
-function knobSetup(element,type){
+function updateUI(){
 
-    let active = false;
+  if($("homeVol"))
+    $("homeVol").textContent =
+      state.volume + "%";
 
-    let lastAngle = null;
+  if($("homeBass"))
+    $("homeBass").textContent =
+      state.bass;
 
+  if($("homeMode"))
+    $("homeMode").textContent =
+      state.mode;
 
-    function angleFromPointer(e){
+  if($("volDial"))
+    $("volDial").textContent =
+      state.volume;
 
-        const rect =
-            element.getBoundingClientRect();
-
-        const x =
-            e.clientX -
-            (rect.left + rect.width/2);
-
-        const y =
-            e.clientY -
-            (rect.top + rect.height/2);
-
-        return Math.atan2(y,x)
-            * 180 / Math.PI;
-
-    }
-
-
-    function pointerDown(e){
-
-        active = true;
-
-        lastAngle =
-            angleFromPointer(e);
-
-        element.setPointerCapture(
-            e.pointerId
-        );
-
-    }
-
-
-    function pointerMove(e){
-
-        if(!active)
-            return;
-
-        const angle =
-            angleFromPointer(e);
-
-        let delta =
-            angle - lastAngle;
-
-
-        if(delta > 180)
-            delta -= 360;
-
-        if(delta < -180)
-            delta += 360;
-
-
-        /*
-           Jeder ca. 15° Drehung = 1 Schritt.
-        */
-
-        if(Math.abs(delta) >= 12){
-
-            const direction =
-                delta > 0 ? 1 : -1;
-
-
-            if(type === "volume")
-                zVolume(direction);
-
-            if(type === "bass")
-                zBass(direction);
-
-
-            lastAngle = angle;
-
-        }
-
-    }
-
-
-    function pointerUp(){
-
-        active = false;
-
-        lastAngle = null;
-
-    }
-
-
-    element.addEventListener(
-        "pointerdown",
-        pointerDown
-    );
-
-    element.addEventListener(
-        "pointermove",
-        pointerMove
-    );
-
-    element.addEventListener(
-        "pointerup",
-        pointerUp
-    );
-
-    element.addEventListener(
-        "pointercancel",
-        pointerUp
-    );
+  if($("bassDial"))
+    $("bassDial").textContent =
+      state.bass;
 
 }
 
 
-knobSetup(
-    document.getElementById("volKnob"),
-    "volume"
-);
+/* =========================
+   BLUR
+========================= */
 
-knobSetup(
-    document.getElementById("bassKnob"),
-    "bass"
-);
+function applyBlur(){
 
+  if($("blur")){
 
-/* =========================================================
-   KNOB VISUAL
-   ========================================================= */
+    $("blur").value =
+      state.blur;
 
-function setKnobVisual(id,value,min,max){
-
-    const knob =
-        document.getElementById(id);
-
-    if(!knob)
-        return;
-
-
-    const pointer =
-        knob.querySelector(
-            ".knobPointer"
-        );
-
-
-    const percent =
-        (value-min) /
-        (max-min);
-
-
-    const angle =
-        -135 +
-        percent * 270;
-
-
-    pointer.style.transform =
-        `translateX(-50%) rotate(${angle}deg)`;
+  }
 
 }
 
 
-/* =========================================================
+/* =========================
+   WALLPAPER
+========================= */
+
+function setWallpaper(input){
+
+  const file =
+    input.files?.[0];
+
+  if(!file){
+    return;
+  }
+
+  const reader =
+    new FileReader();
+
+  reader.onload = ()=>{
+
+    state.wallpaper =
+      reader.result;
+
+    document.body.style.backgroundImage =
+      `linear-gradient(#080a0f88,#080a0fcc),url("${reader.result}")`;
+
+    document.body.style.backgroundSize =
+      "cover";
+
+    document.body.style.backgroundAttachment =
+      "fixed";
+
+    saveState();
+
+  };
+
+  reader.readAsDataURL(file);
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetAll(){
+
+  if(
+    !confirm(
+      "Wirklich alles zurücksetzen?"
+    )
+  ){
+    return;
+  }
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+  location.reload();
+
+}
+
+
+/* =========================
    EQ
-   ========================================================= */
+========================= */
 
-const eqBands = [
+function setupEQ(){
+
+  const bands = [
     "60",
     "120",
     "250",
@@ -2390,504 +2656,565 @@ const eqBands = [
     "2k",
     "4k",
     "8k"
-];
+  ];
 
+  $("eqGrid").innerHTML =
+    bands.map((band,index)=>{
 
-function buildEQ(){
+      return `
 
-    const container =
-        document.getElementById(
-            "eqContainer"
-        );
+        <button
+          class="eqBtn"
+          onclick="eqChange(${index})">
 
-    container.innerHTML = "";
+          ${band}
 
+          <br>
 
-    eqBands.forEach(
-        (band,index)=>{
+          <small>
+            ${state.eq[index] || 0} dB
+          </small>
 
-            const row =
-                document.createElement(
-                    "div"
-                );
+        </button>
 
-            row.className =
-                "eqRow";
+      `;
 
-
-            row.innerHTML = `
-
-                <label>${band} Hz</label>
-
-                <input
-                    type="range"
-                    min="-10"
-                    max="10"
-                    value="${state.eq[index]}"
-                    data-eq="${index}"
-                >
-
-                <output>
-                    ${state.eq[index]} dB
-                </output>
-
-            `;
-
-
-            const slider =
-                row.querySelector(
-                    "input"
-                );
-
-            const output =
-                row.querySelector(
-                    "output"
-                );
-
-
-            slider.addEventListener(
-                "input",
-                ()=>{
-
-                    state.eq[index] =
-                        Number(
-                            slider.value
-                        );
-
-                    output.textContent =
-                        state.eq[index] +
-                        " dB";
-
-                    saveState();
-
-                }
-            );
-
-
-            container.appendChild(row);
-
-        }
-    );
+    }).join("");
 
 }
 
 
-function resetEQ(){
+function eqChange(index){
 
-    state.eq =
-        [0,0,0,0,0,0,0,0];
+  let value =
+    state.eq[index] || 0;
 
-    buildEQ();
+  value += 2;
 
-    saveState();
+  if(value > 6){
+    value = -6;
+  }
 
-    toast("EQ zurückgesetzt");
+  state.eq[index] =
+    value;
+
+  setupEQ();
+
+  saveState();
+
+  sendCommand(
+    "z906_eq_" +
+    index +
+    "_" +
+    value
+  );
 
 }
 
 
-/* =========================================================
-   BACKGROUND
-   ========================================================= */
+/* =========================
+   AI MODE
+========================= */
 
-function setWallpaper(event){
+function setDJMode(mode){
+
+  mixer.mode =
+    mode;
+
+  document
+    .querySelectorAll(".mixerMode")
+    .forEach(button=>{
+
+      button.classList.toggle(
+        "active",
+        button.dataset.dj === mode
+      );
+
+    });
+
+  toast(
+    "DJ-Modus: " + mode
+  );
+
+}
+
+
+/* =========================
+   AI LEVEL
+========================= */
+
+function updateAILevel(value){
+
+  mixer.ai =
+    Number(value);
+
+  $("aiValue").textContent =
+    value + "%";
+
+}
+
+
+/* =========================
+   AI TOGGLE
+========================= */
+
+function toggleAI(button){
+
+  button.classList.toggle(
+    "on"
+  );
+
+}
+
+
+/* =========================
+   LOAD DECK
+========================= */
+
+function loadDeckFile(deck){
+
+  const input =
+    document.createElement("input");
+
+  input.type = "file";
+
+  input.accept = "audio/*";
+
+
+  input.onchange = ()=>{
 
     const file =
-        event.target.files[0];
+      input.files?.[0];
 
-    if(!file)
-        return;
-
-
-    const reader =
-        new FileReader();
+    if(!file){
+      return;
+    }
 
 
-    reader.onload = function(e){
+    const d =
+      mixer[deck];
 
-        state.wallpaper =
-            e.target.result;
 
-        applyBackground();
+    if(d.audio){
 
-        saveState();
+      d.audio.pause();
+
+    }
+
+
+    const url =
+      URL.createObjectURL(file);
+
+
+    d.file =
+      file;
+
+    d.audio =
+      new Audio(url);
+
+    d.audio.preload =
+      "metadata";
+
+
+    $(deck === "A"
+      ? "fileA"
+      : "fileB"
+    ).textContent =
+      file.name;
+
+
+    toast(
+      "Deck " +
+      deck +
+      " geladen"
+    );
+
+  };
+
+
+  input.click();
+
+}
+
+
+/* =========================
+   DECK PLAY
+========================= */
+
+function deckPlay(deck){
+
+  const d =
+    mixer[deck];
+
+
+  if(!d.audio){
+
+    loadDeckFile(deck);
+
+    return;
+
+  }
+
+
+  if(d.playing){
+
+    d.audio.pause();
+
+    d.playing =
+      false;
+
+    toast(
+      "Deck " +
+      deck +
+      " Pause"
+    );
+
+  }else{
+
+    d.audio.play()
+      .catch(()=>{
 
         toast(
-            "Hintergrund gespeichert"
+          "Audio konnte nicht gestartet werden"
         );
 
-    };
+      });
 
+    d.playing =
+      true;
 
-    reader.readAsDataURL(file);
+    toast(
+      "Deck " +
+      deck +
+      " spielt"
+    );
+
+  }
 
 }
 
 
-function applyBackground(){
+/* =========================
+   CUE
+========================= */
 
-    if(state.wallpaper){
+function deckCue(deck){
 
-        document.body.style
-            .setProperty(
-                "--wallpaper",
-                `url("${state.wallpaper}")`
-            );
+  const d =
+    mixer[deck];
 
-    }else{
 
-        document.body.style
-            .setProperty(
-                "--wallpaper",
-                "linear-gradient(135deg,#08090d,#111827)"
-            );
+  if(!d.audio){
 
+    toast(
+      "Erst Track laden"
+    );
+
+    return;
+
+  }
+
+
+  d.audio.currentTime =
+    0;
+
+  toast(
+    "CUE Deck " +
+    deck
+  );
+
+}
+
+
+/* =========================
+   SYNC
+========================= */
+
+function deckSync(deck){
+
+  $("bpm" + deck)
+    .textContent =
+    "128 BPM";
+
+  toast(
+    "Deck " +
+    deck +
+    " synchronisiert"
+  );
+
+}
+
+
+/* =========================
+   GAIN
+========================= */
+
+function deckGain(deck,value){
+
+  mixer[deck].gain =
+    Number(value);
+
+}
+
+
+/* =========================
+   FILTER
+========================= */
+
+function deckFilter(deck,value){
+
+  mixer[deck].filter =
+    Number(value);
+
+}
+
+
+/* =========================
+   CROSSFADER
+========================= */
+
+function crossfade(value){
+
+  const a =
+    mixer.A.audio;
+
+  const b =
+    mixer.B.audio;
+
+
+  const position =
+    Number(value) / 100;
+
+
+  if(a){
+
+    a.volume =
+      Math.cos(
+        position *
+        Math.PI /
+        2
+      );
+
+  }
+
+
+  if(b){
+
+    b.volume =
+      Math.sin(
+        position *
+        Math.PI /
+        2
+      );
+
+  }
+
+}
+
+
+/* =========================
+   AI TRANSITION
+========================= */
+
+function aiPlanTransition(){
+
+  $("transitionText").textContent =
+    "AI empfiehlt: 8 Takte vorbereiten → Bass absenken → EQ tauschen → Crossfader über 8 Takte öffnen.";
+
+  toast(
+    "Übergang geplant"
+  );
+
+}
+
+
+/* =========================
+   AI REMIX
+========================= */
+
+function aiRemixSetup(){
+
+  $("remixText").textContent =
+    "AI Remix: BPM Lock, Gain, EQ, Bass Swap und Vocal Protect vorbereitet.";
+
+  toast(
+    "Remix vorbereitet"
+  );
+
+}
+
+
+/* =========================
+   QUEUE
+========================= */
+
+function addQueueFile(){
+
+  const input =
+    document.createElement("input");
+
+  input.type = "file";
+
+  input.accept = "audio/*";
+
+  input.multiple = true;
+
+
+  input.onchange = ()=>{
+
+    const files =
+      [...input.files];
+
+
+    if(!files.length){
+      return;
     }
 
-    document.body.style
-        .setProperty(
-            "--blur",
-            state.blur + "px"
-        );
 
-}
+    $("queue").innerHTML =
+      files.map(file=>{
 
+        return `
 
-function setBlur(value){
+          <div
+            style="
+            padding:8px 0;
+            border-bottom:
+            1px solid #ffffff12">
 
-    state.blur =
-        Number(value);
+            🎵 ${file.name}
 
-    applyBackground();
+          </div>
 
-    saveState();
+        `;
 
-}
+      }).join("");
 
-
-function backgroundDefault(){
-
-    state.wallpaper = "";
-
-    applyBackground();
-
-    saveState();
 
     toast(
-        "Standard-Hintergrund aktiviert"
+      files.length +
+      " Titel hinzugefügt"
     );
+
+  };
+
+
+  input.click();
 
 }
 
 
-/* =========================================================
-   SETTINGS
-   ========================================================= */
+/* =========================
+   KEYBOARD
+========================= */
 
-function saveSettings(){
+document.addEventListener(
+  "keydown",
+  event=>{
 
-    const input =
-        document.getElementById(
-            "xiaoIP"
-        );
-
-    state.xiaoIP =
-        input.value.trim();
-
-    saveState();
-
-    updateStatus();
-
-    toast(
-        "Einstellungen gespeichert"
-    );
-
-}
-
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
-function updateStatus(){
-
-    const dot =
-        document.getElementById(
-            "statusDot"
-        );
-
-    const text =
-        document.getElementById(
-            "statusText"
-        );
-
-
-    if(state.xiaoIP){
-
-        dot.style.background =
-            "#22c55e";
-
-        dot.style.boxShadow =
-            "0 0 10px #22c55e";
-
-        text.textContent =
-            "XIAO bereit";
-
-    }else{
-
-        dot.style.background =
-            "#f59e0b";
-
-        dot.style.boxShadow =
-            "0 0 10px #f59e0b";
-
-        text.textContent =
-            "Bereit";
-
+    if(
+      state.page !== "z906"
+    ){
+      return;
     }
 
-}
 
-
-/* =========================================================
-   UPDATE UI
-   ========================================================= */
-
-function updateUI(){
-
-    document.getElementById(
-        "volValue"
-    ).textContent =
-        state.volume;
-
-    document.getElementById(
-        "volText"
-    ).textContent =
-        state.volume;
-
-
-    document.getElementById(
-        "bassValue"
-    ).textContent =
-        state.bass;
-
-    document.getElementById(
-        "bassText"
-    ).textContent =
-        state.bass;
-
-
-    document.getElementById(
-        "centerValue"
-    ).textContent =
-        state.center;
-
-
-    document.getElementById(
-        "rearValue"
-    ).textContent =
-        state.rear;
-
-
-    document.getElementById(
-        "subValue"
-    ).textContent =
-        state.sub;
-
-
-    document.getElementById(
-        "homeVolume"
-    ).textContent =
-        state.volume;
-
-
-    document.getElementById(
-        "homeBass"
-    ).textContent =
-        state.bass;
-
-
-    document.getElementById(
-        "homeMode"
-    ).textContent =
-        state.mode;
-
-
-    setKnobVisual(
-        "volKnob",
-        state.volume,
-        0,
-        100
-    );
-
-
-    setKnobVisual(
-        "bassKnob",
-        state.bass,
-        -10,
-        10
-    );
-
-
-    document
-        .querySelectorAll(".mode")
-        .forEach(button=>{
-
-            button.classList.toggle(
-                "active",
-                button.dataset.mode ===
-                state.mode
-            );
-
-        });
-
-
-    document
-        .querySelectorAll(".input")
-        .forEach(button=>{
-
-            button.classList.toggle(
-                "active",
-                button.dataset.input ===
-                state.input
-            );
-
-        });
-
-
-    saveState();
-
-}
-
-
-/* =========================================================
-   LOAD SETTINGS INTO UI
-   ========================================================= */
-
-function loadSettingsUI(){
-
-    document.getElementById(
-        "xiaoIP"
-    ).value =
-        state.xiaoIP || "";
-
-
-    document.getElementById(
-        "blurSelect"
-    ).value =
-        String(state.blur);
-
-
-    applyBackground();
-
-    updateStatus();
-
-}
-
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-function resetAll(){
-
-    const answer =
-        confirm(
-            "Wirklich alle Einstellungen zurücksetzen?"
-        );
-
-    if(!answer)
-        return;
-
-
-    state =
-        JSON.parse(
-            JSON.stringify(defaultState)
-        );
-
-
-    saveState();
-
-    loadSettingsUI();
-
-    buildEQ();
-
-    updateUI();
-
-    showPage("home");
-
-    toast(
-        "Alle Einstellungen zurückgesetzt"
-    );
-
-}
-
-
-/* =========================================================
-   INIT
-   ========================================================= */
-
-loadState();
-
-buildEQ();
-
-loadSettingsUI();
-
-updateUI();
-
-showPage(
-    state.page || "home"
+    if(
+      event.key === "ArrowUp"
+    ){
+      adjust(
+        "volume",
+        2
+      );
+    }
+
+
+    if(
+      event.key === "ArrowDown"
+    ){
+      adjust(
+        "volume",
+        -2
+      );
+    }
+
+
+    if(
+      event.key === "ArrowLeft"
+    ){
+      adjust(
+        "bass",
+        -1
+      );
+    }
+
+
+    if(
+      event.key === "ArrowRight"
+    ){
+      adjust(
+        "bass",
+        1
+      );
+    }
+
+  }
 );
 
 
-/* =========================================================
-   OPTIONAL KEYBOARD SUPPORT
-   ========================================================= */
+/* =========================
+   START
+========================= */
 
-document.addEventListener(
-    "keydown",
-    function(e){
-
-        if(state.page !== "z906")
-            return;
+loadState();
 
 
-        if(e.key === "ArrowUp"){
+if($("xiaoIP")){
 
-            e.preventDefault();
+  $("xiaoIP").value =
+    state.xiaoIP;
 
-            zVolume(1);
-
-        }
-
-
-        if(e.key === "ArrowDown"){
-
-            e.preventDefault();
-
-            zVolume(-1);
-
-        }
+}
 
 
-        if(e.key === "ArrowRight"){
+if($("blur")){
 
-            e.preventDefault();
+  $("blur").value =
+    state.blur;
 
-            zBass(1);
-
-        }
+}
 
 
-        if(e.key === "ArrowLeft"){
+if(state.wallpaper){
 
-            e.preventDefault();
+  document.body.style.backgroundImage =
+    `linear-gradient(#080a0f88,#080a0fcc),url("${state.wallpaper}")`;
 
-            zBass(-1);
+  document.body.style.backgroundSize =
+    "cover";
 
-        }
+  document.body.style.backgroundAttachment =
+    "fixed";
 
-    }
+}
+
+
+setupEQ();
+
+updateUI();
+
+
+/*
+   Seite anzeigen.
+*/
+
+const initialPage =
+  state.page || "home";
+
+showPage(
+  document.getElementById(initialPage)
+    ? initialPage
+    : "home"
 );
 
 </script>
