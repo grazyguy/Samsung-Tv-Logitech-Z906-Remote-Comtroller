@@ -1,0 +1,15 @@
+{
+  "name": "smart-remote-ai-dj",
+  "version": "7.0.0",
+  "description": "Smart Remote mit Samsung TV, Logitech Z906 und Apple Music AI DJ",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "openai": "^5.0.0"
+  }
+}
