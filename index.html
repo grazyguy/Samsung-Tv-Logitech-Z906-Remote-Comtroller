@@ -10,585 +10,579 @@
 
 <style>
 :root{
-  --bg:#080a0f;
-  --card:rgba(255,255,255,.075);
-  --line:rgba(255,255,255,.12);
-  --muted:#9ca3af;
-  --accent:#4da3ff;
-  --danger:#ff526b;
+--bg:#080a0f;
+--card:rgba(255,255,255,.075);
+--line:rgba(255,255,255,.12);
+--muted:#9ca3af;
+--accent:#4da3ff;
+--danger:#ff526b
 }
 
 *{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent
 }
 
 body{
-  margin:0;
-  background:var(--bg);
-  color:#fff;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+margin:0;
+background:var(--bg);
+color:#fff;
+font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif
 }
 
 button,input,select{
-  font:inherit;
+font:inherit
 }
 
 button{
-  border:0;
-  color:#fff;
-  cursor:pointer;
+border:0;
+color:#fff
 }
 
 .bg{
-  position:fixed;
-  inset:-30px;
-  z-index:0;
-  background:
-    radial-gradient(circle at 15% 10%,rgba(77,163,255,.22),transparent 35%),
-    radial-gradient(circle at 85% 80%,rgba(120,70,255,.18),transparent 35%),
-    linear-gradient(145deg,#080a0f,#101521);
-  transform:scale(1.04);
+position:fixed;
+inset:-30px;
+z-index:0;
+background:
+radial-gradient(circle at 15% 10%,rgba(77,163,255,.22),transparent 35%),
+radial-gradient(circle at 85% 80%,rgba(120,70,255,.18),transparent 35%),
+linear-gradient(145deg,#080a0f,#101521);
+filter:blur(var(--blur,0px));
+transform:scale(1.04)
 }
 
 .app{
-  position:relative;
-  z-index:1;
-  max-width:900px;
-  margin:auto;
-  min-height:100vh;
-  padding:
-    calc(18px + env(safe-area-inset-top))
-    16px
-    calc(105px + env(safe-area-inset-bottom));
+position:relative;
+z-index:1;
+max-width:900px;
+margin:auto;
+min-height:100vh;
+padding:calc(18px + env(safe-area-inset-top)) 16px calc(105px + env(safe-area-inset-bottom))
 }
 
 .head{
-  display:flex;
-  gap:13px;
-  align-items:center;
-  margin-bottom:18px;
+display:flex;
+gap:13px;
+align-items:center;
+margin-bottom:18px
 }
 
 .logo{
-  width:55px;
-  height:55px;
-  border-radius:17px;
-  display:grid;
-  place-items:center;
-  font-size:26px;
-  background:#151d2b;
-  border:1px solid var(--line);
+width:55px;
+height:55px;
+border-radius:17px;
+display:grid;
+place-items:center;
+font-size:26px;
+background:#151d2b;
+border:1px solid var(--line)
 }
 
 h1{
-  font-size:23px;
-  margin:0;
+font-size:23px;
+margin:0
 }
 
 h2{
-  font-size:17px;
-  margin:0 0 13px;
+font-size:17px;
+margin:0 0 13px
 }
 
 .muted,.small{
-  color:var(--muted);
-  font-size:13px;
+color:var(--muted);
+font-size:13px
 }
 
 .page{
-  display:none;
+display:none
 }
 
 .page.active{
-  display:block;
+display:block
 }
 
 .card,.deck{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:16px;
-  margin-bottom:14px;
-  backdrop-filter:blur(18px);
+background:var(--card);
+border:1px solid var(--line);
+border-radius:20px;
+padding:16px;
+margin-bottom:14px;
+backdrop-filter:blur(18px)
 }
 
-.grid2,
-.deckgrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+.grid2,.deckgrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px
 }
 
 .grid3{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px
 }
 
-.btn,
-.appbtn,
-.mode,
-.decksrc button,
-.mini{
-  background:rgba(255,255,255,.08);
-  border:1px solid var(--line);
-  border-radius:13px;
-  min-height:46px;
-  padding:10px;
+.btn,.appbtn,.mode,.decksrc button,.mini{
+background:rgba(255,255,255,.08);
+border:1px solid var(--line);
+border-radius:13px;
+min-height:46px;
+padding:10px
 }
 
-.btn.primary,
-.mode.active{
-  background:var(--accent);
+.btn.primary,.mode.active{
+background:var(--accent)
 }
 
 .btn.danger{
-  background:rgba(255,82,107,.15);
-  color:#ff8795;
+background:rgba(255,82,107,.15);
+color:#ff8795
 }
 
 .appbtn{
-  min-height:82px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:5px;
+min-height:82px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:5px
 }
 
 .appbtn b{
-  font-size:26px;
+font-size:26px
 }
 
 .remote{
-  max-width:420px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:9px;
+max-width:420px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:9px
 }
 
 .remote button{
-  min-height:52px;
-  background:rgba(255,255,255,.08);
-  border:1px solid var(--line);
-  border-radius:14px;
+min-height:52px;
+background:rgba(255,255,255,.08);
+border:1px solid var(--line);
+border-radius:14px
 }
 
 .wide{
-  grid-column:span 3;
+grid-column:span 3
 }
 
 .power{
-  color:#ff7182!important;
+color:#ff7182!important
 }
 
 .ok{
-  background:rgba(77,163,255,.18)!important;
+background:rgba(77,163,255,.18)!important
 }
 
 .knobs{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px
 }
 
 .knob{
-  width:105px;
-  height:105px;
-  border-radius:50%;
-  margin:auto;
-  background:conic-gradient(
-    var(--accent) 0 110deg,
-    #273044 110deg
-  );
-  padding:6px;
+width:105px;
+height:105px;
+border-radius:50%;
+margin:auto;
+background:conic-gradient(var(--accent) 0 110deg,#273044 110deg);
+padding:6px
 }
 
 .dial{
-  width:100%;
-  height:100%;
-  border-radius:50%;
-  background:#111722;
-  display:grid;
-  place-items:center;
-  font-size:21px;
-  font-weight:700;
+width:100%;
+height:100%;
+border-radius:50%;
+background:#111722;
+display:grid;
+place-items:center;
+font-size:21px;
+font-weight:700
 }
 
 .range{
-  width:100%;
-  accent-color:var(--accent);
+width:100%;
+accent-color:var(--accent)
 }
 
-.select,
-input[type=text],
-.search{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:#151b26;
-  color:#fff;
+.select,input[type=text],.search{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:1px solid var(--line);
+background:#151b26;
+color:#fff
 }
 
 .nav{
-  position:fixed;
-  z-index:100;
-  left:10px;
-  right:10px;
-  bottom:calc(8px + env(safe-area-inset-bottom));
-  max-width:880px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:5px;
-  padding:7px;
-  border-radius:21px;
-  background:rgba(15,18,26,.9);
-  border:1px solid var(--line);
-  backdrop-filter:blur(22px);
+position:fixed;
+z-index:100;
+left:10px;
+right:10px;
+bottom:calc(8px + env(safe-area-inset-bottom));
+max-width:880px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:5px;
+padding:7px;
+border-radius:21px;
+background:rgba(15,18,26,.9);
+border:1px solid var(--line);
+backdrop-filter:blur(22px)
 }
 
 .nav button{
-  min-height:52px;
-  border-radius:15px;
-  background:transparent;
-  color:#8f98a8;
-  font-size:10px;
+min-height:52px;
+border-radius:15px;
+background:transparent;
+color:#8f98a8;
+font-size:10px
 }
 
 .nav button.active{
-  background:rgba(77,163,255,.17);
-  color:#fff;
+background:rgba(77,163,255,.17);
+color:#fff
 }
 
 .deckhead{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+display:flex;
+justify-content:space-between
 }
 
 .track{
-  min-height:52px;
-  margin:8px 0;
-  border-radius:12px;
-  background:#090c12;
-  padding:12px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+min-height:52px;
+margin:8px 0;
+border-radius:12px;
+background:#090c12;
+padding:12px;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
 }
 
 .decksrc{
-  display:grid!important;
-  grid-template-columns:repeat(3,1fr);
-  gap:6px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:6px
 }
 
 .decksrc button{
-  min-width:0;
-  font-size:11px;
-  padding:9px 4px;
-  border-radius:9px;
-  background:rgba(255,255,255,.08);
+min-width:0;
+font-size:11px;
+padding:9px 4px;
+border-radius:9px;
+background:#252b38
 }
 
 .decksrc button.active{
-  border-color:var(--accent);
-  background:rgba(77,163,255,.16);
+background:#2563eb;
+color:#fff
 }
 
-.filelabel,
-.applebtn{
-  display:block;
-  width:100%;
-  text-align:center;
-  padding:12px;
-  border-radius:11px;
-  margin-top:8px;
-  background:rgba(77,163,255,.13);
-  color:#9bd1ff;
+.filelabel,.applebtn{
+display:block;
+width:100%;
+text-align:center;
+padding:12px;
+border-radius:11px;
+margin-top:8px;
+background:rgba(77,163,255,.13);
+color:#9bd1ff
 }
 
 .filelabel input{
-  display:none;
+display:none
 }
 
 .deckbuttons{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:6px;
-  margin-top:8px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:6px;
+margin-top:8px
 }
 
-.deckbuttons button{
-  background:rgba(255,255,255,.08);
-  border:1px solid var(--line);
-  border-radius:10px;
-  min-height:38px;
+.deckbuttons button,.mini{
+background:rgba(255,255,255,.08);
+border:1px solid var(--line);
+border-radius:10px;
+min-height:38px
 }
 
 .row{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:9px 0;
-  border-bottom:1px solid rgba(255,255,255,.07);
+display:flex;
+align-items:center;
+gap:8px;
+padding:9px 0;
+border-bottom:1px solid rgba(255,255,255,.07)
 }
 
 .row:last-child{
-  border-bottom:0;
+border-bottom:0
 }
 
 .name{
-  flex:1;
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  font-size:13px;
-}
-
-.modal{
-  display:none;
-  position:fixed;
-  z-index:500;
-  inset:0;
-  background:rgba(0,0,0,.68);
-  align-items:flex-end;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.panel{
-  width:100%;
-  max-width:720px;
-  max-height:88vh;
-  overflow:auto;
-  margin:auto auto 0;
-  background:#11151e;
-  border-radius:24px 24px 0 0;
-  padding:17px;
-  padding-bottom:calc(25px + env(safe-area-inset-bottom));
-  border:1px solid var(--line);
-}
-
-.paneltop{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.song{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:9px;
-  border-radius:12px;
-  background:rgba(255,255,255,.045);
-  margin:5px 0;
-}
-
-.art{
-  width:48px;
-  height:48px;
-  border-radius:8px;
-  object-fit:cover;
-  background:#242a36;
-}
-
-.songinfo{
-  flex:1;
-  min-width:0;
-}
-
-.songtitle,
-.songartist{
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.songtitle{
-  font-size:13px;
-  font-weight:650;
-}
-
-.songartist{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:3px;
-}
-
-.status{
-  font-size:12px;
-  color:#9bd1ff;
-  padding:9px;
-  border-radius:10px;
-  background:rgba(77,163,255,.08);
-  margin:10px 0;
+flex:1;
+min-width:0;
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+font-size:13px
 }
 
 .youtubeBox{
-  margin-top:8px;
+margin-top:10px;
+padding:12px;
+border-radius:15px;
+background:rgba(239,68,68,.08);
+border:1px solid rgba(239,68,68,.25)
 }
 
-.youtubeBox .search{
-  height:45px;
-  margin-bottom:7px;
+.youtubeTitle{
+font-weight:700;
+margin-bottom:8px
+}
+
+.youtubeInput{
+width:100%;
+height:44px;
+padding:10px 12px;
+border-radius:11px;
+border:1px solid var(--line);
+background:#151b26;
+color:#fff;
+margin-bottom:8px
 }
 
 .youtubeBtn{
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  background:#ef4444;
-  color:#fff;
-  font-weight:700;
+width:100%;
+padding:12px;
+border-radius:11px;
+background:#ef4444;
+color:white;
+font-weight:700
 }
 
 .ytplayer{
-  width:100%;
-  aspect-ratio:16/9;
-  margin-top:8px;
-  border-radius:12px;
-  overflow:hidden;
-  background:#111;
+width:100%;
+aspect-ratio:16/9;
+margin-top:10px;
+border-radius:12px;
+overflow:hidden;
+background:#050505
 }
 
 .ytplayer iframe{
-  width:100%;
-  height:100%;
-  border:0;
+width:100%;
+height:100%;
+border:0
+}
+
+.youtubeHint{
+font-size:11px;
+color:#9ca3af;
+margin-top:7px
+}
+
+.modal{
+display:none;
+position:fixed;
+z-index:500;
+inset:0;
+background:rgba(0,0,0,.68);
+align-items:flex-end
+}
+
+.modal.show{
+display:flex
+}
+
+.panel{
+width:100%;
+max-width:720px;
+max-height:88vh;
+overflow:auto;
+margin:auto auto 0;
+background:#11151e;
+border-radius:24px 24px 0 0;
+padding:17px;
+padding-bottom:calc(25px + env(safe-area-inset-bottom));
+border:1px solid var(--line)
+}
+
+.paneltop{
+display:flex;
+justify-content:space-between;
+align-items:center
+}
+
+.song{
+display:flex;
+align-items:center;
+gap:10px;
+padding:9px;
+border-radius:12px;
+background:rgba(255,255,255,.045);
+margin:5px 0
+}
+
+.art{
+width:48px;
+height:48px;
+border-radius:8px;
+object-fit:cover;
+background:#242a36
+}
+
+.songinfo{
+flex:1;
+min-width:0
+}
+
+.songtitle,.songartist{
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
+}
+
+.songtitle{
+font-size:13px;
+font-weight:650
+}
+
+.songartist{
+font-size:11px;
+color:var(--muted);
+margin-top:3px
+}
+
+.status{
+font-size:12px;
+color:#9bd1ff;
+padding:9px;
+border-radius:10px;
+background:rgba(77,163,255,.08);
+margin:10px 0
 }
 
 #toast{
-  position:fixed;
-  z-index:700;
-  left:50%;
-  bottom:95px;
-  transform:translate(-50%,20px);
-  opacity:0;
-  padding:11px 15px;
-  border-radius:13px;
-  background:#171c27;
-  border:1px solid var(--line);
-  transition:.2s;
-  font-size:13px;
-  pointer-events:none;
+position:fixed;
+z-index:700;
+left:50%;
+bottom:95px;
+transform:translate(-50%,20px);
+opacity:0;
+padding:11px 15px;
+border-radius:13px;
+background:#171c27;
+border:1px solid var(--line);
+transition:.2s;
+font-size:13px;
+pointer-events:none
 }
 
 .showtoast{
-  opacity:1!important;
-  transform:translate(-50%,0)!important;
+opacity:1!important;
+transform:translate(-50%,0)!important
 }
 
 @media(max-width:700px){
-  .deckgrid{
-    grid-template-columns:1fr;
-  }
+.deckgrid{
+grid-template-columns:1fr
+}
 
-  .knobs{
-    grid-template-columns:1fr 1fr;
-  }
+.knobs{
+grid-template-columns:1fr 1fr
+}
 
-  .grid3{
-    grid-template-columns:1fr 1fr;
-  }
+.grid3{
+grid-template-columns:1fr 1fr
+}
+}
+
+@media(min-width:701px){
+.deckgrid{
+grid-template-columns:1fr 1fr
+}
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg"></div>
+<div class="bg" id="bg"></div>
 
 <main class="app">
 
 <header class="head">
-  <div class="logo">📺🔊</div>
-
-  <div>
-    <h1>Smart Remote</h1>
-    <div class="muted">
-      Samsung TV • Logitech Z906
-    </div>
-  </div>
+<div class="logo">📺🔊</div>
+<div>
+<h1>Smart Remote</h1>
+<div class="muted">Samsung TV • Logitech Z906</div>
+</div>
 </header>
 
 
 <!-- HOME -->
 <section id="home" class="page active">
 
-  <div class="card">
-    <h2>Meine Geräte</h2>
+<div class="card">
+<h2>Meine Geräte</h2>
 
-    <div class="grid2">
+<div class="grid2">
 
-      <div class="card" style="margin:0">
-        📺<br>
-        <b>Samsung TV</b>
-        <div class="small">● Bereit</div>
-      </div>
+<div class="card" style="margin:0">
+📺<br>
+<b>Samsung TV</b>
+<div class="small">● Bereit</div>
+</div>
 
-      <div class="card" style="margin:0">
-        🔊<br>
-        <b>Logitech Z906</b>
-        <div class="small">● Bereit</div>
-      </div>
+<div class="card" style="margin:0">
+🔊<br>
+<b>Logitech Z906</b>
+<div class="small">● Bereit</div>
+</div>
 
-    </div>
-  </div>
+</div>
+</div>
 
 
-  <div class="card">
+<div class="card">
+<h2>Apps & Entertainment</h2>
 
-    <h2>Apps & Entertainment</h2>
+<div class="grid3">
 
-    <div class="grid3">
+<button class="appbtn" onclick="tvApp('Netflix')">
+<b>🎬</b>Netflix
+</button>
 
-      <button class="appbtn"
-              onclick="tvApp('Netflix')">
-        <b>🎬</b>
-        Netflix
-      </button>
+<button class="appbtn" onclick="tvApp('YouTube')">
+<b>▶️</b>YouTube
+</button>
 
-      <button class="appbtn"
-              onclick="tvApp('YouTube')">
-        <b>▶️</b>
-        YouTube
-      </button>
+<button class="appbtn" onclick="tvApp('Prime Video')">
+<b>📦</b>Prime
+</button>
 
-      <button class="appbtn"
-              onclick="tvApp('Prime Video')">
-        <b>📦</b>
-        Prime
-      </button>
+<button class="appbtn" onclick="tvApp('Spotify')">
+<b>🎵</b>Spotify
+</button>
 
-      <button class="appbtn"
-              onclick="tvApp('Spotify')">
-        <b>🎵</b>
-        Spotify
-      </button>
+<button class="appbtn" onclick="showPage('z906')">
+<b>🔊</b>Z906
+</button>
 
-      <button class="appbtn"
-              onclick="showPage('z906')">
-        <b>🔊</b>
-        Z906
-      </button>
+<button class="appbtn" onclick="showPage('mixer')">
+<b>🎧</b>AI DJ
+</button>
 
-      <button class="appbtn"
-              onclick="showPage('mixer')">
-        <b>🎧</b>
-        AI DJ
-      </button>
-
-    </div>
-  </div>
+</div>
+</div>
 
 </section>
 
@@ -596,70 +590,33 @@ input[type=text],
 <!-- TV -->
 <section id="tv" class="page">
 
-  <div class="card">
+<div class="card">
+<h2>📺 Samsung TV</h2>
 
-    <h2>📺 Samsung TV</h2>
+<div class="remote">
 
-    <div class="remote">
+<button class="power" onclick="sendCommand('TV_POWER')">⏻</button>
+<button onclick="sendCommand('TV_SOURCE')">SOURCE</button>
+<button onclick="sendCommand('TV_MENU')">MENU</button>
 
-      <button class="power"
-              onclick="sendCommand('TV_POWER')">
-        ⏻
-      </button>
+<button onclick="sendCommand('TV_UP')">▲</button>
+<button class="ok" onclick="sendCommand('TV_OK')">OK</button>
+<button onclick="sendCommand('TV_DOWN')">▼</button>
 
-      <button onclick="sendCommand('TV_SOURCE')">
-        SOURCE
-      </button>
+<button onclick="sendCommand('TV_LEFT')">◀</button>
+<button onclick="sendCommand('TV_HOME')">⌂</button>
+<button onclick="sendCommand('TV_RIGHT')">▶</button>
 
-      <button onclick="sendCommand('TV_MENU')">
-        MENU
-      </button>
+<button onclick="sendCommand('TV_VOL_DOWN')">VOL −</button>
+<button onclick="sendCommand('TV_MUTE')">🔇</button>
+<button onclick="sendCommand('TV_VOL_UP')">VOL +</button>
 
-      <button onclick="sendCommand('TV_UP')">
-        ▲
-      </button>
+<button class="wide" onclick="sendCommand('TV_BACK')">
+↩ Zurück
+</button>
 
-      <button class="ok"
-              onclick="sendCommand('TV_OK')">
-        OK
-      </button>
-
-      <button onclick="sendCommand('TV_DOWN')">
-        ▼
-      </button>
-
-      <button onclick="sendCommand('TV_LEFT')">
-        ◀
-      </button>
-
-      <button onclick="sendCommand('TV_HOME')">
-        ⌂
-      </button>
-
-      <button onclick="sendCommand('TV_RIGHT')">
-        ▶
-      </button>
-
-      <button onclick="sendCommand('TV_VOL_DOWN')">
-        VOL −
-      </button>
-
-      <button onclick="sendCommand('TV_MUTE')">
-        🔇
-      </button>
-
-      <button onclick="sendCommand('TV_VOL_UP')">
-        VOL +
-      </button>
-
-      <button class="wide"
-              onclick="sendCommand('TV_BACK')">
-        ↩ Zurück
-      </button>
-
-    </div>
-
-  </div>
+</div>
+</div>
 
 </section>
 
@@ -667,129 +624,80 @@ input[type=text],
 <!-- Z906 -->
 <section id="z906" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h2>🔊 Logitech Z906</h2>
+<h2>🔊 Logitech Z906</h2>
 
-    <div class="knobs">
+<div class="knobs">
 
-      <div>
-        <button class="knob"
-                onclick="changeZ('volume',5)">
-          <div class="dial"
-               id="volumeDial">
-            40
-          </div>
-        </button>
-        <div class="small"
-             style="text-align:center">
-          Volume
-        </div>
-      </div>
+<div>
+<button class="knob" onclick="changeZ('volume',5)">
+<div class="dial" id="volumeDial">40</div>
+</button>
+<div class="small" style="text-align:center">Volume</div>
+</div>
 
-      <div>
-        <button class="knob"
-                onclick="changeZ('bass',1)">
-          <div class="dial"
-               id="bassDial">
-            0
-          </div>
-        </button>
-        <div class="small"
-             style="text-align:center">
-          Bass
-        </div>
-      </div>
+<div>
+<button class="knob" onclick="changeZ('bass',1)">
+<div class="dial" id="bassDial">0</div>
+</button>
+<div class="small" style="text-align:center">Bass</div>
+</div>
 
-      <div>
-        <button class="knob"
-                onclick="changeZ('center',1)">
-          <div class="dial"
-               id="centerDial">
-            0
-          </div>
-        </button>
-        <div class="small"
-             style="text-align:center">
-          Center
-        </div>
-      </div>
+<div>
+<button class="knob" onclick="changeZ('center',1)">
+<div class="dial" id="centerDial">0</div>
+</button>
+<div class="small" style="text-align:center">Center</div>
+</div>
 
-      <div>
-        <button class="knob"
-                onclick="changeZ('rear',1)">
-          <div class="dial"
-               id="rearDial">
-            0
-          </div>
-        </button>
-        <div class="small"
-             style="text-align:center">
-          Rear
-        </div>
-      </div>
+<div>
+<button class="knob" onclick="changeZ('rear',1)">
+<div class="dial" id="rearDial">0</div>
+</button>
+<div class="small" style="text-align:center">Rear</div>
+</div>
 
-    </div>
-
-  </div>
+</div>
+</div>
 
 
-  <div class="card">
+<div class="card">
 
-    <h2>Eingang</h2>
+<h2>Eingang</h2>
 
-    <select id="input"
-            class="select"
-            onchange="setInput(this.value)">
+<select id="input" class="select" onchange="setInput(this.value)">
+<option value="optical">Optical</option>
+<option value="coax">Coax</option>
+<option value="6ch">6 Channel</option>
+<option value="stereo">Stereo</option>
+</select>
 
-      <option value="optical">
-        Optical
-      </option>
-
-      <option value="coax">
-        Coax
-      </option>
-
-      <option value="6ch">
-        6 Channel
-      </option>
-
-      <option value="stereo">
-        Stereo
-      </option>
-
-    </select>
-
-  </div>
+</div>
 
 
-  <div class="card">
+<div class="card">
 
-    <div class="grid2">
+<div class="grid2">
 
-      <button class="btn"
-              onclick="z906Volume(-5)">
-        🔉 Leiser
-      </button>
+<button class="btn" onclick="z906Volume(-5)">
+🔉 Leiser
+</button>
 
-      <button class="btn"
-              onclick="z906Volume(5)">
-        🔊 Lauter
-      </button>
+<button class="btn" onclick="z906Volume(5)">
+🔊 Lauter
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('Z906_MUTE')">
-        🔇 Mute
-      </button>
+<button class="btn" onclick="sendCommand('Z906_MUTE')">
+🔇 Mute
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('Z906_3D')">
-        🌐 3D
-      </button>
+<button class="btn" onclick="sendCommand('Z906_3D')">
+🌐 3D
+</button>
 
-    </div>
-
-  </div>
+</div>
+</div>
 
 </section>
 
@@ -797,424 +705,407 @@ input[type=text],
 <!-- MIXER -->
 <section id="mixer" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h2>🎧 Smart AI DJ</h2>
+<h2>🎧 Smart AI DJ</h2>
 
-    <div class="grid3">
+<div class="grid3">
 
-      <button class="mode active"
-              data-mode="manual"
-              onclick="mode('manual')">
-        Manual
-      </button>
+<button class="mode active" data-mode="manual" onclick="mode('manual')">
+Manual
+</button>
 
-      <button class="mode"
-              data-mode="ai"
-              onclick="mode('ai')">
-        AI Assist
-      </button>
+<button class="mode" data-mode="ai" onclick="mode('ai')">
+AI Assist
+</button>
 
-      <button class="mode"
-              data-mode="auto"
-              onclick="mode('auto')">
-        Auto DJ
-      </button>
+<button class="mode" data-mode="auto" onclick="mode('auto')">
+Auto DJ
+</button>
 
-    </div>
+</div>
+</div>
 
-  </div>
 
+<!-- LOKALE MUSIK -->
+<div class="card">
 
-  <!-- LOCAL MUSIC -->
-  <div class="card">
+<h2>🎵 Lokale Musik</h2>
 
-    <h2>🎵 Lokale Musik</h2>
+<label class="filelabel">
 
-    <label class="filelabel">
+📁 Audiodateien aus Dateien auswählen
 
-      📁 Audiodateien aus Dateien auswählen
+<input
+type="file"
+accept="audio/*,.mp3,.m4a,.wav,.aac,.flac,.ogg"
+multiple
+onchange="addLocal(this)"
+>
 
-      <input
-        type="file"
-        accept="audio/*,.mp3,.m4a,.wav,.aac,.flac,.ogg"
-        multiple
-        onchange="addLocal(this)"
-      >
+</label>
 
-    </label>
+<div id="localList" style="margin-top:8px"></div>
 
-    <div id="localList"
-         style="margin-top:8px">
-    </div>
+</div>
 
-  </div>
 
+<!-- DECKS -->
+<div class="deckgrid">
 
-  <div class="deckgrid">
 
+<!-- DECK A -->
+<div class="deck">
 
-    <!-- DECK A -->
-    <div class="deck">
+<div class="deckhead">
+<b>DECK A</b>
+<span class="small" id="statusA">STOP</span>
+</div>
 
-      <div class="deckhead">
+<div class="track" id="trackA">
+Kein Titel
+</div>
 
-        <b>DECK A</b>
 
-        <span class="small"
-              id="statusA">
-          STOP
-        </span>
+<div class="decksrc">
 
-      </div>
+<button
+id="srcAF"
+class="active"
+onclick="source('A','file')">
+📁 Dateien
+</button>
 
+<button
+id="srcAA"
+onclick="source('A','apple')">
+🍎 Apple Music
+</button>
 
-      <div class="track"
-           id="trackA">
-        Kein Titel
-      </div>
+<button
+id="srcAY"
+onclick="source('A','youtube')">
+▶️ YouTube
+</button>
 
+</div>
 
-      <!-- QUELLEN -->
-      <div class="decksrc">
 
-        <button
-          id="srcAF"
-          class="active"
-          onclick="source('A','file')">
-          📁 Dateien
-        </button>
+<!-- DATEI A -->
+<div id="fileA">
 
-        <button
-          id="srcAA"
-          onclick="source('A','apple')">
-          🍎 Apple Music
-        </button>
+<label class="filelabel">
 
-        <button
-          id="srcAY"
-          onclick="source('A','youtube')">
-          ▶️ YouTube
-        </button>
+📂 Datei für A
 
-      </div>
+<input
+type="file"
+accept="audio/*"
+onchange="loadFile('A',this)"
+>
 
+</label>
 
-      <!-- DATEI -->
-      <div id="fileA">
+</div>
 
-        <label class="filelabel">
 
-          📂 Datei für Deck A
+<!-- APPLE A -->
+<div id="appleA" style="display:none">
 
-          <input
-            type="file"
-            accept="audio/*,.mp3,.m4a,.wav,.aac,.flac,.ogg"
-            onchange="loadFile('A',this)"
-          >
+<button class="applebtn" onclick="openApple('A')">
 
-        </label>
+🍎 Apple-Music-Titel wählen
 
-      </div>
+</button>
 
+</div>
 
-      <!-- APPLE MUSIC -->
-      <div id="appleA"
-           style="display:none">
 
-        <button
-          class="applebtn"
-          onclick="openApple('A')">
+<!-- YOUTUBE A IST JETZT SICHTBAR -->
+<div id="youtubeA" class="youtubeBox">
 
-          🍎 Apple-Music-Titel wählen
+<div class="youtubeTitle">
+▶️ YouTube – Deck A
+</div>
 
-        </button>
+<input
+id="youtubeUrlA"
+class="youtubeInput"
+type="text"
+placeholder="YouTube-Link hier einfügen"
+autocomplete="off"
+>
 
-      </div>
+<button
+class="youtubeBtn"
+onclick="loadYouTube('A')">
 
+▶️ YouTube-Titel laden
 
-      <!-- YOUTUBE -->
-      <div id="youtubeA"
-           class="youtubeBox"
-           style="display:none">
+</button>
 
-        <input
-          id="youtubeUrlA"
-          class="search"
-          placeholder="YouTube-Link hier einfügen">
+<div class="youtubeHint">
+Beispiel: https://www.youtube.com/watch?v=...
+</div>
 
-        <button
-          class="youtubeBtn"
-          onclick="loadYouTube('A')">
+<div
+id="ytPlayerA"
+class="ytplayer">
+</div>
 
-          ▶️ YouTube-Titel laden
+</div>
 
-        </button>
 
-        <div id="ytPlayerA"
-             class="ytplayer">
-        </div>
+<div class="deckbuttons">
 
-      </div>
+<button onclick="cue('A')">
+CUE
+</button>
 
+<button onclick="playDeck('A')">
+▶/⏸
+</button>
 
-      <div class="deckbuttons">
+<button onclick="sync('A')">
+SYNC
+</button>
 
-        <button onclick="cue('A')">
-          CUE
-        </button>
+</div>
 
-        <button onclick="playDeck('A')">
-          ▶/⏸
-        </button>
 
-        <button onclick="sync('A')">
-          SYNC
-        </button>
+<div class="small">
+Gain
+</div>
 
-      </div>
+<input
+class="range"
+type="range"
+min="-12"
+max="12"
+value="0"
+oninput="gain('A',this.value)"
+>
 
 
-      <div class="small">
-        Gain
-      </div>
+<div class="small">
+Filter
+</div>
 
-      <input
-        class="range"
-        type="range"
-        min="-12"
-        max="12"
-        value="0"
-        oninput="gain('A',this.value)"
-      >
+<input
+class="range"
+type="range"
+min="-100"
+max="100"
+value="0"
+oninput="filter('A',this.value)"
+>
 
+</div>
 
-      <div class="small">
-        Filter
-      </div>
 
-      <input
-        class="range"
-        type="range"
-        min="-100"
-        max="100"
-        value="0"
-        oninput="filter('A',this.value)"
-      >
+<!-- DECK B -->
+<div class="deck">
 
-    </div>
+<div class="deckhead">
+<b>DECK B</b>
+<span class="small" id="statusB">STOP</span>
+</div>
 
+<div class="track" id="trackB">
+Kein Titel
+</div>
 
-    <!-- DECK B -->
-    <div class="deck">
 
-      <div class="deckhead">
+<div class="decksrc">
 
-        <b>DECK B</b>
+<button
+id="srcBF"
+class="active"
+onclick="source('B','file')">
+📁 Dateien
+</button>
 
-        <span class="small"
-              id="statusB">
-          STOP
-        </span>
+<button
+id="srcBA"
+onclick="source('B','apple')">
+🍎 Apple Music
+</button>
 
-      </div>
+<button
+id="srcBY"
+onclick="source('B','youtube')">
+▶️ YouTube
+</button>
 
+</div>
 
-      <div class="track"
-           id="trackB">
-        Kein Titel
-      </div>
 
+<!-- DATEI B -->
+<div id="fileB">
 
-      <!-- QUELLEN -->
-      <div class="decksrc">
+<label class="filelabel">
 
-        <button
-          id="srcBF"
-          class="active"
-          onclick="source('B','file')">
-          📁 Dateien
-        </button>
+📂 Datei für B
 
-        <button
-          id="srcBA"
-          onclick="source('B','apple')">
-          🍎 Apple Music
-        </button>
+<input
+type="file"
+accept="audio/*"
+onchange="loadFile('B',this)"
+>
 
-        <button
-          id="srcBY"
-          onclick="source('B','youtube')">
-          ▶️ YouTube
-        </button>
+</label>
 
-      </div>
+</div>
 
 
-      <!-- DATEI -->
-      <div id="fileB">
+<!-- APPLE B -->
+<div id="appleB" style="display:none">
 
-        <label class="filelabel">
+<button class="applebtn" onclick="openApple('B')">
 
-          📂 Datei für Deck B
+🍎 Apple-Music-Titel wählen
 
-          <input
-            type="file"
-            accept="audio/*,.mp3,.m4a,.wav,.aac,.flac,.ogg"
-            onchange="loadFile('B',this)"
-          >
+</button>
 
-        </label>
+</div>
 
-      </div>
 
+<!-- YOUTUBE B IST JETZT SICHTBAR -->
+<div id="youtubeB" class="youtubeBox">
 
-      <!-- APPLE MUSIC -->
-      <div id="appleB"
-           style="display:none">
+<div class="youtubeTitle">
+▶️ YouTube – Deck B
+</div>
 
-        <button
-          class="applebtn"
-          onclick="openApple('B')">
+<input
+id="youtubeUrlB"
+class="youtubeInput"
+type="text"
+placeholder="YouTube-Link hier einfügen"
+autocomplete="off"
+>
 
-          🍎 Apple-Music-Titel wählen
+<button
+class="youtubeBtn"
+onclick="loadYouTube('B')">
 
-        </button>
+▶️ YouTube-Titel laden
 
-      </div>
+</button>
 
+<div class="youtubeHint">
+Beispiel: https://www.youtube.com/watch?v=...
+</div>
 
-      <!-- YOUTUBE -->
-      <div id="youtubeB"
-           class="youtubeBox"
-           style="display:none">
+<div
+id="ytPlayerB"
+class="ytplayer">
+</div>
 
-        <input
-          id="youtubeUrlB"
-          class="search"
-          placeholder="YouTube-Link hier einfügen">
+</div>
 
-        <button
-          class="youtubeBtn"
-          onclick="loadYouTube('B')">
 
-          ▶️ YouTube-Titel laden
+<div class="deckbuttons">
 
-        </button>
+<button onclick="cue('B')">
+CUE
+</button>
 
-        <div id="ytPlayerB"
-             class="ytplayer">
-        </div>
+<button onclick="playDeck('B')">
+▶/⏸
+</button>
 
-      </div>
+<button onclick="sync('B')">
+SYNC
+</button>
 
+</div>
 
-      <div class="deckbuttons">
 
-        <button onclick="cue('B')">
-          CUE
-        </button>
+<div class="small">
+Gain
+</div>
 
-        <button onclick="playDeck('B')">
-          ▶/⏸
-        </button>
+<input
+class="range"
+type="range"
+min="-12"
+max="12"
+value="0"
+oninput="gain('B',this.value)"
+>
 
-        <button onclick="sync('B')">
-          SYNC
-        </button>
 
-      </div>
+<div class="small">
+Filter
+</div>
 
+<input
+class="range"
+type="range"
+min="-100"
+max="100"
+value="0"
+oninput="filter('B',this.value)"
+>
 
-      <div class="small">
-        Gain
-      </div>
+</div>
 
-      <input
-        class="range"
-        type="range"
-        min="-12"
-        max="12"
-        value="0"
-        oninput="gain('B',this.value)"
-      >
+</div>
 
 
-      <div class="small">
-        Filter
-      </div>
+<!-- CROSS FADER -->
+<div class="card">
 
-      <input
-        class="range"
-        type="range"
-        min="-100"
-        max="100"
-        value="0"
-        oninput="filter('B',this.value)"
-      >
+<h2>↔️ Crossfader</h2>
 
-    </div>
+<input
+class="range"
+id="cross"
+type="range"
+min="0"
+max="100"
+value="50"
+oninput="crossfade(this.value)"
+>
 
-  </div>
+<div style="display:flex;justify-content:space-between" class="small">
+<span>A</span>
+<span>B</span>
+</div>
 
+</div>
 
-  <!-- CROSS FADER -->
-  <div class="card">
 
-    <h2>↔️ Crossfader</h2>
+<!-- AI -->
+<div class="card">
 
-    <input
-      class="range"
-      id="cross"
-      type="range"
-      min="0"
-      max="100"
-      value="50"
-      oninput="crossfade(this.value)"
-    >
+<h2>🧠 AI Transition</h2>
 
-    <div style="display:flex;justify-content:space-between"
-         class="small">
+<button
+class="btn primary"
+style="width:100%"
+onclick="aiTransition()">
 
-      <span>A</span>
-      <span>B</span>
+✨ Übergang planen
 
-    </div>
+</button>
 
-  </div>
+</div>
 
 
-  <!-- AI -->
-  <div class="card">
+<!-- QUEUE -->
+<div class="card">
 
-    <h2>🧠 AI Transition</h2>
+<h2>📋 Queue</h2>
 
-    <button
-      class="btn primary"
-      style="width:100%"
-      onclick="aiTransition()">
+<div id="queue">
+<div class="small">
+Noch keine Titel
+</div>
+</div>
 
-      ✨ Übergang planen
-
-    </button>
-
-  </div>
-
-
-  <!-- QUEUE -->
-  <div class="card">
-
-    <h2>📋 Queue</h2>
-
-    <div id="queue">
-
-      <div class="small">
-        Noch keine Titel
-      </div>
-
-    </div>
-
-  </div>
+</div>
 
 </section>
 
@@ -1222,51 +1113,51 @@ input[type=text],
 <!-- SETTINGS -->
 <section id="settings" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h2>⚙️ Einstellungen</h2>
+<h2>⚙️ Einstellungen</h2>
 
-    <label class="small">
-      XIAO IP
-    </label>
+<label class="small">
+XIAO IP
+</label>
 
-    <input
-      id="xiao"
-      type="text"
-      placeholder="192.168.1.50"
-      onchange="save()"
-    >
+<input
+id="xiao"
+type="text"
+placeholder="192.168.1.50"
+onchange="save()"
+>
 
-    <br><br>
+<br><br>
 
-    <label class="small">
-      Blur
-    </label>
+<label class="small">
+Blur
+</label>
 
-    <input
-      class="range"
-      type="range"
-      min="0"
-      max="20"
-      value="0"
-      oninput="document.documentElement.style.setProperty('--blur',this.value+'px')"
-    >
+<input
+class="range"
+type="range"
+min="0"
+max="20"
+value="0"
+oninput="document.documentElement.style.setProperty('--blur',this.value+'px')"
+>
 
-  </div>
+</div>
 
 
-  <div class="card">
+<div class="card">
 
-    <button
-      class="btn danger"
-      style="width:100%"
-      onclick="localStorage.clear();location.reload()">
+<button
+class="btn danger"
+style="width:100%"
+onclick="localStorage.clear();location.reload()">
 
-      🗑️ Zurücksetzen
+🗑️ Zurücksetzen
 
-    </button>
+</button>
 
-  </div>
+</div>
 
 </section>
 
@@ -1276,75 +1167,73 @@ input[type=text],
 <!-- NAVIGATION -->
 <nav class="nav">
 
-  <button
-    data-p="home"
-    class="active"
-    onclick="showPage('home')">
-    🏠<br>Home
-  </button>
+<button
+data-p="home"
+class="active"
+onclick="showPage('home')">
+🏠<br>Home
+</button>
 
-  <button
-    data-p="tv"
-    onclick="showPage('tv')">
-    📺<br>TV
-  </button>
+<button
+data-p="tv"
+onclick="showPage('tv')">
+📺<br>TV
+</button>
 
-  <button
-    data-p="z906"
-    onclick="showPage('z906')">
-    🔊<br>Z906
-  </button>
+<button
+data-p="z906"
+onclick="showPage('z906')">
+🔊<br>Z906
+</button>
 
-  <button
-    data-p="mixer"
-    onclick="showPage('mixer')">
-    🎵<br>Mixer
-  </button>
+<button
+data-p="mixer"
+onclick="showPage('mixer')">
+🎵<br>Mixer
+</button>
 
-  <button
-    data-p="settings"
-    onclick="showPage('settings')">
-    ⚙️<br>Settings
-  </button>
+<button
+data-p="settings"
+onclick="showPage('settings')">
+⚙️<br>Settings
+</button>
 
 </nav>
 
 
 <!-- APPLE MUSIC MODAL -->
-<div id="appleModal"
-     class="modal">
+<div id="appleModal" class="modal">
 
-  <div class="panel">
+<div class="panel">
 
-    <div class="paneltop">
+<div class="paneltop">
 
-      <h2>
-        🍎 Apple Music
-      </h2>
+<h2>🍎 Apple Music</h2>
 
-      <button
-        class="mini"
-        onclick="closeApple()">
-        ✕
-      </button>
+<button
+class="mini"
+onclick="closeApple()">
+✕
+</button>
 
-    </div>
+</div>
 
-    <div id="appleStatus"
-         class="status">
-      Noch nicht verbunden.
-    </div>
+<div
+id="appleStatus"
+class="status">
+Noch nicht verbunden.
+</div>
 
-    <input
-      id="appleSearch"
-      class="search"
-      placeholder="Titel, Künstler oder Album suchen"
-      oninput="filterApple(this.value)"
-    >
+<input
+id="appleSearch"
+class="search"
+placeholder="Titel, Künstler oder Album suchen"
+oninput="filterApple(this.value)"
+>
 
-    <div id="appleSongs"></div>
+<div id="appleSongs"></div>
 
-  </div>
+</div>
 
 </div>
 
@@ -1355,1522 +1244,1308 @@ input[type=text],
 <script>
 
 const state =
-  JSON.parse(
-    localStorage.getItem('smartRemoteV6') || '{}'
-  );
-
+JSON.parse(
+localStorage.getItem('smartRemoteV6') || '{}'
+);
 
 const decks = {
 
-  A:{
-    audio:null,
-    source:'file',
-    song:null,
-    gain:0,
-    filter:0,
-    playing:false
-  },
+A:{
+audio:null,
+source:'file',
+song:null,
+gain:0,
+filter:0,
+playing:false
+},
 
-  B:{
-    audio:null,
-    source:'file',
-    song:null,
-    gain:0,
-    filter:0,
-    playing:false
-  }
+B:{
+audio:null,
+source:'file',
+song:null,
+gain:0,
+filter:0,
+playing:false
+}
 
 };
 
+const locals=[];
 
-const locals = [];
+let queue=[];
 
-let queue = [];
+let mk=null;
 
-let mk = null;
+let appleSongs=[];
 
-let appleSongs = [];
-
-let targetDeck = null;
+let targetDeck=null;
 
 
 const $ = id =>
-  document.getElementById(id);
+document.getElementById(id);
 
 
-function toast(text){
+function toast(t){
 
-  const e = $('toast');
+const e=$('toast');
 
-  e.textContent = text;
+e.textContent=t;
 
-  e.classList.add('showtoast');
+e.classList.add('showtoast');
 
-  clearTimeout(window.tt);
+clearTimeout(window.tt);
 
-  window.tt =
-    setTimeout(
-      () => e.classList.remove('showtoast'),
-      1800
-    );
+window.tt=setTimeout(
+()=>e.classList.remove('showtoast'),
+2000
+);
 
 }
 
 
 function save(){
 
-  state.xiao =
-    $('xiao').value;
+state.xiao=$('xiao').value;
 
-  localStorage.setItem(
-    'smartRemoteV6',
-    JSON.stringify(state)
-  );
-
-}
-
-
-function showPage(page){
-
-  document
-    .querySelectorAll('.page')
-    .forEach(
-      x => x.classList.remove('active')
-    );
-
-  $(page).classList.add('active');
-
-  document
-    .querySelectorAll('.nav button')
-    .forEach(
-      x =>
-        x.classList.toggle(
-          'active',
-          x.dataset.p === page
-        )
-    );
-
-  window.scrollTo(0,0);
+localStorage.setItem(
+'smartRemoteV6',
+JSON.stringify(state)
+);
 
 }
 
 
-function sendCommand(command){
+function showPage(p){
 
-  console.log(
-    'IR:',
-    command
-  );
+document
+.querySelectorAll('.page')
+.forEach(
+x=>x.classList.remove('active')
+);
 
-  toast(
-    '📡 ' + command
-  );
+$(p).classList.add('active');
 
-}
+document
+.querySelectorAll('.nav button')
+.forEach(
+x=>x.classList.toggle(
+'active',
+x.dataset.p===p
+)
+);
 
-
-function tvApp(app){
-
-  sendCommand(
-    'TV_APP_' +
-    app
-      .toUpperCase()
-      .replaceAll(' ','_')
-  );
+window.scrollTo(0,0);
 
 }
 
 
-function z906Volume(delta){
+function sendCommand(c){
 
-  state.volume =
-    Math.max(
-      0,
-      Math.min(
-        100,
-        (state.volume ?? 40) + delta
-      )
-    );
+console.log('IR',c);
 
-  $('volumeDial').textContent =
-    state.volume;
-
-  save();
-
-  sendCommand(
-    delta > 0
-      ? 'Z906_VOL_UP'
-      : 'Z906_VOL_DOWN'
-  );
+toast('📡 '+c);
 
 }
 
 
-function changeZ(type,delta){
+function tvApp(a){
 
-  if(type === 'volume'){
-
-    return z906Volume(delta);
-
-  }
-
-  state[type] =
-    Math.max(
-      -10,
-      Math.min(
-        10,
-        (state[type] ?? 0) + delta
-      )
-    );
-
-  $(type+'Dial').textContent =
-    state[type];
-
-  save();
-
-  sendCommand(
-    'Z906_' +
-    type.toUpperCase()
-  );
+sendCommand(
+'TV_APP_' +
+a.toUpperCase().replaceAll(' ','_')
+);
 
 }
 
 
-function setInput(value){
+function z906Volume(d){
 
-  state.input =
-    value;
+state.volume=Math.max(
+0,
+Math.min(
+100,
+(state.volume??40)+d
+)
+);
 
-  save();
+$('volumeDial').textContent=
+state.volume;
 
-  sendCommand(
-    'Z906_INPUT_' +
-    value.toUpperCase()
-  );
+save();
+
+sendCommand(
+d>0
+?'Z906_VOL_UP'
+:'Z906_VOL_DOWN'
+);
+
+}
+
+
+function changeZ(t,d){
+
+if(t==='volume')
+return z906Volume(d);
+
+state[t]=Math.max(
+-10,
+Math.min(
+10,
+(state[t]??0)+d
+)
+);
+
+$(t+'Dial').textContent=
+state[t];
+
+save();
+
+sendCommand(
+'Z906_'+
+t.toUpperCase()
+);
+
+}
+
+
+function setInput(v){
+
+state.input=v;
+
+save();
+
+sendCommand(
+'Z906_INPUT_'+
+v.toUpperCase()
+);
 
 }
 
 
 function mode(m){
 
-  document
-    .querySelectorAll('.mode')
-    .forEach(
-      b =>
-        b.classList.toggle(
-          'active',
-          b.dataset.mode === m
-        )
-    );
+document
+.querySelectorAll('.mode')
+.forEach(
+b=>b.classList.toggle(
+'active',
+b.dataset.mode===m
+)
+);
 
-  state.mode = m;
+state.mode=m;
 
-  save();
-
-}
-
-
-/* =========================
-   QUELLE WECHSELN
-========================= */
-
-function source(deck,src){
-
-  decks[deck].source = src;
-
-  $('src'+deck+'F')
-    .classList.toggle(
-      'active',
-      src === 'file'
-    );
-
-  $('src'+deck+'A')
-    .classList.toggle(
-      'active',
-      src === 'apple'
-    );
-
-  $('src'+deck+'Y')
-    .classList.toggle(
-      'active',
-      src === 'youtube'
-    );
-
-  $('file'+deck).style.display =
-    src === 'file'
-      ? 'block'
-      : 'none';
-
-  $('apple'+deck).style.display =
-    src === 'apple'
-      ? 'block'
-      : 'none';
-
-  $('youtube'+deck).style.display =
-    src === 'youtube'
-      ? 'block'
-      : 'none';
+save();
 
 }
 
 
-/* =========================
-   DATEI
-========================= */
+function source(d,s){
 
-function loadFile(deck,input){
+decks[d].source=s;
 
-  if(!input.files?.[0])
-    return;
+$('src'+d+'F')
+.classList.toggle(
+'active',
+s==='file'
+);
 
-  const file =
-    input.files[0];
+$('src'+d+'A')
+.classList.toggle(
+'active',
+s==='apple'
+);
 
-  const x =
-    decks[deck];
+$('src'+d+'Y')
+.classList.toggle(
+'active',
+s==='youtube'
+);
 
-  if(x.audio)
-    x.audio.pause();
+$('file'+d).style.display =
+s==='file'
+?'block'
+:'none';
 
-  x.source = 'file';
+$('apple'+d).style.display =
+s==='apple'
+?'block'
+:'none';
 
-  x.song = null;
+/*
+YouTube bleibt absichtlich IMMER sichtbar.
+Damit der Bereich auf dem iPhone
+nicht verschwindet.
+*/
 
-  x.audio =
-    new Audio(
-      URL.createObjectURL(file)
-    );
-
-  x.audio.preload =
-    'metadata';
-
-  x.audio.addEventListener(
-    'ended',
-    () => {
-
-      $('status'+deck)
-        .textContent =
-        'STOP';
-
-      x.playing = false;
-
-    }
-  );
-
-  $('track'+deck)
-    .textContent =
-    '📁 ' + file.name;
-
-  $('status'+deck)
-    .textContent =
-    'READY';
-
-  source(
-    deck,
-    'file'
-  );
-
-  apply(deck);
-
-  toast(
-    'Deck ' +
-    deck +
-    ' geladen'
-  );
+$('youtube'+d).style.display='block';
 
 }
 
 
-function apply(deck){
+function loadFile(d,input){
 
-  const x =
-    decks[deck];
+if(!input.files?.[0])
+return;
 
-  if(!x.audio)
-    return;
+const f=input.files[0];
 
-  const gain =
-    Math.pow(
-      10,
-      (x.gain || 0) / 20
-    );
+const x=decks[d];
 
-  x.audio.volume =
-    Math.max(
-      0,
-      Math.min(
-        1,
-        .7 * gain
-      )
-    );
+if(x.audio)
+x.audio.pause();
+
+x.source='file';
+
+x.song=null;
+
+x.audio=
+new Audio(
+URL.createObjectURL(f)
+);
+
+x.audio.preload='metadata';
+
+x.audio.addEventListener(
+'ended',
+()=>{
+$('status'+d).textContent='STOP';
+x.playing=false;
+}
+);
+
+$('track'+d).textContent=
+'📁 '+f.name;
+
+$('status'+d).textContent=
+'READY';
+
+source(d,'file');
+
+apply(d);
+
+toast(
+'Deck '+d+' geladen'
+);
 
 }
 
 
-/* =========================
-   PLAY DECK
-========================= */
+function apply(d){
 
-async function playDeck(deck){
+const x=decks[d];
 
-  const x =
-    decks[deck];
+if(!x.audio)
+return;
 
-  if(x.source === 'apple'){
+const g=
+Math.pow(
+10,
+(x.gain||0)/20
+);
 
-    if(!x.song)
-      return openApple(deck);
-
-    return playApple(deck);
-
-  }
-
-  if(x.source === 'youtube'){
-
-    return toggleYouTube(deck);
-
-  }
-
-  if(!x.audio)
-    return toast(
-      '📁 Titel laden'
-    );
-
-  if(x.playing){
-
-    x.audio.pause();
-
-    x.playing = false;
-
-    $('status'+deck)
-      .textContent =
-      'PAUSE';
-
-  }else{
-
-    try{
-
-      await x.audio.play();
-
-      x.playing = true;
-
-      $('status'+deck)
-        .textContent =
-        'PLAY';
-
-    }catch(error){
-
-      console.error(error);
-
-      toast(
-        '⚠️ Wiedergabe nicht möglich'
-      );
-
-    }
-
-  }
+x.audio.volume=
+Math.max(
+0,
+Math.min(
+1,
+.7*g
+)
+);
 
 }
 
 
-/* =========================
-   CUE
-========================= */
+async function playDeck(d){
 
-function cue(deck){
+const x=decks[d];
 
-  const x =
-    decks[deck];
+if(x.source==='apple'){
 
-  if(x.source === 'apple'){
+if(!x.song)
+return openApple(d);
 
-    if(mk){
+return playApple(d);
 
-      try{
-        mk.seekToTime(0);
-      }catch{}
+}
 
-    }
+if(x.source==='youtube')
+return toggleYouTube(d);
 
-    return toast(
-      '🍎 CUE'
-    );
+if(!x.audio)
+return toast(
+'📁 Titel laden'
+);
 
-  }
+if(x.playing){
 
-  if(x.source === 'youtube'){
+x.audio.pause();
 
-    return youtubeCommand(
-      deck,
-      'seekTo',
-      0
-    );
+x.playing=false;
 
-  }
+$('status'+d).textContent=
+'PAUSE';
 
-  if(x.audio){
+}else{
 
-    x.audio.currentTime =
-      0;
+try{
 
-    toast(
-      '🎧 CUE ' +
-      deck
-    );
+await x.audio.play();
 
-  }
+x.playing=true;
+
+$('status'+d).textContent=
+'PLAY';
+
+}catch(e){
+
+toast(
+'⚠️ Wiedergabe nicht möglich'
+);
+
+}
+
+}
 
 }
 
 
-/* =========================
-   SYNC
-========================= */
+function cue(d){
 
-function sync(deck){
+const x=decks[d];
 
-  const other =
-    deck === 'A'
-      ? 'B'
-      : 'A';
+if(x.source==='apple'){
 
-  if(
-    decks[deck].audio &&
-    decks[other].audio
-  ){
+if(mk)
+try{
+mk.seekToTime(0);
+}catch{}
 
-    decks[deck]
-      .audio
-      .currentTime =
-      decks[other]
-        .audio
-        .currentTime;
+return toast('🍎 CUE');
 
-    toast(
-      '🔄 SYNC ' +
-      deck
-    );
+}
 
-  }else{
+if(x.source==='youtube'){
 
-    toast(
-      'SYNC nur für lokale Audiodateien'
-    );
+youtubeCommand(
+d,
+'seekTo',
+0
+);
 
-  }
+return toast(
+'▶️ YouTube CUE '+d
+);
+
+}
+
+if(x.audio){
+
+x.audio.currentTime=0;
+
+toast(
+'🎧 CUE '+d
+);
+
+}
 
 }
 
 
-/* =========================
-   GAIN / FILTER
-========================= */
+function sync(d){
 
-function gain(deck,value){
+const o=
+d==='A'
+?'B'
+:'A';
 
-  decks[deck].gain =
-    Number(value);
+if(
+decks[d].audio &&
+decks[o].audio
+){
 
-  apply(deck);
+decks[d].audio.currentTime=
+decks[o].audio.currentTime;
+
+toast(
+'🔄 SYNC '+d
+);
+
+}else{
+
+toast(
+'YouTube/Apple Music können hier nicht exakt synchronisiert werden'
+);
+
+}
 
 }
 
 
-function filter(deck,value){
+function gain(d,v){
 
-  decks[deck].filter =
-    Number(value);
+decks[d].gain=+v;
 
-}
-
-
-/* =========================
-   CROSSFADER
-========================= */
-
-function crossfade(value){
-
-  const x =
-    Number(value) / 100;
-
-  if(decks.A.audio){
-
-    decks.A.audio.volume =
-      Math.cos(
-        x * Math.PI / 2
-      ) * .7;
-
-  }
-
-  if(decks.B.audio){
-
-    decks.B.audio.volume =
-      Math.cos(
-        (1-x) * Math.PI / 2
-      ) * .7;
-
-  }
+apply(d);
 
 }
 
 
-/* =========================
-   LOKALE MUSIK
-========================= */
+function filter(d,v){
+
+decks[d].filter=+v;
+
+}
+
+
+function crossfade(v){
+
+const x=+v/100;
+
+if(decks.A.audio)
+decks.A.audio.volume=
+Math.cos(x*Math.PI/2)*.7;
+
+if(decks.B.audio)
+decks.B.audio.volume=
+Math.cos((1-x)*Math.PI/2)*.7;
+
+}
+
+
+/* LOKALE MUSIK */
 
 function addLocal(input){
 
-  [
-    ...input.files
-  ].forEach(
-    file => {
+[...input.files].forEach(
+f=>{
 
-      if(
-        !file.type.startsWith('audio/') &&
-        !/\.(mp3|m4a|wav|aac|flac|ogg)$/i
-          .test(file.name)
-      ){
+if(
+!f.type.startsWith('audio/') &&
+!/\.(mp3|m4a|wav|aac|flac|ogg)$/i
+.test(f.name)
+)
+return;
 
-        return;
+locals.push(f);
 
-      }
+}
+);
 
-      locals.push(file);
+input.value='';
 
-    }
-  );
-
-  input.value = '';
-
-  renderLocal();
+renderLocal();
 
 }
 
 
 function renderLocal(){
 
-  $('localList')
-    .innerHTML =
-      locals
-        .map(
-          (file,index) => `
+$('localList').innerHTML=
 
-            <div class="row">
+locals.map(
+(f,i)=>`
 
-              <div class="name">
-                🎵 ${esc(file.name)}
-              </div>
+<div class="row">
 
-              <button
-                class="mini"
-                onclick="loadLocal(${index},'A')">
-                A
-              </button>
+<div class="name">
+🎵 ${esc(f.name)}
+</div>
 
-              <button
-                class="mini"
-                onclick="loadLocal(${index},'B')">
-                B
-              </button>
+<button
+class="mini"
+onclick="loadLocal(${i},'A')">
+A
+</button>
 
-              <button
-                class="mini"
-                onclick="addLocalToQueue(${index})">
-                ＋
-              </button>
+<button
+class="mini"
+onclick="loadLocal(${i},'B')">
+B
+</button>
 
-            </div>
+<button
+class="mini"
+onclick="queue.push({type:'file',file:locals[${i}]});renderQueue()">
+＋
+</button>
 
-          `
-        )
-        .join('')
+</div>
 
-      ||
+`
+).join('')
 
-      '<div class="small">Noch keine lokalen Dateien.</div>';
+||
+
+'<div class="small">Noch keine lokalen Dateien.</div>';
 
 }
 
 
-function loadLocal(index,deck){
+function loadLocal(i,d){
 
-  loadFile(
-    deck,
-    {
-      files:[
-        locals[index]
-      ]
-    }
-  );
+loadFile(
+d,
+{
+files:[locals[i]]
+}
+);
 
 }
 
-
-function addLocalToQueue(index){
-
-  queue.push({
-    type:'file',
-    file:locals[index]
-  });
-
-  renderQueue();
-
-}
-
-
-/* =========================
-   QUEUE
-========================= */
 
 function renderQueue(){
 
-  $('queue')
-    .innerHTML =
-      queue
-        .map(
-          (item,index) => `
+$('queue').innerHTML=
 
-            <div class="row">
+queue.map(
+(q,i)=>`
 
-              <div class="name">
+<div class="row">
 
-                ${
-                  item.type === 'apple'
-                    ? '🍎'
-                    : '🎵'
-                }
+<div class="name">
 
-                ${esc(
-                  item.name ||
-                  item.file?.name ||
-                  'Titel'
-                )}
+${q.type==='apple'?'🍎':'🎵'}
 
-              </div>
+${esc(
+q.name ||
+q.file?.name ||
+'Titel'
+)}
 
-              <button
-                class="mini"
-                onclick="queuePlay(${index},'A')">
-                A
-              </button>
+</div>
 
-              <button
-                class="mini"
-                onclick="queuePlay(${index},'B')">
-                B
-              </button>
+<button
+class="mini"
+onclick="queuePlay(${i},'A')">
+A
+</button>
 
-              <button
-                class="mini"
-                onclick="
-                  queue.splice(${index},1);
-                  renderQueue()
-                ">
-                ×
-              </button>
+<button
+class="mini"
+onclick="queuePlay(${i},'B')">
+B
+</button>
 
-            </div>
+<button
+class="mini"
+onclick="queue.splice(${i},1);renderQueue()">
+×
+</button>
 
-          `
-        )
-        .join('')
+</div>
 
-      ||
+`
+).join('')
 
-      '<div class="small">Noch keine Titel.</div>';
+||
+
+'<div class="small">Noch keine Titel.</div>';
 
 }
 
 
-function queuePlay(index,deck){
+function queuePlay(i,d){
 
-  const item =
-    queue[index];
+const q=queue[i];
 
-  if(item.type === 'apple'){
+if(q.type==='apple'){
 
-    decks[deck].song =
-      item.song;
+decks[d].song=q.song;
 
-    decks[deck].source =
-      'apple';
+decks[d].source='apple';
 
-    $('track'+deck)
-      .textContent =
-      '🍎 ' +
-      item.name;
+$('track'+d).textContent=
+'🍎 '+q.name;
 
-    source(
-      deck,
-      'apple'
-    );
+source(d,'apple');
 
-    return playApple(deck);
+playApple(d);
 
-  }
+}else{
 
-  loadFile(
-    deck,
-    {
-      files:[
-        item.file
-      ]
-    }
-  );
+loadFile(
+d,
+{
+files:[q.file]
+}
+);
+
+}
 
 }
 
 
-function esc(text){
+function esc(s){
 
-  return String(
-    text ?? ''
-  ).replace(
-    /[&<>"']/g,
-    character => ({
-      '&':'&amp;',
-      '<':'&lt;',
-      '>':'&gt;',
-      '"':'&quot;',
-      "'":'&#039;'
-    }[character])
-  );
+return String(s).replace(
+/[&<>"']/g,
+c=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#039;'
+}[c])
+);
 
 }
 
 
-/* =========================
-   APPLE MUSIC
-========================= */
+/* APPLE MUSIC */
 
 async function getMusicKit(){
 
-  if(mk)
-    return mk;
+if(mk)
+return mk;
 
-  if(!window.MusicKit)
-    throw Error(
-      'MusicKit Script fehlt'
-    );
+if(!window.MusicKit)
+throw Error(
+'MusicKit Script fehlt'
+);
 
-  const response =
-    await fetch(
-      '/api/apple-music-token'
-    );
+const r=
+await fetch(
+'/api/apple-music-token'
+);
 
-  if(!response.ok)
-    throw Error(
-      'Apple Developer Token fehlt'
-    );
+if(!r.ok)
+throw Error(
+'Apple Developer Token fehlt'
+);
 
-  const json =
-    await response.json();
+const j=
+await r.json();
 
-  mk =
-    await MusicKit.configure({
-      developerToken:
-        json.token,
+mk=
+MusicKit.configure({
+developerToken:j.token,
+app:{
+name:'Smart Remote AI DJ',
+build:'1.0'
+}
+});
 
-      app:{
-        name:
-          'Smart Remote AI DJ',
-
-        build:
-          '1.0'
-      }
-    });
-
-  return mk;
+return mk;
 
 }
 
 
 async function authorize(){
 
-  const music =
-    await getMusicKit();
+const m=
+await getMusicKit();
 
-  if(!music.isAuthorized)
-    await music.authorize();
+if(!m.isAuthorized)
+await m.authorize();
 
-  return music;
+return m;
 
 }
 
 
-async function openApple(deck){
+async function openApple(d){
 
-  targetDeck =
-    deck;
+targetDeck=d;
 
-  $('appleModal')
-    .classList.add('show');
+$('appleModal')
+.classList.add('show');
 
-  $('appleStatus')
-    .textContent =
-    '🍎 Apple Music verbindet...';
+$('appleStatus').textContent=
+'🍎 Apple Music verbindet...';
 
-  try{
+try{
 
-    const music =
-      await authorize();
+const m=
+await authorize();
 
-    $('appleStatus')
-      .textContent =
-      '🍎 Deine Musikbibliothek';
+$('appleStatus').textContent=
+'🍎 Deine Musikbibliothek';
 
-    const response =
-      await music.api.library.songs({
-        limit:100
-      });
+const r=
+await m.api.library.songs({
+limit:100
+});
 
-    appleSongs =
-      response.data || [];
+appleSongs=
+r.data||[];
 
-    renderApple(
-      appleSongs
-    );
+renderApple(
+appleSongs
+);
 
-  }catch(error){
+}catch(e){
 
-    console.error(error);
+console.error(e);
 
-    $('appleStatus')
-      .textContent =
-      '⚠️ Apple Music konnte nicht verbunden werden.';
+$('appleStatus').textContent=
+'⚠️ Apple Music konnte nicht verbunden werden.';
 
-    $('appleSongs')
-      .innerHTML =
-      `
-        <div class="small">
-          Apple Music braucht eine korrekt eingerichtete MusicKit-Konfiguration.
-        </div>
-      `;
+$('appleSongs').innerHTML=
+'<div class="small">Apple Music braucht eine korrekt eingerichtete MusicKit-Konfiguration.</div>';
 
-  }
+}
 
 }
 
 
 function closeApple(){
 
-  $('appleModal')
-    .classList.remove('show');
+$('appleModal')
+.classList.remove('show');
 
-  targetDeck =
-    null;
-
-}
-
-
-function renderApple(songs){
-
-  $('appleSongs')
-    .innerHTML =
-      songs
-        .map(
-          song => {
-
-            const attributes =
-              song.attributes || {};
-
-            const artwork =
-              attributes.artwork?.url
-                ?.replace(
-                  '{w}',
-                  '100'
-                )
-                ?.replace(
-                  '{h}',
-                  '100'
-                ) || '';
-
-            return `
-
-              <div class="song">
-
-                ${
-                  artwork
-                    ? `<img
-                        class="art"
-                        src="${esc(artwork)}">`
-                    : '<div class="art"></div>'
-                }
-
-                <div class="songinfo">
-
-                  <div class="songtitle">
-                    ${esc(
-                      attributes.name ||
-                      'Titel'
-                    )}
-                  </div>
-
-                  <div class="songartist">
-                    ${esc(
-                      attributes.artistName ||
-                      ''
-                    )}
-                  </div>
-
-                </div>
-
-                <button
-                  class="mini"
-                  onclick="pickApple('${esc(song.id)}')">
-                  ▶
-                </button>
-
-                <button
-                  class="mini"
-                  onclick="addApple('${esc(song.id)}')">
-                  ＋
-                </button>
-
-              </div>
-
-            `;
-
-          }
-        )
-        .join('')
-
-      ||
-
-      '<div class="small">Keine Titel in deiner Bibliothek.</div>';
+targetDeck=null;
 
 }
 
 
-function filterApple(query){
+function renderApple(arr){
 
-  const q =
-    query.toLowerCase();
+$('appleSongs').innerHTML=
 
-  renderApple(
-    appleSongs.filter(
-      song => {
+arr.map(
+s=>{
 
-        const a =
-          song.attributes || {};
+const a=s.attributes||{};
 
-        return `
-          ${a.name}
-          ${a.artistName}
-          ${a.albumName}
-        `
-        .toLowerCase()
-        .includes(q);
+const art=
+a.artwork?.url
+?.replace('{w}','100')
+?.replace('{h}','100')
+||'';
 
-      }
-    )
-  );
+return `
+
+<div class="song">
+
+${
+art
+?`<img class="art" src="${esc(art)}">`
+:'<div class="art"></div>'
+}
+
+<div class="songinfo">
+
+<div class="songtitle">
+${esc(a.name||'Titel')}
+</div>
+
+<div class="songartist">
+${esc(a.artistName||'')}
+</div>
+
+</div>
+
+<button
+class="mini"
+onclick="pickApple('${esc(s.id)}')">
+▶
+</button>
+
+<button
+class="mini"
+onclick="addApple('${esc(s.id)}')">
+＋
+</button>
+
+</div>
+
+`;
+
+}
+).join('')
+
+||
+
+'<div class="small">Keine Titel in deiner Bibliothek.</div>';
+
+}
+
+
+function filterApple(q){
+
+q=q.toLowerCase();
+
+renderApple(
+appleSongs.filter(
+s=>{
+
+const a=s.attributes||{};
+
+return `${a.name} ${a.artistName} ${a.albumName}`
+.toLowerCase()
+.includes(q);
+
+}
+)
+);
 
 }
 
 
 function findApple(id){
 
-  return appleSongs.find(
-    song =>
-      String(song.id) ===
-      String(id)
-  );
+return appleSongs.find(
+s=>String(s.id)===String(id)
+);
 
 }
 
 
 function pickApple(id){
 
-  const song =
-    findApple(id);
+const s=findApple(id);
 
-  if(!song)
-    return;
+if(!s)
+return;
 
-  const a =
-    song.attributes || {};
+const a=s.attributes||{};
 
-  if(targetDeck){
+if(targetDeck){
 
-    const deck =
-      targetDeck;
+const d=targetDeck;
 
-    decks[deck].source =
-      'apple';
+decks[d].source='apple';
 
-    decks[deck].song =
-      song;
+decks[d].song=s;
 
-    decks[deck].audio =
-      null;
+decks[d].audio=null;
 
-    $('track'+deck)
-      .textContent =
-      '🍎 ' +
-      (a.name || 'Titel');
+$('track'+d).textContent=
+'🍎 '+(a.name||'Titel');
 
-    $('status'+deck)
-      .textContent =
-      'READY';
+$('status'+d).textContent=
+'READY';
 
-    source(
-      deck,
-      'apple'
-    );
+source(d,'apple');
 
-    closeApple();
+closeApple();
 
-    toast(
-      '🍎 Deck ' +
-      deck +
-      ' geladen'
-    );
+toast(
+'🍎 Deck '+d+' geladen'
+);
 
-    playApple(deck);
+playApple(d);
 
-  }else{
+}else{
 
-    playAppleSong(song);
+playAppleSong(s);
 
-  }
+}
 
 }
 
 
 function addApple(id){
 
-  const song =
-    findApple(id);
+const s=findApple(id);
 
-  if(!song)
-    return;
+if(!s)
+return;
 
-  queue.push({
+queue.push({
+type:'apple',
+song:s,
+name:s.attributes?.name||'Titel'
+});
 
-    type:'apple',
+renderQueue();
 
-    song:song,
-
-    name:
-      song.attributes?.name ||
-      'Titel'
-
-  });
-
-  renderQueue();
-
-  toast(
-    '➕ Queue'
-  );
+toast(
+'➕ Queue'
+);
 
 }
 
 
-async function playApple(deck){
+async function playApple(d){
 
-  try{
+try{
 
-    const music =
-      await authorize();
+const m=
+await authorize();
 
-    await music.setQueue({
-      song:
-        decks[deck]
-          .song
-          .id
-    });
+await m.setQueue({
+song:decks[d].song.id
+});
 
-    await music.play();
+await m.play();
 
-    decks[deck].playing =
-      true;
+decks[d].playing=true;
 
-    $('status'+deck)
-      .textContent =
-      'PLAY';
+$('status'+d).textContent=
+'PLAY';
 
-  }catch(error){
+}catch(e){
 
-    console.error(error);
+console.error(e);
 
-    toast(
-      '⚠️ Apple Music Wiedergabe fehlgeschlagen'
-    );
+toast(
+'⚠️ Apple Music Wiedergabe fehlgeschlagen'
+);
 
-  }
+}
 
 }
 
 
-async function playAppleSong(song){
+async function playAppleSong(s){
 
-  try{
+try{
 
-    const music =
-      await authorize();
+const m=
+await authorize();
 
-    await music.setQueue({
-      song:
-        song.id
-    });
+await m.setQueue({
+song:s.id
+});
 
-    await music.play();
+await m.play();
 
-    toast(
-      '🍎 Wiedergabe gestartet'
-    );
+toast(
+'🍎 Wiedergabe gestartet'
+);
 
-  }catch(error){
+}catch(e){
 
-    console.error(error);
+console.error(e);
 
-    toast(
-      '⚠️ Apple Music Wiedergabe fehlgeschlagen'
-    );
+toast(
+'⚠️ Apple Music Wiedergabe fehlgeschlagen'
+);
 
-  }
+}
 
 }
 
 
-/* =========================
-   YOUTUBE
-========================= */
+/* YOUTUBE */
 
 function youtubeId(url){
 
-  try{
+try{
 
-    const u =
-      new URL(url);
+const u=
+new URL(url.trim());
 
-    if(
-      u.hostname.includes(
-        'youtu.be'
-      )
-    ){
+const host=
+u.hostname.toLowerCase();
 
-      return u.pathname
-        .slice(1)
-        .split('/')[0];
+if(
+host==='youtu.be' ||
+host==='www.youtu.be'
+){
 
-    }
+return u.pathname
+.replace('/','')
+.split('/')[0];
 
-    if(
-      u.hostname.includes(
-        'youtube.com'
-      )
-    ){
+}
 
-      if(
-        u.pathname ===
-        '/watch'
-      ){
+if(
+host.includes('youtube.com') ||
+host.includes('youtube-nocookie.com')
+){
 
-        return u.searchParams
-          .get('v');
+if(
+u.pathname==='/watch'
+){
 
-      }
+return u.searchParams.get('v');
 
-      if(
-        u.pathname.startsWith(
-          '/shorts/'
-        )
-      ){
+}
 
-        return u.pathname
-          .split('/')[2];
+if(
+u.pathname.startsWith('/shorts/')
+){
 
-      }
+return u.pathname
+.split('/')[2];
 
-      if(
-        u.pathname.startsWith(
-          '/embed/'
-        )
-      ){
+}
 
-        return u.pathname
-          .split('/')[2];
+if(
+u.pathname.startsWith('/embed/')
+){
 
-      }
+return u.pathname
+.split('/')[2];
 
-    }
+}
 
-  }catch{}
+}
 
-  return null;
+}catch(e){
+
+return null;
+
+}
+
+return null;
 
 }
 
 
-function loadYouTube(deck){
+function loadYouTube(d){
 
-  const url =
-    $('youtubeUrl'+deck)
-      .value
-      .trim();
+const input=
+$('youtubeUrl'+d);
 
-  const id =
-    youtubeId(url);
+const url=
+input.value.trim();
 
-  if(!id){
+const id=
+youtubeId(url);
 
-    return toast(
-      '⚠️ Ungültiger YouTube-Link'
-    );
+if(!id){
 
-  }
+toast(
+'⚠️ Ungültiger YouTube-Link'
+);
 
-  decks[deck].source =
-    'youtube';
+return;
 
-  decks[deck].song = {
-    youtubeId:id,
-    url:url
-  };
+}
 
-  decks[deck].audio =
-    null;
+const x=
+decks[d];
 
-  $('track'+deck)
-    .textContent =
-    '▶️ YouTube • ' +
-    id;
+if(x.audio)
+x.audio.pause();
 
-  $('status'+deck)
-    .textContent =
-    'READY';
+x.source='youtube';
 
-  source(
-    deck,
-    'youtube'
-  );
+x.song={
+youtubeId:id,
+url:url
+};
 
-  $('ytPlayer'+deck)
-    .innerHTML = `
+x.audio=null;
 
-      <iframe
-        id="ytFrame${deck}"
-        src="https://www.youtube.com/embed/${encodeURIComponent(id)}?enablejsapi=1&playsinline=1&rel=0"
-        title="YouTube Player"
-        allow="autoplay; encrypted-media; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+x.playing=false;
 
-    `;
+$('track'+d).textContent=
+'▶️ YouTube • '+id;
 
-  toast(
-    '▶️ YouTube Deck ' +
-    deck +
-    ' geladen'
-  );
+$('status'+d).textContent=
+'READY';
+
+
+/*
+YouTube-Button wird aktiviert,
+aber der Bereich bleibt sichtbar.
+*/
+
+source(
+d,
+'youtube'
+);
+
+
+$('ytPlayer'+d).innerHTML=
+
+`
+<iframe
+id="ytFrame${d}"
+src="https://www.youtube.com/embed/${encodeURIComponent(id)}?enablejsapi=1&playsinline=1&rel=0"
+title="YouTube Player"
+allow="autoplay; encrypted-media; picture-in-picture"
+allowfullscreen>
+</iframe>
+`;
+
+
+toast(
+'▶️ YouTube Deck '+d+' geladen'
+);
 
 }
 
 
 function youtubeCommand(
-  deck,
-  func,
-  value
+d,
+func,
+value
 ){
 
-  const frame =
-    $('ytFrame'+deck);
+const f=
+$('ytFrame'+d);
 
-  if(!frame){
+if(!f){
 
-    return toast(
-      '▶️ YouTube-Titel laden'
-    );
+toast(
+'▶️ Zuerst YouTube-Titel laden'
+);
 
-  }
+return;
 
-  frame.contentWindow.postMessage(
+}
 
-    JSON.stringify({
-
-      event:
-        'command',
-
-      func:
-        func,
-
-      args:
-        value === undefined
-          ? []
-          : [value]
-
-    }),
-
-    'https://www.youtube.com'
-
-  );
+f.contentWindow.postMessage(
+JSON.stringify({
+event:'command',
+func:func,
+args:
+value===undefined
+?[]
+:[value]
+}),
+'https://www.youtube.com'
+);
 
 }
 
 
-function toggleYouTube(deck){
+function toggleYouTube(d){
 
-  const x =
-    decks[deck];
+const x=
+decks[d];
 
-  if(!x.song)
-    return loadYouTube(deck);
+if(!x.song){
 
-  youtubeCommand(
-    deck,
-    x.playing
-      ? 'pauseVideo'
-      : 'playVideo'
-  );
+loadYouTube(d);
 
-  x.playing =
-    !x.playing;
+return;
 
-  $('status'+deck)
-    .textContent =
-    x.playing
-      ? 'PLAY'
-      : 'PAUSE';
+}
+
+youtubeCommand(
+d,
+x.playing
+?'pauseVideo'
+:'playVideo'
+);
+
+x.playing=
+!x.playing;
+
+$('status'+d).textContent=
+x.playing
+?'PLAY'
+:'PAUSE';
 
 }
 
 
-/* =========================
-   AI DJ
-========================= */
+/* AI */
 
 async function aiTransition(){
 
-  try{
+try{
 
-    const response =
-      await fetch(
-        '/api/ai-dj',
-        {
-          method:'POST',
+const r=
+await fetch(
+'/api/ai-dj',
+{
+method:'POST',
+headers:{
+'Content-Type':
+'application/json'
+},
+body:
+JSON.stringify({
 
-          headers:{
-            'Content-Type':
-              'application/json'
-          },
+mode:
+state.mode||'manual',
 
-          body:
-            JSON.stringify({
+deckA:{
+source:
+decks.A.source,
 
-              mode:
-                state.mode ||
-                'manual',
+title:
+decks.A.source==='youtube'
+?
+'YouTube: '+
+(
+decks.A.song?.youtubeId||''
+)
+:
+decks.A.song?.attributes?.name||
+decks.A.audio?.src||
+null
+},
 
-              deckA:{
-                source:
-                  decks.A.source,
+deckB:{
+source:
+decks.B.source,
 
-                title:
-                  decks.A.source === 'youtube'
-                    ? 'YouTube: ' +
-                      (
-                        decks.A.song
-                          ?.youtubeId ||
-                        ''
-                      )
-                    : decks.A.song
-                        ?.attributes
-                        ?.name ||
-                      decks.A.audio
-                        ?.src ||
-                      null
-              },
+title:
+decks.B.source==='youtube'
+?
+'YouTube: '+
+(
+decks.B.song?.youtubeId||''
+)
+:
+decks.B.song?.attributes?.name||
+decks.B.audio?.src||
+null
+}
 
-              deckB:{
-                source:
-                  decks.B.source,
+})
+}
+);
 
-                title:
-                  decks.B.source === 'youtube'
-                    ? 'YouTube: ' +
-                      (
-                        decks.B.song
-                          ?.youtubeId ||
-                        ''
-                      )
-                    : decks.B.song
-                        ?.attributes
-                        ?.name ||
-                      decks.B.audio
-                        ?.src ||
-                      null
-              }
+if(!r.ok)
+throw Error();
 
-            })
+const j=
+await r.json();
 
-        }
-      );
+console.log(
+j.plan
+);
 
-    if(!response.ok)
-      throw Error();
+toast(
+'✨ AI-Übergang geplant'
+);
 
-    const json =
-      await response.json();
+}catch(e){
 
-    console.log(
-      json.plan
-    );
+toast(
+'⚠️ AI-Server nicht erreichbar'
+);
 
-    toast(
-      '✨ AI-Übergang geplant'
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    toast(
-      '⚠️ AI-Server nicht erreichbar'
-    );
-
-  }
+}
 
 }
 
 
-/* =========================
-   START
-========================= */
+/* START */
 
-$('volumeDial')
-  .textContent =
-  state.volume ?? 40;
+$('volumeDial').textContent=
+state.volume??40;
 
-$('bassDial')
-  .textContent =
-  state.bass ?? 0;
+$('bassDial').textContent=
+state.bass??0;
 
-$('centerDial')
-  .textContent =
-  state.center ?? 0;
+$('centerDial').textContent=
+state.center??0;
 
-$('rearDial')
-  .textContent =
-  state.rear ?? 0;
+$('rearDial').textContent=
+state.rear??0;
 
-$('input').value =
-  state.input ||
-  'optical';
+$('input').value=
+state.input||'optical';
 
-$('xiao').value =
-  state.xiao ||
-  '';
+$('xiao').value=
+state.xiao||'';
 
 mode(
-  state.mode ||
-  'manual'
+state.mode||'manual'
 );
 
 renderLocal();
 
 renderQueue();
+
+
+/*
+YouTube bleibt beim Start sichtbar.
+*/
+
+source('A','file');
+source('B','file');
 
 </script>
 
