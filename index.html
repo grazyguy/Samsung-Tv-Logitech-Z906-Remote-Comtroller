@@ -1,2551 +1,2583 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080a0f">
-<title>Smart Remote</title>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover">
 
-<script src="https://js-cdn.music.apple.com/musickit/v3/musickit.js"></script>
+<meta name="theme-color" content="#090b10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<title>Smart Remote</title>
 
 <style>
 :root{
---bg:#080a0f;
---card:rgba(255,255,255,.075);
---line:rgba(255,255,255,.12);
---muted:#9ca3af;
---accent:#4da3ff;
---danger:#ff526b
+  --bg:#090b10;
+  --card:#141923;
+  --card2:#1c2432;
+  --text:#f5f7fb;
+  --muted:#98a4b5;
+  --accent:#59a8ff;
+  --green:#42d392;
+  --red:#ff6478;
 }
 
 *{
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:
+    radial-gradient(circle at top,#1a2940 0,#090b10 48%);
+  color:var(--text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    Arial,sans-serif;
 }
 
 body{
-margin:0;
-background:var(--bg);
-color:#fff;
-font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif
+  padding-bottom:95px;
 }
 
-button,input,select{
-font:inherit
+.wrap{
+  width:100%;
+  max-width:900px;
+  margin:auto;
+  padding:18px 14px 30px;
 }
 
-button{
-border:0;
-color:#fff
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
 }
 
-.bg{
-position:fixed;
-inset:-30px;
-z-index:0;
-background:
-radial-gradient(circle at 15% 10%,rgba(77,163,255,.22),transparent 35%),
-radial-gradient(circle at 85% 80%,rgba(120,70,255,.18),transparent 35%),
-linear-gradient(145deg,#080a0f,#101521);
-filter:blur(var(--blur,0px));
-transform:scale(1.04)
-}
-
-.app{
-position:relative;
-z-index:1;
-max-width:900px;
-margin:auto;
-min-height:100vh;
-padding:calc(18px + env(safe-area-inset-top)) 16px calc(105px + env(safe-area-inset-bottom))
-}
-
-.head{
-display:flex;
-gap:13px;
-align-items:center;
-margin-bottom:18px
+.title{
+  font-size:27px;
+  font-weight:800;
 }
 
 .logo{
-width:55px;
-height:55px;
-border-radius:17px;
-display:grid;
-place-items:center;
-font-size:26px;
-background:#151d2b;
-border:1px solid var(--line)
+  font-size:30px;
 }
 
-h1{
-font-size:23px;
-margin:0
+.small{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.card{
+  background:rgba(20,25,35,.92);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:20px;
+  padding:16px;
+  margin:12px 0;
+  box-shadow:0 12px 35px rgba(0,0,0,.22);
+  backdrop-filter:blur(15px);
 }
 
 h2{
-font-size:17px;
-margin:0 0 13px
+  margin:0 0 13px;
+  font-size:18px;
 }
 
-.muted,.small{
-color:var(--muted);
-font-size:13px
+h3{
+  margin:0 0 10px;
 }
 
-.page{
-display:none
-}
-
-.page.active{
-display:block
-}
-
-.card,.deck{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:20px;
-padding:16px;
-margin-bottom:14px;
-backdrop-filter:blur(18px)
-}
-
-.grid2,.deckgrid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
 }
 
 .grid3{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
 }
 
-.btn,.appbtn,.mode,.decksrc button,.mini{
-background:rgba(255,255,255,.08);
-border:1px solid var(--line);
-border-radius:13px;
-min-height:46px;
-padding:10px
+.btn,
+.input,
+.select{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:14px 12px;
+  font-size:15px;
+  font-weight:650;
+  color:var(--text);
+  background:var(--card2);
 }
 
-.btn.primary,.mode.active{
-background:var(--accent)
+.btn{
+  cursor:pointer;
+  transition:.12s;
 }
 
-.btn.danger{
-background:rgba(255,82,107,.15);
-color:#ff8795
+.btn:active{
+  transform:scale(.97);
 }
 
-.appbtn{
-min-height:82px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:5px
+.btn.active{
+  outline:2px solid var(--accent);
+  background:#243957;
 }
 
-.appbtn b{
-font-size:26px
+.btn.green{
+  background:#163829;
 }
 
-.remote{
-max-width:420px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:9px
+.btn.red{
+  background:#382029;
 }
 
-.remote button{
-min-height:52px;
-background:rgba(255,255,255,.08);
-border:1px solid var(--line);
-border-radius:14px
+.input{
+  outline:none;
+  border:1px solid rgba(255,255,255,.08);
+  font-weight:500;
 }
 
-.wide{
-grid-column:span 3
-}
-
-.power{
-color:#ff7182!important
-}
-
-.ok{
-background:rgba(77,163,255,.18)!important
-}
-
-.knobs{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px
-}
-
-.knob{
-width:105px;
-height:105px;
-border-radius:50%;
-margin:auto;
-background:conic-gradient(var(--accent) 0 110deg,#273044 110deg);
-padding:6px
-}
-
-.dial{
-width:100%;
-height:100%;
-border-radius:50%;
-background:#111722;
-display:grid;
-place-items:center;
-font-size:21px;
-font-weight:700
-}
-
-.range{
-width:100%;
-accent-color:var(--accent)
-}
-
-.select,input[type=text],.search{
-width:100%;
-padding:12px;
-border-radius:12px;
-border:1px solid var(--line);
-background:#151b26;
-color:#fff
-}
-
-.nav{
-position:fixed;
-z-index:100;
-left:10px;
-right:10px;
-bottom:calc(8px + env(safe-area-inset-bottom));
-max-width:880px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:5px;
-padding:7px;
-border-radius:21px;
-background:rgba(15,18,26,.9);
-border:1px solid var(--line);
-backdrop-filter:blur(22px)
-}
-
-.nav button{
-min-height:52px;
-border-radius:15px;
-background:transparent;
-color:#8f98a8;
-font-size:10px
-}
-
-.nav button.active{
-background:rgba(77,163,255,.17);
-color:#fff
-}
-
-.deckhead{
-display:flex;
-justify-content:space-between
-}
-
-.track{
-min-height:52px;
-margin:8px 0;
-border-radius:12px;
-background:#090c12;
-padding:12px;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis
-}
-
-.decksrc{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:6px
-}
-
-.decksrc button{
-min-width:0;
-font-size:11px;
-padding:9px 4px;
-border-radius:9px;
-background:#252b38
-}
-
-.decksrc button.active{
-background:#2563eb;
-color:#fff
-}
-
-.filelabel,.applebtn{
-display:block;
-width:100%;
-text-align:center;
-padding:12px;
-border-radius:11px;
-margin-top:8px;
-background:rgba(77,163,255,.13);
-color:#9bd1ff
-}
-
-.filelabel input{
-display:none
-}
-
-.deckbuttons{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:6px;
-margin-top:8px
-}
-
-.deckbuttons button,.mini{
-background:rgba(255,255,255,.08);
-border:1px solid var(--line);
-border-radius:10px;
-min-height:38px
-}
-
-.row{
-display:flex;
-align-items:center;
-gap:8px;
-padding:9px 0;
-border-bottom:1px solid rgba(255,255,255,.07)
-}
-
-.row:last-child{
-border-bottom:0
-}
-
-.name{
-flex:1;
-min-width:0;
-overflow:hidden;
-text-overflow:ellipsis;
-white-space:nowrap;
-font-size:13px
-}
-
-.youtubeBox{
-margin-top:10px;
-padding:12px;
-border-radius:15px;
-background:rgba(239,68,68,.08);
-border:1px solid rgba(239,68,68,.25)
-}
-
-.youtubeTitle{
-font-weight:700;
-margin-bottom:8px
-}
-
-.youtubeInput{
-width:100%;
-height:44px;
-padding:10px 12px;
-border-radius:11px;
-border:1px solid var(--line);
-background:#151b26;
-color:#fff;
-margin-bottom:8px
-}
-
-.youtubeBtn{
-width:100%;
-padding:12px;
-border-radius:11px;
-background:#ef4444;
-color:white;
-font-weight:700
-}
-
-.ytplayer{
-width:100%;
-aspect-ratio:16/9;
-margin-top:10px;
-border-radius:12px;
-overflow:hidden;
-background:#050505
-}
-
-.ytplayer iframe{
-width:100%;
-height:100%;
-border:0
-}
-
-.youtubeHint{
-font-size:11px;
-color:#9ca3af;
-margin-top:7px
-}
-
-.modal{
-display:none;
-position:fixed;
-z-index:500;
-inset:0;
-background:rgba(0,0,0,.68);
-align-items:flex-end
-}
-
-.modal.show{
-display:flex
-}
-
-.panel{
-width:100%;
-max-width:720px;
-max-height:88vh;
-overflow:auto;
-margin:auto auto 0;
-background:#11151e;
-border-radius:24px 24px 0 0;
-padding:17px;
-padding-bottom:calc(25px + env(safe-area-inset-bottom));
-border:1px solid var(--line)
-}
-
-.paneltop{
-display:flex;
-justify-content:space-between;
-align-items:center
-}
-
-.song{
-display:flex;
-align-items:center;
-gap:10px;
-padding:9px;
-border-radius:12px;
-background:rgba(255,255,255,.045);
-margin:5px 0
-}
-
-.art{
-width:48px;
-height:48px;
-border-radius:8px;
-object-fit:cover;
-background:#242a36
-}
-
-.songinfo{
-flex:1;
-min-width:0
-}
-
-.songtitle,.songartist{
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis
-}
-
-.songtitle{
-font-size:13px;
-font-weight:650
-}
-
-.songartist{
-font-size:11px;
-color:var(--muted);
-margin-top:3px
+.select{
+  appearance:auto;
 }
 
 .status{
-font-size:12px;
-color:#9bd1ff;
-padding:9px;
-border-radius:10px;
-background:rgba(77,163,255,.08);
-margin:10px 0
+  background:#0d1119;
+  border-radius:12px;
+  padding:10px;
+  margin:8px 0;
+  color:var(--muted);
+  font-size:13px;
 }
 
-#toast{
-position:fixed;
-z-index:700;
-left:50%;
-bottom:95px;
-transform:translate(-50%,20px);
-opacity:0;
-padding:11px 15px;
-border-radius:13px;
-background:#171c27;
-border:1px solid var(--line);
-transition:.2s;
-font-size:13px;
-pointer-events:none
+.bigVolume{
+  text-align:center;
+  padding:7px 0 15px;
 }
 
-.showtoast{
-opacity:1!important;
-transform:translate(-50%,0)!important
+.bigVolume .number{
+  font-size:44px;
+  font-weight:800;
 }
 
-@media(max-width:700px){
+.slider{
+  width:100%;
+  accent-color:var(--accent);
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.nav{
+  position:fixed;
+  z-index:50;
+  bottom:0;
+  left:0;
+  right:0;
+
+  display:flex;
+  justify-content:center;
+  gap:4px;
+
+  padding:
+    8px
+    8px
+    calc(8px + env(safe-area-inset-bottom));
+
+  background:rgba(10,13,19,.96);
+  border-top:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(18px);
+}
+
+.nav button{
+  flex:1;
+  max-width:140px;
+  border:0;
+  background:none;
+  color:#8792a3;
+  padding:7px 3px;
+  border-radius:12px;
+  font-size:11px;
+}
+
+.nav button.active{
+  background:#1b2638;
+  color:white;
+}
+
+.nav span{
+  display:block;
+  font-size:20px;
+  margin-bottom:2px;
+}
+
+.remote{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.remote .wide{
+  grid-column:span 3;
+}
+
+.remote .center{
+  grid-column:2;
+}
+
+.remote button{
+  min-height:55px;
+}
+
+.circle{
+  border-radius:50%;
+  min-height:72px!important;
+}
+
 .deckgrid{
-grid-template-columns:1fr
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
 
-.knobs{
-grid-template-columns:1fr 1fr
+.deck{
+  background:#0f141e;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  padding:13px;
 }
 
-.grid3{
-grid-template-columns:1fr 1fr
-}
+.ytbox{
+  margin-top:9px;
+  overflow:hidden;
+  border-radius:14px;
+  background:#000;
 }
 
-@media(min-width:701px){
-.deckgrid{
-grid-template-columns:1fr 1fr
+.ytbox iframe{
+  display:block;
+  width:100%;
+  aspect-ratio:16/9;
+  border:0;
 }
+
+.queueItem{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.queueItem:last-child{
+  border-bottom:0;
+}
+
+.queueName{
+  flex:1;
+  font-size:13px;
+}
+
+.toast{
+  position:fixed;
+  z-index:100;
+  left:50%;
+  bottom:100px;
+
+  transform:
+    translateX(-50%)
+    translateY(20px);
+
+  max-width:90%;
+
+  background:#f5f7fb;
+  color:#10131a;
+
+  padding:11px 15px;
+  border-radius:14px;
+
+  font-weight:700;
+  text-align:center;
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:.2s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+@media(max-width:650px){
+
+  .deckgrid{
+    grid-template-columns:1fr;
+  }
+
+  .title{
+    font-size:23px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg" id="bg"></div>
+<div class="wrap">
 
-<main class="app">
+<!-- HEADER -->
 
-<header class="head">
-<div class="logo">📺🔊</div>
-<div>
-<h1>Smart Remote</h1>
-<div class="muted">Samsung TV • Logitech Z906</div>
+<div class="top">
+
+  <div>
+    <div class="title">🎛️ Smart Remote</div>
+    <div class="small">
+      Samsung TV • Logitech Z906 • DJ Mixer
+    </div>
+  </div>
+
+  <div class="logo">⚡</div>
+
 </div>
-</header>
 
 
-<!-- HOME -->
+<!-- ================= HOME ================= -->
+
 <section id="home" class="page active">
 
-<div class="card">
-<h2>Meine Geräte</h2>
+  <div class="card">
 
-<div class="grid2">
+    <h2>🏠 Steuerzentrale</h2>
 
-<div class="card" style="margin:0">
-📺<br>
-<b>Samsung TV</b>
-<div class="small">● Bereit</div>
-</div>
+    <div class="grid2">
 
-<div class="card" style="margin:0">
-🔊<br>
-<b>Logitech Z906</b>
-<div class="small">● Bereit</div>
-</div>
+      <button class="btn"
+              onclick="showPage('tv')">
+        📺 Samsung TV
+      </button>
 
-</div>
-</div>
+      <button class="btn"
+              onclick="showPage('z906')">
+        🔊 Logitech Z906
+      </button>
+
+      <button class="btn"
+              onclick="showPage('mixer')">
+        🎧 DJ Mixer
+      </button>
+
+      <button class="btn"
+              onclick="showPage('settings')">
+        ⚙️ Einstellungen
+      </button>
+
+    </div>
+
+  </div>
 
 
-<div class="card">
-<h2>Apps & Entertainment</h2>
+  <div class="card">
 
-<div class="grid3">
+    <h2>📡 XIAO Verbindung</h2>
 
-<button class="appbtn" onclick="tvApp('Netflix')">
-<b>🎬</b>Netflix
-</button>
+    <div id="connectionStatus"
+         class="status">
+      XIAO: nicht getestet
+    </div>
 
-<button class="appbtn" onclick="tvApp('YouTube')">
-<b>▶️</b>YouTube
-</button>
+    <button class="btn"
+            onclick="testXiao()">
+      🔌 Verbindung testen
+    </button>
 
-<button class="appbtn" onclick="tvApp('Prime Video')">
-<b>📦</b>Prime
-</button>
-
-<button class="appbtn" onclick="tvApp('Spotify')">
-<b>🎵</b>Spotify
-</button>
-
-<button class="appbtn" onclick="showPage('z906')">
-<b>🔊</b>Z906
-</button>
-
-<button class="appbtn" onclick="showPage('mixer')">
-<b>🎧</b>AI DJ
-</button>
-
-</div>
-</div>
+  </div>
 
 </section>
 
 
-<!-- TV -->
+
+<!-- ================= SAMSUNG TV ================= -->
+
 <section id="tv" class="page">
 
-<div class="card">
-<h2>📺 Samsung TV</h2>
+  <div class="card">
 
-<div class="remote">
+    <h2>📺 Samsung TV</h2>
 
-<button class="power" onclick="sendCommand('TV_POWER')">⏻</button>
-<button onclick="sendCommand('TV_SOURCE')">SOURCE</button>
-<button onclick="sendCommand('TV_MENU')">MENU</button>
+    <div class="status">
+      Samsung TV Fernbedienung
+    </div>
 
-<button onclick="sendCommand('TV_UP')">▲</button>
-<button class="ok" onclick="sendCommand('TV_OK')">OK</button>
-<button onclick="sendCommand('TV_DOWN')">▼</button>
+    <div class="remote">
 
-<button onclick="sendCommand('TV_LEFT')">◀</button>
-<button onclick="sendCommand('TV_HOME')">⌂</button>
-<button onclick="sendCommand('TV_RIGHT')">▶</button>
+      <button class="btn"
+              onclick="sendCommand('TV_POWER')">
+        ⏻ Power
+      </button>
 
-<button onclick="sendCommand('TV_VOL_DOWN')">VOL −</button>
-<button onclick="sendCommand('TV_MUTE')">🔇</button>
-<button onclick="sendCommand('TV_VOL_UP')">VOL +</button>
+      <button class="btn"
+              onclick="sendCommand('TV_SOURCE')">
+        📺 Source
+      </button>
 
-<button class="wide" onclick="sendCommand('TV_BACK')">
-↩ Zurück
-</button>
+      <button class="btn"
+              onclick="sendCommand('TV_MUTE')">
+        🔇 Mute
+      </button>
 
-</div>
-</div>
+
+      <button class="btn"
+              onclick="sendCommand('TV_VOL_DOWN')">
+        🔉 Vol −
+      </button>
+
+      <button class="btn"
+              onclick="sendCommand('TV_VOL_UP')">
+        🔊 Vol +
+      </button>
+
+      <button class="btn"
+              onclick="sendCommand('TV_CH_DOWN')">
+        CH −
+      </button>
+
+
+      <button class="btn"
+              onclick="sendCommand('TV_CH_UP')">
+        CH +
+      </button>
+
+      <button class="btn circle"
+              onclick="sendCommand('TV_ENTER')">
+        OK
+      </button>
+
+      <button class="btn"
+              onclick="sendCommand('TV_BACK')">
+        ↩ Zurück
+      </button>
+
+
+      <button class="btn"
+              onclick="sendCommand('TV_LEFT')">
+        ◀
+      </button>
+
+      <button class="btn"
+              onclick="sendCommand('TV_UP')">
+        ▲
+      </button>
+
+      <button class="btn"
+              onclick="sendCommand('TV_RIGHT')">
+        ▶
+      </button>
+
+
+      <button class="btn center"
+              onclick="sendCommand('TV_DOWN')">
+        ▼
+      </button>
+
+      <button class="btn"
+              onclick="sendCommand('TV_PLAY')">
+        ▶/Ⅱ
+      </button>
+
+      <button class="btn"
+              onclick="sendCommand('TV_HOME')">
+        ⌂ Home
+      </button>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- Z906 -->
+
+<!-- ================= Z906 ================= -->
+
 <section id="z906" class="page">
 
-<div class="card">
+  <div class="card">
 
-<h2>🔊 Logitech Z906</h2>
+    <h2>🔊 Logitech Z906</h2>
 
-<div class="knobs">
+    <div class="bigVolume">
 
-<div>
-<button class="knob" onclick="changeZ('volume',5)">
-<div class="dial" id="volumeDial">40</div>
-</button>
-<div class="small" style="text-align:center">Volume</div>
-</div>
+      <div class="small">
+        LAUTSTÄRKE
+      </div>
 
-<div>
-<button class="knob" onclick="changeZ('bass',1)">
-<div class="dial" id="bassDial">0</div>
-</button>
-<div class="small" style="text-align:center">Bass</div>
-</div>
+      <div id="volumeValue"
+           class="number">
+        40
+      </div>
 
-<div>
-<button class="knob" onclick="changeZ('center',1)">
-<div class="dial" id="centerDial">0</div>
-</button>
-<div class="small" style="text-align:center">Center</div>
-</div>
-
-<div>
-<button class="knob" onclick="changeZ('rear',1)">
-<div class="dial" id="rearDial">0</div>
-</button>
-<div class="small" style="text-align:center">Rear</div>
-</div>
-
-</div>
-</div>
+    </div>
 
 
-<div class="card">
+    <div class="grid2">
 
-<h2>Eingang</h2>
+      <button class="btn"
+              onclick="z906Volume(-1)">
+        🔉 Leiser −1
+      </button>
 
-<select id="input" class="select" onchange="setInput(this.value)">
-<option value="optical">Optical</option>
-<option value="coax">Coax</option>
-<option value="6ch">6 Channel</option>
-<option value="stereo">Stereo</option>
-</select>
+      <button class="btn"
+              onclick="z906Volume(1)">
+        🔊 Lauter +1
+      </button>
 
-</div>
+      <button class="btn"
+              onclick="sendCommand('Z906_MUTE')">
+        🔇 Mute
+      </button>
+
+    </div>
+
+  </div>
 
 
-<div class="card">
+  <div class="card">
 
-<div class="grid2">
+    <h2>🎛️ Sound-Modus</h2>
 
-<button class="btn" onclick="z906Volume(-5)">
-🔉 Leiser
-</button>
+    <div class="grid2">
 
-<button class="btn" onclick="z906Volume(5)">
-🔊 Lauter
-</button>
+      <button id="zmode_3d"
+              class="btn"
+              onclick="z906Effect('3d')">
+        🌐 3D
+      </button>
 
-<button class="btn" onclick="sendCommand('Z906_MUTE')">
-🔇 Mute
-</button>
+      <button id="zmode_4_1"
+              class="btn"
+              onclick="z906Effect('4.1')">
+        🔊 4.1
+      </button>
 
-<button class="btn" onclick="sendCommand('Z906_3D')">
-🌐 3D
-</button>
+      <button id="zmode_2_1"
+              class="btn"
+              onclick="z906Effect('2.1')">
+        🔈 2.1
+      </button>
 
-</div>
-</div>
+      <button id="zmode_none"
+              class="btn"
+              onclick="z906Effect('none')">
+        🎚️ Kein Effekt
+      </button>
+
+    </div>
+
+    <div class="small"
+         style="margin-top:10px">
+
+      „Kein Effekt“ ist beim Z906
+      für 6-Kanal-Eingang vorgesehen.
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>🎚️ Eingang</h2>
+
+    <select id="input"
+            class="select"
+            onchange="setInput(this.value)">
+
+      <option value="optical">
+        Optical
+      </option>
+
+      <option value="coax">
+        Coax
+      </option>
+
+      <option value="6ch">
+        6 Channel
+      </option>
+
+      <option value="stereo">
+        Stereo
+      </option>
+
+      <option value="aux">
+        AUX
+      </option>
+
+    </select>
+
+  </div>
 
 </section>
 
 
-<!-- MIXER -->
+
+<!-- ================= MIXER ================= -->
+
 <section id="mixer" class="page">
 
-<div class="card">
+  <div class="card">
 
-<h2>🎧 Smart AI DJ</h2>
+    <h2>🎧 DJ Mixer</h2>
 
-<div class="grid3">
+    <div class="small">
 
-<button class="mode active" data-mode="manual" onclick="mode('manual')">
-Manual
-</button>
+      YouTube Deck A + Deck B.
+      Crossfader und automatischer Übergang.
 
-<button class="mode" data-mode="ai" onclick="mode('ai')">
-AI Assist
-</button>
+    </div>
 
-<button class="mode" data-mode="auto" onclick="mode('auto')">
-Auto DJ
-</button>
 
-</div>
-</div>
+    <div style="margin-top:14px">
 
+      <div class="row">
 
-<!-- LOKALE MUSIK -->
-<div class="card">
+        <span class="small">A</span>
 
-<h2>🎵 Lokale Musik</h2>
+        <input id="cross"
+               class="slider"
+               type="range"
+               min="0"
+               max="100"
+               value="50"
+               oninput="applyCrossfade(this.value)">
 
-<label class="filelabel">
+        <span class="small">B</span>
 
-📁 Audiodateien aus Dateien auswählen
+      </div>
 
-<input
-type="file"
-accept="audio/*,.mp3,.m4a,.wav,.aac,.flac,.ogg"
-multiple
-onchange="addLocal(this)"
->
+    </div>
 
-</label>
 
-<div id="localList" style="margin-top:8px"></div>
+    <button class="btn green"
+            style="margin-top:12px"
+            onclick="aiTransition()">
 
-</div>
+      🤖 KI-Übergang A → B
 
+    </button>
 
-<!-- DECKS -->
-<div class="deckgrid">
+  </div>
 
 
-<!-- DECK A -->
-<div class="deck">
 
-<div class="deckhead">
-<b>DECK A</b>
-<span class="small" id="statusA">STOP</span>
-</div>
+  <!-- DECKS -->
 
-<div class="track" id="trackA">
-Kein Titel
-</div>
+  <div class="deckgrid">
 
 
-<div class="decksrc">
+    <!-- DECK A -->
 
-<button
-id="srcAF"
-class="active"
-onclick="source('A','file')">
-📁 Dateien
-</button>
+    <div class="deck">
 
-<button
-id="srcAA"
-onclick="source('A','apple')">
-🍎 Apple Music
-</button>
+      <h3>🅰️ Deck A</h3>
 
-<button
-id="srcAY"
-onclick="source('A','youtube')">
-▶️ YouTube
-</button>
+      <div id="trackA"
+           class="status">
+        Kein Titel
+      </div>
 
-</div>
+      <div id="statusA"
+           class="status">
+        STOP
+      </div>
 
 
-<!-- DATEI A -->
-<div id="fileA">
+      <input id="youtubeUrlA"
+             class="input"
+             placeholder="YouTube-Link für Deck A">
 
-<label class="filelabel">
 
-📂 Datei für A
+      <button class="btn"
+              style="margin-top:8px"
+              onclick="loadYouTube('A')">
 
-<input
-type="file"
-accept="audio/*"
-onchange="loadFile('A',this)"
->
+        ▶️ YouTube laden
 
-</label>
+      </button>
 
-</div>
 
+      <div id="ytPlayerA"
+           class="ytbox">
+      </div>
 
-<!-- APPLE A -->
-<div id="appleA" style="display:none">
 
-<button class="applebtn" onclick="openApple('A')">
+      <div class="grid2"
+           style="margin-top:8px">
 
-🍎 Apple-Music-Titel wählen
+        <button class="btn"
+                onclick="toggleYouTube('A')">
+          ▶/Ⅱ
+        </button>
 
-</button>
+        <button class="btn"
+                onclick="youtubeMute('A')">
+          🔇
+        </button>
 
-</div>
+        <button class="btn"
+                onclick="changeDeckGain('A',-1)">
+          🔉 −
+        </button>
 
+        <button class="btn"
+                onclick="changeDeckGain('A',1)">
+          🔊 +
+        </button>
 
-<!-- YOUTUBE A IST JETZT SICHTBAR -->
-<div id="youtubeA" class="youtubeBox">
+        <button class="btn"
+                onclick="addYouTubeToQueue('A')">
+          ➕ Queue
+        </button>
 
-<div class="youtubeTitle">
-▶️ YouTube – Deck A
-</div>
+      </div>
 
-<input
-id="youtubeUrlA"
-class="youtubeInput"
-type="text"
-placeholder="YouTube-Link hier einfügen"
-autocomplete="off"
->
 
-<button
-class="youtubeBtn"
-onclick="loadYouTube('A')">
+      <div class="small"
+           style="margin-top:8px">
 
-▶️ YouTube-Titel laden
+        Gain:
+        <span id="gainA">0</span> dB
 
-</button>
+      </div>
 
-<div class="youtubeHint">
-Beispiel: https://www.youtube.com/watch?v=...
-</div>
+    </div>
 
-<div
-id="ytPlayerA"
-class="ytplayer">
-</div>
 
-</div>
 
+    <!-- DECK B -->
 
-<div class="deckbuttons">
+    <div class="deck">
 
-<button onclick="cue('A')">
-CUE
-</button>
+      <h3>🅱️ Deck B</h3>
 
-<button onclick="playDeck('A')">
-▶/⏸
-</button>
+      <div id="trackB"
+           class="status">
+        Kein Titel
+      </div>
 
-<button onclick="sync('A')">
-SYNC
-</button>
+      <div id="statusB"
+           class="status">
+        STOP
+      </div>
 
-</div>
 
+      <input id="youtubeUrlB"
+             class="input"
+             placeholder="YouTube-Link für Deck B">
 
-<div class="small">
-Gain
-</div>
 
-<input
-class="range"
-type="range"
-min="-12"
-max="12"
-value="0"
-oninput="gain('A',this.value)"
->
+      <button class="btn"
+              style="margin-top:8px"
+              onclick="loadYouTube('B')">
 
+        ▶️ YouTube laden
 
-<div class="small">
-Filter
-</div>
+      </button>
 
-<input
-class="range"
-type="range"
-min="-100"
-max="100"
-value="0"
-oninput="filter('A',this.value)"
->
 
-</div>
+      <div id="ytPlayerB"
+           class="ytbox">
+      </div>
 
 
-<!-- DECK B -->
-<div class="deck">
+      <div class="grid2"
+           style="margin-top:8px">
 
-<div class="deckhead">
-<b>DECK B</b>
-<span class="small" id="statusB">STOP</span>
-</div>
+        <button class="btn"
+                onclick="toggleYouTube('B')">
+          ▶/Ⅱ
+        </button>
 
-<div class="track" id="trackB">
-Kein Titel
-</div>
+        <button class="btn"
+                onclick="youtubeMute('B')">
+          🔇
+        </button>
 
+        <button class="btn"
+                onclick="changeDeckGain('B',-1)">
+          🔉 −
+        </button>
 
-<div class="decksrc">
+        <button class="btn"
+                onclick="changeDeckGain('B',1)">
+          🔊 +
+        </button>
 
-<button
-id="srcBF"
-class="active"
-onclick="source('B','file')">
-📁 Dateien
-</button>
+        <button class="btn"
+                onclick="addYouTubeToQueue('B')">
+          ➕ Queue
+        </button>
 
-<button
-id="srcBA"
-onclick="source('B','apple')">
-🍎 Apple Music
-</button>
+      </div>
 
-<button
-id="srcBY"
-onclick="source('B','youtube')">
-▶️ YouTube
-</button>
 
-</div>
+      <div class="small"
+           style="margin-top:8px">
 
+        Gain:
+        <span id="gainB">0</span> dB
 
-<!-- DATEI B -->
-<div id="fileB">
+      </div>
 
-<label class="filelabel">
+    </div>
 
-📂 Datei für B
+  </div>
 
-<input
-type="file"
-accept="audio/*"
-onchange="loadFile('B',this)"
->
 
-</label>
 
-</div>
+  <!-- LOCAL FILES -->
 
+  <div class="card">
 
-<!-- APPLE B -->
-<div id="appleB" style="display:none">
+    <h2>📁 Lokale Musik</h2>
 
-<button class="applebtn" onclick="openApple('B')">
+    <input id="fileInput"
+           class="input"
+           type="file"
+           accept="audio/*"
+           multiple
+           onchange="handleFiles(this.files)">
 
-🍎 Apple-Music-Titel wählen
+    <div id="localStatus"
+         class="status">
 
-</button>
+      Keine Dateien geladen
 
-</div>
+    </div>
 
+  </div>
 
-<!-- YOUTUBE B IST JETZT SICHTBAR -->
-<div id="youtubeB" class="youtubeBox">
 
-<div class="youtubeTitle">
-▶️ YouTube – Deck B
-</div>
 
-<input
-id="youtubeUrlB"
-class="youtubeInput"
-type="text"
-placeholder="YouTube-Link hier einfügen"
-autocomplete="off"
->
+  <!-- APPLE MUSIC -->
 
-<button
-class="youtubeBtn"
-onclick="loadYouTube('B')">
+  <div class="card">
 
-▶️ YouTube-Titel laden
+    <h2>🍎 Apple Music</h2>
 
-</button>
+    <div class="status">
 
-<div class="youtubeHint">
-Beispiel: https://www.youtube.com/watch?v=...
-</div>
+      Apple MusicKit braucht eine
+      korrekt konfigurierte MusicKit-Umgebung.
 
-<div
-id="ytPlayerB"
-class="ytplayer">
-</div>
+    </div>
 
-</div>
+    <button class="btn"
+            onclick="toast('🍎 Apple MusicKit muss noch konfiguriert werden.')">
 
+      🍎 Apple Music
 
-<div class="deckbuttons">
+    </button>
 
-<button onclick="cue('B')">
-CUE
-</button>
+  </div>
 
-<button onclick="playDeck('B')">
-▶/⏸
-</button>
 
-<button onclick="sync('B')">
-SYNC
-</button>
 
-</div>
+  <!-- AUDIO OUTPUT -->
 
+  <div class="card">
 
-<div class="small">
-Gain
-</div>
+    <h2>🔊 Audio-Ausgabe</h2>
 
-<input
-class="range"
-type="range"
-min="-12"
-max="12"
-value="0"
-oninput="gain('B',this.value)"
->
+    <div id="audioOutputStatus"
+         class="status">
 
+      📱 iPhone / iOS-Standardausgabe
 
-<div class="small">
-Filter
-</div>
+    </div>
 
-<input
-class="range"
-type="range"
-min="-100"
-max="100"
-value="0"
-oninput="filter('B',this.value)"
->
+    <button class="btn"
+            onclick="chooseAudioOutput()">
 
-</div>
+      🔄 Ausgabegerät wählen
 
-</div>
+    </button>
 
 
-<!-- CROSS FADER -->
-<div class="card">
+    <button class="btn"
+            style="margin-top:8px"
+            onclick="showIOSAudioHelp()">
 
-<h2>↔️ Crossfader</h2>
+      📱 iPhone-Ausgabe wechseln
 
-<input
-class="range"
-id="cross"
-type="range"
-min="0"
-max="100"
-value="50"
-oninput="crossfade(this.value)"
->
+    </button>
 
-<div style="display:flex;justify-content:space-between" class="small">
-<span>A</span>
-<span>B</span>
-</div>
 
-</div>
+    <div class="small"
+         style="margin-top:8px">
 
+      Kontrollzentrum →
+      AirPlay/Ausgabe →
+      gewünschtes Gerät auswählen.
 
-<!-- AI -->
-<div class="card">
+    </div>
 
-<h2>🧠 AI Transition</h2>
+  </div>
 
-<button
-class="btn primary"
-style="width:100%"
-onclick="aiTransition()">
 
-✨ Übergang planen
 
-</button>
+  <!-- QUEUE -->
 
-</div>
+  <div class="card">
 
+    <h2>📋 Queue</h2>
 
-<!-- QUEUE -->
-<div class="card">
+    <div id="queue">
 
-<h2>📋 Queue</h2>
+      <div class="small">
+        Queue ist leer.
+      </div>
 
-<div id="queue">
-<div class="small">
-Noch keine Titel
-</div>
-</div>
+    </div>
 
-</div>
+
+    <button class="btn red"
+            onclick="clearQueue()">
+
+      🗑️ Queue leeren
+
+    </button>
+
+  </div>
 
 </section>
 
 
-<!-- SETTINGS -->
+
+<!-- ================= SETTINGS ================= -->
+
 <section id="settings" class="page">
 
-<div class="card">
+  <div class="card">
 
-<h2>⚙️ Einstellungen</h2>
+    <h2>⚙️ XIAO Smart IR Mate</h2>
 
-<label class="small">
-XIAO IP
-</label>
+    <div class="small">
 
-<input
-id="xiao"
-type="text"
-placeholder="192.168.1.50"
-onchange="save()"
->
+      IP-Adresse des XIAO eingeben.
 
-<br><br>
+      Beispiel:
+      192.168.1.50
 
-<label class="small">
-Blur
-</label>
-
-<input
-class="range"
-type="range"
-min="0"
-max="20"
-value="0"
-oninput="document.documentElement.style.setProperty('--blur',this.value+'px')"
->
-
-</div>
+    </div>
 
 
-<div class="card">
+    <input id="xiaoIp"
+           class="input"
+           style="margin-top:10px"
+           placeholder="http://192.168.1.50">
 
-<button
-class="btn danger"
-style="width:100%"
-onclick="localStorage.clear();location.reload()">
 
-🗑️ Zurücksetzen
+    <button class="btn"
+            style="margin-top:9px"
+            onclick="saveSettings()">
 
-</button>
+      💾 Speichern
 
-</div>
+    </button>
+
+
+    <button class="btn"
+            style="margin-top:9px"
+            onclick="testXiao()">
+
+      🔌 Verbindung testen
+
+    </button>
+
+
+    <div class="status">
+
+      Die App sendet Befehle an:
+
+      <br><br>
+
+      <b>POST /command</b>
+
+      <br><br>
+
+      mit:
+
+      <br>
+
+      {"command":"TV_POWER"}
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>📱 iPhone</h2>
+
+    <div class="small">
+
+      Diese Datei kannst du später als
+      GitHub Pages Web-App verwenden und
+      zum Home-Bildschirm hinzufügen.
+
+    </div>
+
+  </div>
 
 </section>
 
-</main>
-
-
-<!-- NAVIGATION -->
-<nav class="nav">
-
-<button
-data-p="home"
-class="active"
-onclick="showPage('home')">
-🏠<br>Home
-</button>
-
-<button
-data-p="tv"
-onclick="showPage('tv')">
-📺<br>TV
-</button>
-
-<button
-data-p="z906"
-onclick="showPage('z906')">
-🔊<br>Z906
-</button>
-
-<button
-data-p="mixer"
-onclick="showPage('mixer')">
-🎵<br>Mixer
-</button>
-
-<button
-data-p="settings"
-onclick="showPage('settings')">
-⚙️<br>Settings
-</button>
-
-</nav>
-
-
-<!-- APPLE MUSIC MODAL -->
-<div id="appleModal" class="modal">
-
-<div class="panel">
-
-<div class="paneltop">
-
-<h2>🍎 Apple Music</h2>
-
-<button
-class="mini"
-onclick="closeApple()">
-✕
-</button>
-
 </div>
 
-<div
-id="appleStatus"
-class="status">
-Noch nicht verbunden.
-</div>
 
-<input
-id="appleSearch"
-class="search"
-placeholder="Titel, Künstler oder Album suchen"
-oninput="filterApple(this.value)"
->
 
-<div id="appleSongs"></div>
+<!-- ================= NAVIGATION ================= -->
 
-</div>
+<div class="nav">
+
+  <button id="nav_home"
+          class="active"
+          onclick="showPage('home')">
+
+    <span>🏠</span>
+    Home
+
+  </button>
+
+
+  <button id="nav_tv"
+          onclick="showPage('tv')">
+
+    <span>📺</span>
+    TV
+
+  </button>
+
+
+  <button id="nav_z906"
+          onclick="showPage('z906')">
+
+    <span>🔊</span>
+    Z906
+
+  </button>
+
+
+  <button id="nav_mixer"
+          onclick="showPage('mixer')">
+
+    <span>🎧</span>
+    Mixer
+
+  </button>
+
+
+  <button id="nav_settings"
+          onclick="showPage('settings')">
+
+    <span>⚙️</span>
+    Settings
+
+  </button>
 
 </div>
 
 
-<div id="toast"></div>
+<div id="toast"
+     class="toast">
+</div>
 
+
+
+<!-- ================= JAVASCRIPT ================= -->
 
 <script>
 
-const state =
-JSON.parse(
-localStorage.getItem('smartRemoteV6') || '{}'
-);
+const STORAGE = "smartRemoteV6";
 
-const decks = {
 
-A:{
-audio:null,
-source:'file',
-song:null,
-gain:0,
-filter:0,
-playing:false
-},
+let state = {
 
-B:{
-audio:null,
-source:'file',
-song:null,
-gain:0,
-filter:0,
-playing:false
-}
+  volume:40,
+
+  z906Effect:"3d",
+
+  xiaoIp:"",
+
+  audioSinkId:""
 
 };
 
-const locals=[];
 
-let queue=[];
+try{
 
-let mk=null;
+  state = {
 
-let appleSongs=[];
+    ...state,
 
-let targetDeck=null;
+    ...JSON.parse(
+      localStorage.getItem(STORAGE) || "{}"
+    )
+
+  };
+
+}catch(e){}
 
 
-const $ = id =>
-document.getElementById(id);
+
+const decks = {
+
+  A:{
+    source:"youtube",
+    song:null,
+    audio:null,
+    gain:0,
+    playing:false,
+    ytReady:false,
+    ytPending:[]
+  },
+
+  B:{
+    source:"youtube",
+    song:null,
+    audio:null,
+    gain:0,
+    playing:false,
+    ytReady:false,
+    ytPending:[]
+  }
+
+};
 
 
-function toast(t){
+let queue = [];
 
-const e=$('toast');
 
-e.textContent=t;
 
-e.classList.add('showtoast');
+function $(id){
 
-clearTimeout(window.tt);
-
-window.tt=setTimeout(
-()=>e.classList.remove('showtoast'),
-2000
-);
+  return document.getElementById(id);
 
 }
+
 
 
 function save(){
 
-state.xiao=$('xiao').value;
-
-localStorage.setItem(
-'smartRemoteV6',
-JSON.stringify(state)
-);
+  localStorage.setItem(
+    STORAGE,
+    JSON.stringify(state)
+  );
 
 }
 
 
-function showPage(p){
 
-document
-.querySelectorAll('.page')
-.forEach(
-x=>x.classList.remove('active')
-);
+function toast(message){
 
-$(p).classList.add('active');
+  const t = $("toast");
 
-document
-.querySelectorAll('.nav button')
-.forEach(
-x=>x.classList.toggle(
-'active',
-x.dataset.p===p
-)
-);
+  t.textContent = message;
 
-window.scrollTo(0,0);
+  t.classList.add("show");
+
+  clearTimeout(window.__toast);
+
+  window.__toast = setTimeout(()=>{
+
+    t.classList.remove("show");
+
+  },2300);
 
 }
 
 
-function sendCommand(c){
 
-console.log('IR',c);
+function showPage(id){
 
-toast('📡 '+c);
-
-}
-
-
-function tvApp(a){
-
-sendCommand(
-'TV_APP_' +
-a.toUpperCase().replaceAll(' ','_')
-);
-
-}
+  document
+    .querySelectorAll(".page")
+    .forEach(p =>
+      p.classList.remove("active")
+    );
 
 
-function z906Volume(d){
+  $(id).classList.add("active");
 
-state.volume=Math.max(
-0,
-Math.min(
-100,
-(state.volume??40)+d
-)
-);
 
-$('volumeDial').textContent=
-state.volume;
+  document
+    .querySelectorAll(".nav button")
+    .forEach(b =>
+      b.classList.remove("active")
+    );
 
-save();
 
-sendCommand(
-d>0
-?'Z906_VOL_UP'
-:'Z906_VOL_DOWN'
-);
+  const nav = $("nav_"+id);
+
+  if(nav){
+
+    nav.classList.add("active");
+
+  }
+
+
+  window.scrollTo({
+
+    top:0,
+
+    behavior:"smooth"
+
+  });
 
 }
 
 
-function changeZ(t,d){
 
-if(t==='volume')
-return z906Volume(d);
-
-state[t]=Math.max(
--10,
-Math.min(
-10,
-(state[t]??0)+d
-)
-);
-
-$(t+'Dial').textContent=
-state[t];
-
-save();
-
-sendCommand(
-'Z906_'+
-t.toUpperCase()
-);
-
-}
+/* ================= XIAO ================= */
 
 
-function setInput(v){
+function sendCommand(command){
 
-state.input=v;
-
-save();
-
-sendCommand(
-'Z906_INPUT_'+
-v.toUpperCase()
-);
-
-}
+  let base =
+    (state.xiaoIp || "")
+    .trim()
+    .replace(/\/+$/,"");
 
 
-function mode(m){
+  if(!base){
 
-document
-.querySelectorAll('.mode')
-.forEach(
-b=>b.classList.toggle(
-'active',
-b.dataset.mode===m
-)
-);
+    toast(
+      "⚠️ Zuerst XIAO-IP eintragen"
+    );
 
-state.mode=m;
+    return;
 
-save();
-
-}
+  }
 
 
-function source(d,s){
+  fetch(
+    base + "/command",
+    {
 
-decks[d].source=s;
+      method:"POST",
 
-$('src'+d+'F')
-.classList.toggle(
-'active',
-s==='file'
-);
+      headers:{
+        "Content-Type":
+          "application/json"
+      },
 
-$('src'+d+'A')
-.classList.toggle(
-'active',
-s==='apple'
-);
+      body:JSON.stringify({
 
-$('src'+d+'Y')
-.classList.toggle(
-'active',
-s==='youtube'
-);
+        command:command
 
-$('file'+d).style.display =
-s==='file'
-?'block'
-:'none';
+      })
 
-$('apple'+d).style.display =
-s==='apple'
-?'block'
-:'none';
+    }
 
-/*
-YouTube bleibt absichtlich IMMER sichtbar.
-Damit der Bereich auf dem iPhone
-nicht verschwindet.
-*/
+  )
 
-$('youtube'+d).style.display='block';
+  .then(r=>{
+
+    if(!r.ok){
+
+      throw new Error(
+        "HTTP "+r.status
+      );
+
+    }
+
+    toast("✅ "+command);
+
+  })
+
+  .catch(()=>{
+
+    toast(
+      "❌ XIAO nicht erreichbar"
+    );
+
+  });
 
 }
 
 
-function loadFile(d,input){
 
-if(!input.files?.[0])
-return;
+async function testXiao(){
 
-const f=input.files[0];
-
-const x=decks[d];
-
-if(x.audio)
-x.audio.pause();
-
-x.source='file';
-
-x.song=null;
-
-x.audio=
-new Audio(
-URL.createObjectURL(f)
-);
-
-x.audio.preload='metadata';
-
-x.audio.addEventListener(
-'ended',
-()=>{
-$('status'+d).textContent='STOP';
-x.playing=false;
-}
-);
-
-$('track'+d).textContent=
-'📁 '+f.name;
-
-$('status'+d).textContent=
-'READY';
-
-source(d,'file');
-
-apply(d);
-
-toast(
-'Deck '+d+' geladen'
-);
-
-}
+  const base =
+    (state.xiaoIp || "")
+    .trim()
+    .replace(/\/+$/,"");
 
 
-function apply(d){
+  if(!base){
 
-const x=decks[d];
+    toast(
+      "⚠️ Keine XIAO-IP eingetragen"
+    );
 
-if(!x.audio)
-return;
+    return;
 
-const g=
-Math.pow(
-10,
-(x.gain||0)/20
-);
+  }
 
-x.audio.volume=
-Math.max(
-0,
-Math.min(
-1,
-.7*g
-)
-);
+
+  $("connectionStatus")
+    .textContent =
+    "XIAO: teste...";
+
+
+  try{
+
+    const r =
+      await fetch(
+        base + "/ping"
+      );
+
+
+    if(!r.ok){
+
+      throw new Error();
+
+    }
+
+
+    $("connectionStatus")
+      .textContent =
+      "XIAO: ✅ verbunden";
+
+
+    toast(
+      "✅ XIAO erreichbar"
+    );
+
+  }catch(e){
+
+    $("connectionStatus")
+      .textContent =
+      "XIAO: ❌ nicht erreichbar";
+
+
+    toast(
+      "❌ XIAO nicht erreichbar"
+    );
+
+  }
 
 }
 
 
-async function playDeck(d){
 
-const x=decks[d];
+function saveSettings(){
 
-if(x.source==='apple'){
+  let ip =
+    $("xiaoIp")
+    .value
+    .trim();
 
-if(!x.song)
-return openApple(d);
 
-return playApple(d);
+  if(
+    ip &&
+    !/^https?:\/\//i.test(ip)
+  ){
 
-}
+    ip = "http://" + ip;
 
-if(x.source==='youtube')
-return toggleYouTube(d);
+  }
 
-if(!x.audio)
-return toast(
-'📁 Titel laden'
-);
 
-if(x.playing){
+  state.xiaoIp = ip;
 
-x.audio.pause();
+  save();
 
-x.playing=false;
-
-$('status'+d).textContent=
-'PAUSE';
-
-}else{
-
-try{
-
-await x.audio.play();
-
-x.playing=true;
-
-$('status'+d).textContent=
-'PLAY';
-
-}catch(e){
-
-toast(
-'⚠️ Wiedergabe nicht möglich'
-);
-
-}
-
-}
+  toast(
+    "💾 XIAO-IP gespeichert"
+  );
 
 }
 
 
-function cue(d){
 
-const x=decks[d];
+/* ================= Z906 ================= */
 
-if(x.source==='apple'){
 
-if(mk)
-try{
-mk.seekToTime(0);
-}catch{}
+function z906Volume(delta){
 
-return toast('🍎 CUE');
+  state.volume =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        (state.volume ?? 40) + delta
+      )
+    );
 
-}
 
-if(x.source==='youtube'){
+  $("volumeValue")
+    .textContent =
+    state.volume;
 
-youtubeCommand(
-d,
-'seekTo',
-0
-);
 
-return toast(
-'▶️ YouTube CUE '+d
-);
+  save();
 
-}
 
-if(x.audio){
-
-x.audio.currentTime=0;
-
-toast(
-'🎧 CUE '+d
-);
-
-}
+  sendCommand(
+    delta > 0
+      ? "Z906_VOL_UP"
+      : "Z906_VOL_DOWN"
+  );
 
 }
 
 
-function sync(d){
 
-const o=
-d==='A'
-?'B'
-:'A';
+function z906Effect(effect){
 
-if(
-decks[d].audio &&
-decks[o].audio
+  const commands = {
+
+    "3d":"Z906_3D",
+
+    "4.1":"Z906_4_1",
+
+    "2.1":"Z906_2_1",
+
+    "none":"Z906_NO_EFFECT"
+
+  };
+
+
+  if(!commands[effect]){
+
+    return;
+
+  }
+
+
+  sendCommand(
+    commands[effect]
+  );
+
+
+  document
+    .querySelectorAll(".zmode")
+    .forEach(
+      b => b.classList.remove("active")
+    );
+
+
+  let id;
+
+
+  if(effect === "3d")
+    id = "zmode_3d";
+
+  if(effect === "4.1")
+    id = "zmode_4_1";
+
+  if(effect === "2.1")
+    id = "zmode_2_1";
+
+  if(effect === "none")
+    id = "zmode_none";
+
+
+  $(id).classList.add("active");
+
+
+  state.z906Effect =
+    effect;
+
+
+  save();
+
+}
+
+
+
+function setInput(value){
+
+  sendCommand(
+    "Z906_INPUT_" +
+    value.toUpperCase()
+  );
+
+}
+
+
+
+/* ================= YOUTUBE ================= */
+
+
+function youtubeId(url){
+
+  try{
+
+    const u =
+      new URL(
+        url.trim()
+      );
+
+
+    const host =
+      u.hostname.toLowerCase();
+
+
+    if(
+      host === "youtu.be" ||
+      host === "www.youtu.be"
+    ){
+
+      return (
+        u.pathname
+        .split("/")
+        .filter(Boolean)[0]
+        || null
+      );
+
+    }
+
+
+    if(
+      host.includes("youtube.com") ||
+      host.includes("youtube-nocookie.com")
+    ){
+
+      if(
+        u.pathname === "/watch"
+      ){
+
+        return u.searchParams
+          .get("v");
+
+      }
+
+
+      if(
+        u.pathname.startsWith(
+          "/shorts/"
+        )
+      ){
+
+        return u.pathname
+          .split("/")[2];
+
+      }
+
+
+      if(
+        u.pathname.startsWith(
+          "/embed/"
+        )
+      ){
+
+        return u.pathname
+          .split("/")[2];
+
+      }
+
+
+      if(
+        u.pathname.startsWith(
+          "/live/"
+        )
+      ){
+
+        return u.pathname
+          .split("/")[2];
+
+      }
+
+    }
+
+  }catch(e){
+
+    return null;
+
+  }
+
+
+  return null;
+
+}
+
+
+
+function loadYouTube(deck){
+
+  const input =
+    $("youtubeUrl"+deck);
+
+
+  const url =
+    input.value.trim();
+
+
+  const id =
+    youtubeId(url);
+
+
+  const x =
+    decks[deck];
+
+
+  if(!id){
+
+    toast(
+      "⚠️ Ungültiger YouTube-Link"
+    );
+
+    return;
+
+  }
+
+
+  x.source = "youtube";
+
+  x.song = {
+
+    youtubeId:id,
+
+    url:url
+
+  };
+
+
+  x.playing = false;
+
+  x.ytReady = false;
+
+  x.ytPending = [];
+
+
+  $("track"+deck)
+    .textContent =
+    "▶️ YouTube • "+id;
+
+
+  $("status"+deck)
+    .textContent =
+    "LADE...";
+
+
+  let origin = "";
+
+
+  if(
+    location.protocol === "http:" ||
+    location.protocol === "https:"
+  ){
+
+    origin =
+      "&origin=" +
+      encodeURIComponent(
+        location.origin
+      );
+
+  }
+
+
+  $("ytPlayer"+deck)
+    .innerHTML = `
+
+      <iframe
+
+        id="ytFrame${deck}"
+
+        src=
+        "https://www.youtube.com/embed/${encodeURIComponent(id)}?enablejsapi=1&playsinline=1&rel=0${origin}"
+
+        title="YouTube Player ${deck}"
+
+        allow=
+        "autoplay; encrypted-media; picture-in-picture; fullscreen"
+
+        allowfullscreen>
+
+      </iframe>
+
+    `;
+
+
+  const frame =
+    $("ytFrame"+deck);
+
+
+  frame.addEventListener(
+    "load",
+    ()=>{
+
+      x.ytReady = true;
+
+
+      $("status"+deck)
+        .textContent =
+        "READY";
+
+
+      const pending =
+        [...x.ytPending];
+
+
+      x.ytPending = [];
+
+
+      pending.forEach(
+        cmd =>
+          youtubeCommand(
+            deck,
+            cmd.func,
+            cmd.value
+          )
+      );
+
+
+      applyCrossfade();
+
+      toast(
+        "▶️ YouTube Deck "+
+        deck+
+        " bereit"
+      );
+
+    },
+    {once:true}
+  );
+
+}
+
+
+
+function youtubeCommand(
+  deck,
+  func,
+  value
 ){
 
-decks[d].audio.currentTime=
-decks[o].audio.currentTime;
-
-toast(
-'🔄 SYNC '+d
-);
-
-}else{
-
-toast(
-'YouTube/Apple Music können hier nicht exakt synchronisiert werden'
-);
-
-}
-
-}
+  const x =
+    decks[deck];
 
 
-function gain(d,v){
-
-decks[d].gain=+v;
-
-apply(d);
-
-}
+  const frame =
+    $("ytFrame"+deck);
 
 
-function filter(d,v){
+  if(!frame){
 
-decks[d].filter=+v;
+    toast(
+      "▶️ Zuerst YouTube laden"
+    );
 
-}
+    return;
 
-
-function crossfade(v){
-
-const x=+v/100;
-
-if(decks.A.audio)
-decks.A.audio.volume=
-Math.cos(x*Math.PI/2)*.7;
-
-if(decks.B.audio)
-decks.B.audio.volume=
-Math.cos((1-x)*Math.PI/2)*.7;
-
-}
+  }
 
 
-/* LOKALE MUSIK */
+  if(!x.ytReady){
 
-function addLocal(input){
+    x.ytPending.push({
 
-[...input.files].forEach(
-f=>{
+      func:func,
 
-if(
-!f.type.startsWith('audio/') &&
-!/\.(mp3|m4a|wav|aac|flac|ogg)$/i
-.test(f.name)
-)
-return;
+      value:value
 
-locals.push(f);
+    });
 
-}
-);
+    return;
 
-input.value='';
+  }
 
-renderLocal();
+
+  const args =
+    value === undefined
+      ? []
+      : Array.isArray(value)
+        ? value
+        : [value];
+
+
+  frame.contentWindow.postMessage(
+
+    JSON.stringify({
+
+      event:"command",
+
+      func:func,
+
+      args:args
+
+    }),
+
+    "https://www.youtube.com"
+
+  );
 
 }
 
 
-function renderLocal(){
 
-$('localList').innerHTML=
+function youtubeSetVolume(
+  deck,
+  volume
+){
 
-locals.map(
-(f,i)=>`
-
-<div class="row">
-
-<div class="name">
-🎵 ${esc(f.name)}
-</div>
-
-<button
-class="mini"
-onclick="loadLocal(${i},'A')">
-A
-</button>
-
-<button
-class="mini"
-onclick="loadLocal(${i},'B')">
-B
-</button>
-
-<button
-class="mini"
-onclick="queue.push({type:'file',file:locals[${i}]});renderQueue()">
-＋
-</button>
-
-</div>
-
-`
-).join('')
-
-||
-
-'<div class="small">Noch keine lokalen Dateien.</div>';
+  youtubeCommand(
+    deck,
+    "setVolume",
+    Math.max(
+      0,
+      Math.min(
+        100,
+        volume
+      )
+    )
+  );
 
 }
 
 
-function loadLocal(i,d){
 
-loadFile(
-d,
-{
-files:[locals[i]]
-}
-);
+function youtubeMute(deck){
+
+  youtubeCommand(
+    deck,
+    "mute"
+  );
+
+
+  decks[deck].playing =
+    false;
+
+
+  $("status"+deck)
+    .textContent =
+    "MUTE";
 
 }
+
+
+
+function toggleYouTube(deck){
+
+  const x =
+    decks[deck];
+
+
+  if(!x.song){
+
+    loadYouTube(deck);
+
+    return;
+
+  }
+
+
+  if(x.playing){
+
+    youtubeCommand(
+      deck,
+      "pauseVideo"
+    );
+
+
+    x.playing = false;
+
+
+    $("status"+deck)
+      .textContent =
+      "PAUSE";
+
+  }else{
+
+    youtubeCommand(
+      deck,
+      "playVideo"
+    );
+
+
+    x.playing = true;
+
+
+    $("status"+deck)
+      .textContent =
+      "PLAY";
+
+  }
+
+
+  applyCrossfade();
+
+}
+
+
+
+function changeDeckGain(
+  deck,
+  delta
+){
+
+  const x =
+    decks[deck];
+
+
+  x.gain =
+    Math.max(
+      -12,
+      Math.min(
+        12,
+        x.gain + delta
+      )
+    );
+
+
+  $("gain"+deck)
+    .textContent =
+    x.gain;
+
+
+  applyCrossfade();
+
+}
+
+
+
+/* ================= CROSSFADER ================= */
+
+
+function getDeckVolume(deck){
+
+  const x =
+    decks[deck];
+
+
+  const gainFactor =
+    Math.pow(
+      10,
+      (x.gain || 0) / 20
+    );
+
+
+  return Math.max(
+    0,
+    Math.min(
+      1,
+      .7 * gainFactor
+    )
+  );
+
+}
+
+
+
+function applyCrossfade(value){
+
+  const slider =
+    $("cross");
+
+
+  const v =
+    value === undefined
+      ? +slider.value
+      : +value;
+
+
+  const x =
+    v / 100;
+
+
+  const volumeA =
+    Math.cos(
+      x * Math.PI / 2
+    ) *
+    getDeckVolume("A");
+
+
+  const volumeB =
+    Math.cos(
+      (1-x) *
+      Math.PI / 2
+    ) *
+    getDeckVolume("B");
+
+
+  if(
+    decks.A.audio
+  ){
+
+    decks.A.audio.volume =
+      Math.max(
+        0,
+        Math.min(
+          1,
+          volumeA
+        )
+      );
+
+  }
+
+
+  if(
+    decks.B.audio
+  ){
+
+    decks.B.audio.volume =
+      Math.max(
+        0,
+        Math.min(
+          1,
+          volumeB
+        )
+      );
+
+  }
+
+
+  if(
+    decks.A.source === "youtube" &&
+    decks.A.song
+  ){
+
+    youtubeSetVolume(
+      "A",
+      volumeA * 100
+    );
+
+  }
+
+
+  if(
+    decks.B.source === "youtube" &&
+    decks.B.song
+  ){
+
+    youtubeSetVolume(
+      "B",
+      volumeB * 100
+    );
+
+  }
+
+}
+
+
+
+/* ================= KI ÜBERGANG ================= */
+
+
+async function aiTransition(){
+
+  const a =
+    decks.A;
+
+  const b =
+    decks.B;
+
+
+  if(
+    !a.song ||
+    !b.song
+  ){
+
+    toast(
+      "🤖 Beide Decks zuerst laden"
+    );
+
+    return;
+
+  }
+
+
+  toast(
+    "🤖 Übergang startet"
+  );
+
+
+  if(!b.playing){
+
+    youtubeCommand(
+      "B",
+      "playVideo"
+    );
+
+
+    b.playing = true;
+
+
+    $("statusB")
+      .textContent =
+      "PLAY";
+
+  }
+
+
+  const start =
+    +$("cross").value;
+
+
+  let progress = 0;
+
+
+  const duration =
+    8000;
+
+
+  const interval =
+    100;
+
+
+  const timer =
+    setInterval(()=>{
+
+      progress += interval;
+
+
+      const t =
+        Math.min(
+          1,
+          progress / duration
+        );
+
+
+      const eased =
+        t*t*(3-2*t);
+
+
+      const cross =
+        start +
+        (100-start) *
+        eased;
+
+
+      $("cross").value =
+        cross;
+
+
+      applyCrossfade(
+        cross
+      );
+
+
+      if(t >= 1){
+
+        clearInterval(timer);
+
+
+        youtubeCommand(
+          "A",
+          "pauseVideo"
+        );
+
+
+        a.playing =
+          false;
+
+
+        $("statusA")
+          .textContent =
+          "STOP";
+
+
+        $("cross").value =
+          100;
+
+
+        applyCrossfade(
+          100
+        );
+
+
+        toast(
+          "✨ Übergang fertig"
+        );
+
+      }
+
+    },interval);
+
+}
+
+
+
+/* ================= QUEUE ================= */
+
+
+function addYouTubeToQueue(
+  deck
+){
+
+  const x =
+    decks[deck];
+
+
+  if(
+    !x.song ||
+    x.source !== "youtube"
+  ){
+
+    toast(
+      "▶️ Zuerst YouTube laden"
+    );
+
+    return;
+
+  }
+
+
+  queue.push({
+
+    type:"youtube",
+
+    url:x.song.url,
+
+    name:
+      "YouTube • "+
+      x.song.youtubeId
+
+  });
+
+
+  renderQueue();
+
+
+  toast(
+    "➕ Zur Queue hinzugefügt"
+  );
+
+}
+
+
+
+function queuePlay(
+  index,
+  deck
+){
+
+  const item =
+    queue[index];
+
+
+  if(!item)
+    return;
+
+
+  if(
+    item.type === "youtube"
+  ){
+
+    $("youtubeUrl"+deck)
+      .value =
+      item.url;
+
+
+    loadYouTube(deck);
+
+  }
+
+}
+
 
 
 function renderQueue(){
 
-$('queue').innerHTML=
-
-queue.map(
-(q,i)=>`
-
-<div class="row">
-
-<div class="name">
-
-${q.type==='apple'?'🍎':'🎵'}
-
-${esc(
-q.name ||
-q.file?.name ||
-'Titel'
-)}
-
-</div>
-
-<button
-class="mini"
-onclick="queuePlay(${i},'A')">
-A
-</button>
-
-<button
-class="mini"
-onclick="queuePlay(${i},'B')">
-B
-</button>
-
-<button
-class="mini"
-onclick="queue.splice(${i},1);renderQueue()">
-×
-</button>
-
-</div>
-
-`
-).join('')
-
-||
-
-'<div class="small">Noch keine Titel.</div>';
-
-}
+  const container =
+    $("queue");
 
 
-function queuePlay(i,d){
-
-const q=queue[i];
-
-if(q.type==='apple'){
-
-decks[d].song=q.song;
-
-decks[d].source='apple';
-
-$('track'+d).textContent=
-'🍎 '+q.name;
-
-source(d,'apple');
-
-playApple(d);
-
-}else{
-
-loadFile(
-d,
-{
-files:[q.file]
-}
-);
-
-}
-
-}
+  container.innerHTML = "";
 
 
-function esc(s){
+  if(!queue.length){
 
-return String(s).replace(
-/[&<>"']/g,
-c=>({
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-'"':'&quot;',
-"'":'&#039;'
-}[c])
-);
+    container.innerHTML =
+      '<div class="small">Queue ist leer.</div>';
+
+    return;
+
+  }
+
+
+  queue.forEach(
+    (item,index)=>{
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+
+      row.className =
+        "queueItem";
+
+
+      row.innerHTML = `
+
+        <div class="queueName">
+
+          ${index+1}.
+          ${escapeHtml(item.name)}
+
+        </div>
+
+        <button
+          class="btn"
+          onclick=
+          "queuePlay(${index},'A')">
+
+          A
+
+        </button>
+
+        <button
+          class="btn"
+          onclick=
+          "queuePlay(${index},'B')">
+
+          B
+
+        </button>
+
+        <button
+          class="btn red"
+          onclick=
+          "queue.splice(${index},1);renderQueue()">
+
+          ×
+
+        </button>
+
+      `;
+
+
+      container.appendChild(
+        row
+      );
+
+    }
+  );
 
 }
 
 
-/* APPLE MUSIC */
 
-async function getMusicKit(){
+function clearQueue(){
 
-if(mk)
-return mk;
+  queue = [];
 
-if(!window.MusicKit)
-throw Error(
-'MusicKit Script fehlt'
-);
+  renderQueue();
 
-const r=
-await fetch(
-'/api/apple-music-token'
-);
-
-if(!r.ok)
-throw Error(
-'Apple Developer Token fehlt'
-);
-
-const j=
-await r.json();
-
-mk=
-MusicKit.configure({
-developerToken:j.token,
-app:{
-name:'Smart Remote AI DJ',
-build:'1.0'
-}
-});
-
-return mk;
+  toast(
+    "🗑️ Queue geleert"
+  );
 
 }
 
 
-async function authorize(){
 
-const m=
-await getMusicKit();
+function escapeHtml(text){
 
-if(!m.isAuthorized)
-await m.authorize();
+  return String(text)
+    .replace(
+      /[&<>"']/g,
+      char => ({
 
-return m;
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
 
-}
-
-
-async function openApple(d){
-
-targetDeck=d;
-
-$('appleModal')
-.classList.add('show');
-
-$('appleStatus').textContent=
-'🍎 Apple Music verbindet...';
-
-try{
-
-const m=
-await authorize();
-
-$('appleStatus').textContent=
-'🍎 Deine Musikbibliothek';
-
-const r=
-await m.api.library.songs({
-limit:100
-});
-
-appleSongs=
-r.data||[];
-
-renderApple(
-appleSongs
-);
-
-}catch(e){
-
-console.error(e);
-
-$('appleStatus').textContent=
-'⚠️ Apple Music konnte nicht verbunden werden.';
-
-$('appleSongs').innerHTML=
-'<div class="small">Apple Music braucht eine korrekt eingerichtete MusicKit-Konfiguration.</div>';
-
-}
+      }[char])
+    );
 
 }
 
 
-function closeApple(){
 
-$('appleModal')
-.classList.remove('show');
-
-targetDeck=null;
-
-}
+/* ================= LOKALE MUSIK ================= */
 
 
-function renderApple(arr){
+let localAudio = [];
 
-$('appleSongs').innerHTML=
 
-arr.map(
-s=>{
+function handleFiles(files){
 
-const a=s.attributes||{};
+  localAudio =
+    [...files];
 
-const art=
-a.artwork?.url
-?.replace('{w}','100')
-?.replace('{h}','100')
-||'';
 
-return `
+  $("localStatus")
+    .textContent =
+    localAudio.length +
+    " Datei(en) geladen";
 
-<div class="song">
 
-${
-art
-?`<img class="art" src="${esc(art)}">`
-:'<div class="art"></div>'
-}
-
-<div class="songinfo">
-
-<div class="songtitle">
-${esc(a.name||'Titel')}
-</div>
-
-<div class="songartist">
-${esc(a.artistName||'')}
-</div>
-
-</div>
-
-<button
-class="mini"
-onclick="pickApple('${esc(s.id)}')">
-▶
-</button>
-
-<button
-class="mini"
-onclick="addApple('${esc(s.id)}')">
-＋
-</button>
-
-</div>
-
-`;
-
-}
-).join('')
-
-||
-
-'<div class="small">Keine Titel in deiner Bibliothek.</div>';
+  toast(
+    "📁 "+
+    localAudio.length+
+    " Datei(en) bereit"
+  );
 
 }
 
 
-function filterApple(q){
 
-q=q.toLowerCase();
-
-renderApple(
-appleSongs.filter(
-s=>{
-
-const a=s.attributes||{};
-
-return `${a.name} ${a.artistName} ${a.albumName}`
-.toLowerCase()
-.includes(q);
-
-}
-)
-);
-
-}
+/* ================= AUDIO OUTPUT ================= */
 
 
-function findApple(id){
+async function chooseAudioOutput(){
 
-return appleSongs.find(
-s=>String(s.id)===String(id)
-);
+  if(
+    navigator.mediaDevices &&
+    typeof
+      navigator.mediaDevices
+        .selectAudioOutput ===
+      "function"
+  ){
 
-}
+    try{
 
-
-function pickApple(id){
-
-const s=findApple(id);
-
-if(!s)
-return;
-
-const a=s.attributes||{};
-
-if(targetDeck){
-
-const d=targetDeck;
-
-decks[d].source='apple';
-
-decks[d].song=s;
-
-decks[d].audio=null;
-
-$('track'+d).textContent=
-'🍎 '+(a.name||'Titel');
-
-$('status'+d).textContent=
-'READY';
-
-source(d,'apple');
-
-closeApple();
-
-toast(
-'🍎 Deck '+d+' geladen'
-);
-
-playApple(d);
-
-}else{
-
-playAppleSong(s);
-
-}
-
-}
+      const device =
+        await navigator
+          .mediaDevices
+          .selectAudioOutput();
 
 
-function addApple(id){
+      state.audioSinkId =
+        device.deviceId;
 
-const s=findApple(id);
 
-if(!s)
-return;
+      save();
 
-queue.push({
-type:'apple',
-song:s,
-name:s.attributes?.name||'Titel'
-});
 
-renderQueue();
+      for(
+        const deck of ["A","B"]
+      ){
 
-toast(
-'➕ Queue'
-);
+        if(
+          decks[deck].audio &&
+          typeof
+            decks[deck].audio
+              .setSinkId ===
+            "function"
+        ){
+
+          await decks[deck]
+            .audio
+            .setSinkId(
+              device.deviceId
+            );
+
+        }
+
+      }
+
+
+      $("audioOutputStatus")
+        .textContent =
+        "🔊 "+
+        (
+          device.label ||
+          "Ausgabegerät gewählt"
+        );
+
+
+      toast(
+        "🔊 Audioausgabe gewählt"
+      );
+
+
+      return;
+
+    }catch(e){}
+
+  }
+
+
+  showIOSAudioHelp();
 
 }
 
 
-async function playApple(d){
 
-try{
+function showIOSAudioHelp(){
 
-const m=
-await authorize();
-
-await m.setQueue({
-song:decks[d].song.id
-});
-
-await m.play();
-
-decks[d].playing=true;
-
-$('status'+d).textContent=
-'PLAY';
-
-}catch(e){
-
-console.error(e);
-
-toast(
-'⚠️ Apple Music Wiedergabe fehlgeschlagen'
-);
-
-}
+  toast(
+    "📱 Kontrollzentrum → AirPlay/Ausgabe → gewünschtes Gerät"
+  );
 
 }
 
 
-async function playAppleSong(s){
 
-try{
-
-const m=
-await authorize();
-
-await m.setQueue({
-song:s.id
-});
-
-await m.play();
-
-toast(
-'🍎 Wiedergabe gestartet'
-);
-
-}catch(e){
-
-console.error(e);
-
-toast(
-'⚠️ Apple Music Wiedergabe fehlgeschlagen'
-);
-
-}
-
-}
+/* ================= START ================= */
 
 
-/* YOUTUBE */
-
-function youtubeId(url){
-
-try{
-
-const u=
-new URL(url.trim());
-
-const host=
-u.hostname.toLowerCase();
-
-if(
-host==='youtu.be' ||
-host==='www.youtu.be'
-){
-
-return u.pathname
-.replace('/','')
-.split('/')[0];
-
-}
-
-if(
-host.includes('youtube.com') ||
-host.includes('youtube-nocookie.com')
-){
-
-if(
-u.pathname==='/watch'
-){
-
-return u.searchParams.get('v');
-
-}
-
-if(
-u.pathname.startsWith('/shorts/')
-){
-
-return u.pathname
-.split('/')[2];
-
-}
-
-if(
-u.pathname.startsWith('/embed/')
-){
-
-return u.pathname
-.split('/')[2];
-
-}
-
-}
-
-}catch(e){
-
-return null;
-
-}
-
-return null;
-
-}
+$("xiaoIp").value =
+  state.xiaoIp || "";
 
 
-function loadYouTube(d){
+$("volumeValue")
+  .textContent =
+  state.volume ?? 40;
 
-const input=
-$('youtubeUrl'+d);
 
-const url=
-input.value.trim();
-
-const id=
-youtubeId(url);
-
-if(!id){
-
-toast(
-'⚠️ Ungültiger YouTube-Link'
-);
-
-return;
-
-}
-
-const x=
-decks[d];
-
-if(x.audio)
-x.audio.pause();
-
-x.source='youtube';
-
-x.song={
-youtubeId:id,
-url:url
-};
-
-x.audio=null;
-
-x.playing=false;
-
-$('track'+d).textContent=
-'▶️ YouTube • '+id;
-
-$('status'+d).textContent=
-'READY';
+const initialEffect =
+  state.z906Effect || "3d";
 
 
 /*
-YouTube-Button wird aktiviert,
-aber der Bereich bleibt sichtbar.
+  Aktiven Z906-Modus nur
+  optisch setzen, ohne beim
+  Start einen Befehl zu senden.
 */
 
-source(
-d,
-'youtube'
-);
+document
+  .querySelectorAll(".zmode")
+  .forEach(
+    b => b.classList.remove("active")
+  );
 
 
-$('ytPlayer'+d).innerHTML=
-
-`
-<iframe
-id="ytFrame${d}"
-src="https://www.youtube.com/embed/${encodeURIComponent(id)}?enablejsapi=1&playsinline=1&rel=0"
-title="YouTube Player"
-allow="autoplay; encrypted-media; picture-in-picture"
-allowfullscreen>
-</iframe>
-`;
+let initialButton;
 
 
-toast(
-'▶️ YouTube Deck '+d+' geladen'
-);
+if(initialEffect === "3d")
+  initialButton = $("zmode_3d");
 
-}
+if(initialEffect === "4.1")
+  initialButton = $("zmode_4_1");
 
+if(initialEffect === "2.1")
+  initialButton = $("zmode_2_1");
 
-function youtubeCommand(
-d,
-func,
-value
-){
-
-const f=
-$('ytFrame'+d);
-
-if(!f){
-
-toast(
-'▶️ Zuerst YouTube-Titel laden'
-);
-
-return;
-
-}
-
-f.contentWindow.postMessage(
-JSON.stringify({
-event:'command',
-func:func,
-args:
-value===undefined
-?[]
-:[value]
-}),
-'https://www.youtube.com'
-);
-
-}
+if(initialEffect === "none")
+  initialButton = $("zmode_none");
 
 
-function toggleYouTube(d){
+if(initialButton)
+  initialButton.classList.add("active");
 
-const x=
-decks[d];
-
-if(!x.song){
-
-loadYouTube(d);
-
-return;
-
-}
-
-youtubeCommand(
-d,
-x.playing
-?'pauseVideo'
-:'playVideo'
-);
-
-x.playing=
-!x.playing;
-
-$('status'+d).textContent=
-x.playing
-?'PLAY'
-:'PAUSE';
-
-}
-
-
-/* AI */
-
-async function aiTransition(){
-
-try{
-
-const r=
-await fetch(
-'/api/ai-dj',
-{
-method:'POST',
-headers:{
-'Content-Type':
-'application/json'
-},
-body:
-JSON.stringify({
-
-mode:
-state.mode||'manual',
-
-deckA:{
-source:
-decks.A.source,
-
-title:
-decks.A.source==='youtube'
-?
-'YouTube: '+
-(
-decks.A.song?.youtubeId||''
-)
-:
-decks.A.song?.attributes?.name||
-decks.A.audio?.src||
-null
-},
-
-deckB:{
-source:
-decks.B.source,
-
-title:
-decks.B.source==='youtube'
-?
-'YouTube: '+
-(
-decks.B.song?.youtubeId||''
-)
-:
-decks.B.song?.attributes?.name||
-decks.B.audio?.src||
-null
-}
-
-})
-}
-);
-
-if(!r.ok)
-throw Error();
-
-const j=
-await r.json();
-
-console.log(
-j.plan
-);
-
-toast(
-'✨ AI-Übergang geplant'
-);
-
-}catch(e){
-
-toast(
-'⚠️ AI-Server nicht erreichbar'
-);
-
-}
-
-}
-
-
-/* START */
-
-$('volumeDial').textContent=
-state.volume??40;
-
-$('bassDial').textContent=
-state.bass??0;
-
-$('centerDial').textContent=
-state.center??0;
-
-$('rearDial').textContent=
-state.rear??0;
-
-$('input').value=
-state.input||'optical';
-
-$('xiao').value=
-state.xiao||'';
-
-mode(
-state.mode||'manual'
-);
-
-renderLocal();
 
 renderQueue();
-
-
-/*
-YouTube bleibt beim Start sichtbar.
-*/
-
-source('A','file');
-source('B','file');
 
 </script>
 
