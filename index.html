@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080a0f">
-
 <title>Smart Remote</title>
 
 <script src="https://js-cdn.music.apple.com/musickit/v3/musickit.js"></script>
@@ -17,8 +16,6 @@
   --muted:#9ca3af;
   --accent:#4da3ff;
   --danger:#ff526b;
-  --green:#31d158;
-  --orange:#ff9f0a;
 }
 
 *{
@@ -51,14 +48,13 @@ button{
     radial-gradient(circle at 15% 10%,rgba(77,163,255,.22),transparent 35%),
     radial-gradient(circle at 85% 80%,rgba(120,70,255,.18),transparent 35%),
     linear-gradient(145deg,#080a0f,#101521);
-  filter:blur(var(--blur,0px));
   transform:scale(1.04);
 }
 
 .app{
   position:relative;
   z-index:1;
-  max-width:1000px;
+  max-width:900px;
   margin:auto;
   min-height:100vh;
   padding:
@@ -95,12 +91,7 @@ h2{
   margin:0 0 13px;
 }
 
-h3{
-  margin:0;
-}
-
-.muted,
-.small{
+.muted,.small{
   color:var(--muted);
   font-size:13px;
 }
@@ -113,8 +104,7 @@ h3{
   display:block;
 }
 
-.card,
-.deck{
+.card,.deck{
   background:var(--card);
   border:1px solid var(--line);
   border-radius:20px;
@@ -274,287 +264,70 @@ input[type=text],
   color:#fff;
 }
 
-/* =========================
-   DJ MIXER
-========================= */
-
-.mixerHero{
-  padding:18px;
-  border-radius:24px;
-  background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(77,163,255,.18),
-      transparent 55%
-    ),
-    rgba(255,255,255,.06);
-  border:1px solid var(--line);
-  margin-bottom:14px;
-}
-
-.mixerTitle{
+.deckhead{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
 }
 
-.live{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  font-size:11px;
-  color:#7dff9a;
-}
-
-.liveDot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#31d158;
-  box-shadow:0 0 12px #31d158;
-}
-
-.aiControls{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:7px;
-  margin-top:14px;
-}
-
-.aiControls button{
-  min-height:42px;
-  padding:7px;
-  border-radius:11px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.06);
-  font-size:11px;
-}
-
-.aiControls button.active{
-  background:rgba(77,163,255,.2);
-  border-color:var(--accent);
-}
-
-.deckgrid{
-  align-items:stretch;
-}
-
-.deck{
-  position:relative;
+.track{
+  min-height:52px;
+  margin:8px 0;
+  border-radius:12px;
+  background:#090c12;
+  padding:12px;
+  white-space:nowrap;
   overflow:hidden;
-  padding:14px;
+  text-overflow:ellipsis;
 }
 
-.deckA{
-  background:
-    radial-gradient(
-      circle at 20% 0%,
-      rgba(77,163,255,.18),
-      transparent 50%
-    ),
-    rgba(255,255,255,.07);
+.decksrc{
+  display:grid!important;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
 }
 
-.deckB{
-  background:
-    radial-gradient(
-      circle at 80% 0%,
-      rgba(255,70,120,.17),
-      transparent 50%
-    ),
-    rgba(255,255,255,.07);
-}
-
-.deckTop{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:10px;
-}
-
-.deckLetter{
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:1.4px;
-}
-
-.deckState{
-  padding:5px 8px;
-  border-radius:8px;
-  font-size:9px;
+.decksrc button{
+  min-width:0;
+  font-size:11px;
+  padding:9px 4px;
+  border-radius:9px;
   background:rgba(255,255,255,.08);
-  color:#9ca3af;
 }
 
-.artwork{
-  width:100%;
-  aspect-ratio:1/1;
-  border-radius:17px;
-  object-fit:cover;
-  background:
-    linear-gradient(
-      135deg,
-      #172033,
-      #080a0f
-    );
-  border:1px solid rgba(255,255,255,.1);
-}
-
-.artworkPlaceholder{
-  width:100%;
-  aspect-ratio:1/1;
-  border-radius:17px;
-  display:grid;
-  place-items:center;
-  font-size:58px;
-  background:
-    radial-gradient(circle at 30% 20%,rgba(77,163,255,.22),transparent 35%),
-    #101621;
-  border:1px solid rgba(255,255,255,.1);
-}
-
-.trackInfo{
-  padding:12px 2px 5px;
-}
-
-.trackTitle{
-  font-size:17px;
-  font-weight:750;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-.trackArtist{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:4px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-.sourceBadge{
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  margin-top:8px;
-  padding:5px 8px;
-  border-radius:8px;
-  font-size:10px;
-  background:rgba(255,255,255,.07);
-}
-
-.sourceTabs{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px;
-  margin-top:10px;
-}
-
-.sourceTabs button{
-  min-height:40px;
-  border-radius:10px;
-  background:rgba(255,255,255,.06);
-  border:1px solid var(--line);
-  font-size:11px;
-}
-
-.sourceTabs button.active{
+.decksrc button.active{
   border-color:var(--accent);
   background:rgba(77,163,255,.16);
 }
 
-.filePicker{
-  margin-top:8px;
-}
-
-.filePicker label{
+.filelabel,
+.applebtn{
   display:block;
   width:100%;
   text-align:center;
-  padding:11px;
-  border-radius:10px;
+  padding:12px;
+  border-radius:11px;
+  margin-top:8px;
   background:rgba(77,163,255,.13);
-  border:1px solid rgba(77,163,255,.2);
-  color:#a8d7ff;
-  font-size:12px;
+  color:#9bd1ff;
 }
 
-.filePicker input{
+.filelabel input{
   display:none;
 }
 
-.applePickerButton{
-  display:block;
-  width:100%;
+.deckbuttons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
   margin-top:8px;
-  padding:11px;
-  border-radius:10px;
+}
+
+.deckbuttons button{
   background:rgba(255,255,255,.08);
   border:1px solid var(--line);
-}
-
-.transport{
-  display:grid;
-  grid-template-columns:1fr 1.5fr 1fr;
-  gap:6px;
-  margin-top:10px;
-}
-
-.transport button{
-  min-height:43px;
   border-radius:10px;
-  background:rgba(255,255,255,.07);
-  border:1px solid var(--line);
-}
-
-.transport .play{
-  background:var(--accent);
-  font-weight:700;
-}
-
-.deckSlider{
-  margin-top:11px;
-}
-
-.sliderLine{
-  display:flex;
-  justify-content:space-between;
-  color:var(--muted);
-  font-size:10px;
-  margin-bottom:3px;
-}
-
-.crossfadeBox{
-  padding:17px;
-}
-
-.crossfadeTitle{
-  display:flex;
-  justify-content:space-between;
-  font-size:12px;
-  font-weight:700;
-}
-
-.crossfadeLabels{
-  display:flex;
-  justify-content:space-between;
-  font-size:10px;
-  color:var(--muted);
-}
-
-.crossfade{
-  width:100%;
-  margin:12px 0 3px;
-  accent-color:var(--accent);
-}
-
-.queueTitle{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  min-height:38px;
 }
 
 .row{
@@ -578,33 +351,12 @@ input[type=text],
   font-size:13px;
 }
 
-.queueBadge{
-  padding:4px 6px;
-  border-radius:7px;
-  font-size:9px;
-  background:rgba(255,255,255,.07);
-}
-
-.aiResult{
-  margin-top:10px;
-  padding:12px;
-  border-radius:12px;
-  background:rgba(77,163,255,.08);
-  border:1px solid rgba(77,163,255,.13);
-  font-size:12px;
-  line-height:1.5;
-}
-
-/* =========================
-   APPLE MUSIC MODAL
-========================= */
-
 .modal{
   display:none;
   position:fixed;
   z-index:500;
   inset:0;
-  background:rgba(0,0,0,.72);
+  background:rgba(0,0,0,.68);
   align-items:flex-end;
 }
 
@@ -614,12 +366,12 @@ input[type=text],
 
 .panel{
   width:100%;
-  max-width:760px;
-  max-height:90vh;
+  max-width:720px;
+  max-height:88vh;
   overflow:auto;
   margin:auto auto 0;
   background:#11151e;
-  border-radius:25px 25px 0 0;
+  border-radius:24px 24px 0 0;
   padding:17px;
   padding-bottom:calc(25px + env(safe-area-inset-bottom));
   border:1px solid var(--line);
@@ -681,6 +433,39 @@ input[type=text],
   margin:10px 0;
 }
 
+.youtubeBox{
+  margin-top:8px;
+}
+
+.youtubeBox .search{
+  height:45px;
+  margin-bottom:7px;
+}
+
+.youtubeBtn{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  background:#ef4444;
+  color:#fff;
+  font-weight:700;
+}
+
+.ytplayer{
+  width:100%;
+  aspect-ratio:16/9;
+  margin-top:8px;
+  border-radius:12px;
+  overflow:hidden;
+  background:#111;
+}
+
+.ytplayer iframe{
+  width:100%;
+  height:100%;
+  border:0;
+}
+
 #toast{
   position:fixed;
   z-index:700;
@@ -703,7 +488,6 @@ input[type=text],
 }
 
 @media(max-width:700px){
-
   .deckgrid{
     grid-template-columns:1fr;
   }
@@ -715,24 +499,13 @@ input[type=text],
   .grid3{
     grid-template-columns:1fr 1fr;
   }
-
-  .aiControls{
-    grid-template-columns:repeat(3,1fr);
-  }
-}
-
-@media(min-width:701px){
-
-  .deckgrid{
-    grid-template-columns:1fr 1fr;
-  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg" id="bg"></div>
+<div class="bg"></div>
 
 <main class="app">
 
@@ -748,8 +521,7 @@ input[type=text],
 </header>
 
 
-<!-- ================= HOME ================= -->
-
+<!-- HOME -->
 <section id="home" class="page active">
 
   <div class="card">
@@ -758,15 +530,13 @@ input[type=text],
     <div class="grid2">
 
       <div class="card" style="margin:0">
-        📺
-        <br>
+        📺<br>
         <b>Samsung TV</b>
         <div class="small">● Bereit</div>
       </div>
 
       <div class="card" style="margin:0">
-        🔊
-        <br>
+        🔊<br>
         <b>Logitech Z906</b>
         <div class="small">● Bereit</div>
       </div>
@@ -823,8 +593,7 @@ input[type=text],
 </section>
 
 
-<!-- ================= TV ================= -->
-
+<!-- TV -->
 <section id="tv" class="page">
 
   <div class="card">
@@ -889,13 +658,13 @@ input[type=text],
       </button>
 
     </div>
+
   </div>
 
 </section>
 
 
-<!-- ================= Z906 ================= -->
-
+<!-- Z906 -->
 <section id="z906" class="page">
 
   <div class="card">
@@ -912,13 +681,11 @@ input[type=text],
             40
           </div>
         </button>
-
         <div class="small"
              style="text-align:center">
           Volume
         </div>
       </div>
-
 
       <div>
         <button class="knob"
@@ -928,13 +695,11 @@ input[type=text],
             0
           </div>
         </button>
-
         <div class="small"
              style="text-align:center">
           Bass
         </div>
       </div>
-
 
       <div>
         <button class="knob"
@@ -944,13 +709,11 @@ input[type=text],
             0
           </div>
         </button>
-
         <div class="small"
              style="text-align:center">
           Center
         </div>
       </div>
-
 
       <div>
         <button class="knob"
@@ -960,7 +723,6 @@ input[type=text],
             0
           </div>
         </button>
-
         <div class="small"
              style="text-align:center">
           Rear
@@ -968,6 +730,7 @@ input[type=text],
       </div>
 
     </div>
+
   </div>
 
 
@@ -1031,33 +794,14 @@ input[type=text],
 </section>
 
 
-<!-- ================= MIXER ================= -->
-
+<!-- MIXER -->
 <section id="mixer" class="page">
 
+  <div class="card">
 
-  <div class="mixerHero">
+    <h2>🎧 Smart AI DJ</h2>
 
-    <div class="mixerTitle">
-
-      <div>
-        <h2>🎧 Smart AI DJ</h2>
-
-        <div class="muted">
-          Dual Deck • Apple Music • Dateien
-        </div>
-      </div>
-
-      <div class="live">
-        <span class="liveDot"></span>
-        LIVE
-      </div>
-
-    </div>
-
-
-    <div class="grid3"
-         style="margin-top:15px">
+    <div class="grid3">
 
       <button class="mode active"
               data-mode="manual"
@@ -1079,70 +823,26 @@ input[type=text],
 
     </div>
 
-
-    <div class="aiControls">
-
-      <button id="aiBeat"
-              onclick="toggleAI('beat')">
-        Beat Match
-      </button>
-
-      <button id="aiGain"
-              onclick="toggleAI('gain')">
-        Auto Gain
-      </button>
-
-      <button id="aiKey"
-              onclick="toggleAI('key')">
-        Key Match
-      </button>
-
-      <button id="aiEnergy"
-              onclick="toggleAI('energy')">
-        Energy
-      </button>
-
-      <button id="aiSmooth"
-              onclick="toggleAI('smooth')">
-        Smooth Mix
-      </button>
-
-      <button id="aiBass"
-              onclick="toggleAI('bass')">
-        Bass Drop
-      </button>
-
-    </div>
-
   </div>
 
 
-  <!-- LOCAL LIBRARY -->
-
+  <!-- LOCAL MUSIC -->
   <div class="card">
 
-    <h2>🎵 Meine Musik</h2>
+    <h2>🎵 Lokale Musik</h2>
 
-    <div class="muted">
-      Lokale Audiodateien aus der iPhone-Dateien-App
-    </div>
+    <label class="filelabel">
 
-    <div class="filePicker">
+      📁 Audiodateien aus Dateien auswählen
 
-      <label>
+      <input
+        type="file"
+        accept="audio/*,.mp3,.m4a,.wav,.aac,.flac,.ogg"
+        multiple
+        onchange="addLocal(this)"
+      >
 
-        📁 Audiodateien auswählen
-
-        <input
-          type="file"
-          accept="audio/*,.mp3,.m4a,.wav,.aac,.flac,.ogg"
-          multiple
-          onchange="addLocal(this)"
-        >
-
-      </label>
-
-    </div>
+    </label>
 
     <div id="localList"
          style="margin-top:8px">
@@ -1151,75 +851,59 @@ input[type=text],
   </div>
 
 
-  <!-- DECKS -->
-
   <div class="deckgrid">
 
 
     <!-- DECK A -->
+    <div class="deck">
 
-    <div class="deck deckA">
+      <div class="deckhead">
 
-      <div class="deckTop">
+        <b>DECK A</b>
 
-        <div class="deckLetter">
-          DECK A
-        </div>
-
-        <div class="deckState"
-             id="statusA">
+        <span class="small"
+              id="statusA">
           STOP
-        </div>
+        </span>
 
       </div>
 
 
-      <div id="artA"
-           class="artworkPlaceholder">
-        🎧
+      <div class="track"
+           id="trackA">
+        Kein Titel
       </div>
 
 
-      <div class="trackInfo">
+      <!-- QUELLEN -->
+      <div class="decksrc">
 
-        <div class="trackTitle"
-             id="titleA">
-          Kein Titel
-        </div>
-
-        <div class="trackArtist"
-             id="artistA">
-          —
-        </div>
-
-        <div class="sourceBadge"
-             id="badgeA">
-          📁 Datei
-        </div>
-
-      </div>
-
-
-      <div class="sourceTabs">
-
-        <button id="srcAF"
-                class="active"
-                onclick="source('A','file')">
-          📁 Datei
+        <button
+          id="srcAF"
+          class="active"
+          onclick="source('A','file')">
+          📁 Dateien
         </button>
 
-        <button id="srcAA"
-                onclick="source('A','apple')">
+        <button
+          id="srcAA"
+          onclick="source('A','apple')">
           🍎 Apple Music
         </button>
 
+        <button
+          id="srcAY"
+          onclick="source('A','youtube')">
+          ▶️ YouTube
+        </button>
+
       </div>
 
 
-      <div id="fileA"
-           class="filePicker">
+      <!-- DATEI -->
+      <div id="fileA">
 
-        <label>
+        <label class="filelabel">
 
           📂 Datei für Deck A
 
@@ -1234,27 +918,54 @@ input[type=text],
       </div>
 
 
+      <!-- APPLE MUSIC -->
       <div id="appleA"
            style="display:none">
 
-        <button class="applePickerButton"
-                onclick="openApple('A')">
-          🍎 Apple Music öffnen
+        <button
+          class="applebtn"
+          onclick="openApple('A')">
+
+          🍎 Apple-Music-Titel wählen
+
         </button>
 
       </div>
 
 
-      <div class="transport">
+      <!-- YOUTUBE -->
+      <div id="youtubeA"
+           class="youtubeBox"
+           style="display:none">
+
+        <input
+          id="youtubeUrlA"
+          class="search"
+          placeholder="YouTube-Link hier einfügen">
+
+        <button
+          class="youtubeBtn"
+          onclick="loadYouTube('A')">
+
+          ▶️ YouTube-Titel laden
+
+        </button>
+
+        <div id="ytPlayerA"
+             class="ytplayer">
+        </div>
+
+      </div>
+
+
+      <div class="deckbuttons">
 
         <button onclick="cue('A')">
           CUE
         </button>
 
-        <button class="play"
-                onclick="playDeck('A')"
-                id="playA">
-          ▶ PLAY
+        <button onclick="playDeck('A')">
+          ▶/⏸
         </button>
 
         <button onclick="sync('A')">
@@ -1264,114 +975,86 @@ input[type=text],
       </div>
 
 
-      <div class="deckSlider">
-
-        <div class="sliderLine">
-          <span>GAIN</span>
-          <span id="gainValueA">
-            0 dB
-          </span>
-        </div>
-
-        <input
-          class="range"
-          type="range"
-          min="-12"
-          max="12"
-          value="0"
-          oninput="gain('A',this.value)"
-        >
-
+      <div class="small">
+        Gain
       </div>
 
+      <input
+        class="range"
+        type="range"
+        min="-12"
+        max="12"
+        value="0"
+        oninput="gain('A',this.value)"
+      >
 
-      <div class="deckSlider">
 
-        <div class="sliderLine">
-          <span>FILTER</span>
-          <span id="filterValueA">
-            0
-          </span>
-        </div>
-
-        <input
-          class="range"
-          type="range"
-          min="-100"
-          max="100"
-          value="0"
-          oninput="filter('A',this.value)"
-        >
-
+      <div class="small">
+        Filter
       </div>
+
+      <input
+        class="range"
+        type="range"
+        min="-100"
+        max="100"
+        value="0"
+        oninput="filter('A',this.value)"
+      >
 
     </div>
 
 
     <!-- DECK B -->
+    <div class="deck">
 
-    <div class="deck deckB">
+      <div class="deckhead">
 
-      <div class="deckTop">
+        <b>DECK B</b>
 
-        <div class="deckLetter">
-          DECK B
-        </div>
-
-        <div class="deckState"
-             id="statusB">
+        <span class="small"
+              id="statusB">
           STOP
-        </div>
+        </span>
 
       </div>
 
 
-      <div id="artB"
-           class="artworkPlaceholder">
-        🎧
+      <div class="track"
+           id="trackB">
+        Kein Titel
       </div>
 
 
-      <div class="trackInfo">
+      <!-- QUELLEN -->
+      <div class="decksrc">
 
-        <div class="trackTitle"
-             id="titleB">
-          Kein Titel
-        </div>
-
-        <div class="trackArtist"
-             id="artistB">
-          —
-        </div>
-
-        <div class="sourceBadge"
-             id="badgeB">
-          📁 Datei
-        </div>
-
-      </div>
-
-
-      <div class="sourceTabs">
-
-        <button id="srcBF"
-                class="active"
-                onclick="source('B','file')">
-          📁 Datei
+        <button
+          id="srcBF"
+          class="active"
+          onclick="source('B','file')">
+          📁 Dateien
         </button>
 
-        <button id="srcBA"
-                onclick="source('B','apple')">
+        <button
+          id="srcBA"
+          onclick="source('B','apple')">
           🍎 Apple Music
         </button>
 
+        <button
+          id="srcBY"
+          onclick="source('B','youtube')">
+          ▶️ YouTube
+        </button>
+
       </div>
 
 
-      <div id="fileB"
-           class="filePicker">
+      <!-- DATEI -->
+      <div id="fileB">
 
-        <label>
+        <label class="filelabel">
 
           📂 Datei für Deck B
 
@@ -1386,27 +1069,54 @@ input[type=text],
       </div>
 
 
+      <!-- APPLE MUSIC -->
       <div id="appleB"
            style="display:none">
 
-        <button class="applePickerButton"
-                onclick="openApple('B')">
-          🍎 Apple Music öffnen
+        <button
+          class="applebtn"
+          onclick="openApple('B')">
+
+          🍎 Apple-Music-Titel wählen
+
         </button>
 
       </div>
 
 
-      <div class="transport">
+      <!-- YOUTUBE -->
+      <div id="youtubeB"
+           class="youtubeBox"
+           style="display:none">
+
+        <input
+          id="youtubeUrlB"
+          class="search"
+          placeholder="YouTube-Link hier einfügen">
+
+        <button
+          class="youtubeBtn"
+          onclick="loadYouTube('B')">
+
+          ▶️ YouTube-Titel laden
+
+        </button>
+
+        <div id="ytPlayerB"
+             class="ytplayer">
+        </div>
+
+      </div>
+
+
+      <div class="deckbuttons">
 
         <button onclick="cue('B')">
           CUE
         </button>
 
-        <button class="play"
-                onclick="playDeck('B')"
-                id="playB">
-          ▶ PLAY
+        <button onclick="playDeck('B')">
+          ▶/⏸
         </button>
 
         <button onclick="sync('B')">
@@ -1416,65 +1126,46 @@ input[type=text],
       </div>
 
 
-      <div class="deckSlider">
-
-        <div class="sliderLine">
-          <span>GAIN</span>
-          <span id="gainValueB">
-            0 dB
-          </span>
-        </div>
-
-        <input
-          class="range"
-          type="range"
-          min="-12"
-          max="12"
-          value="0"
-          oninput="gain('B',this.value)"
-        >
-
+      <div class="small">
+        Gain
       </div>
 
+      <input
+        class="range"
+        type="range"
+        min="-12"
+        max="12"
+        value="0"
+        oninput="gain('B',this.value)"
+      >
 
-      <div class="deckSlider">
 
-        <div class="sliderLine">
-          <span>FILTER</span>
-          <span id="filterValueB">
-            0
-          </span>
-        </div>
-
-        <input
-          class="range"
-          type="range"
-          min="-100"
-          max="100"
-          value="0"
-          oninput="filter('B',this.value)"
-        >
-
+      <div class="small">
+        Filter
       </div>
+
+      <input
+        class="range"
+        type="range"
+        min="-100"
+        max="100"
+        value="0"
+        oninput="filter('B',this.value)"
+      >
 
     </div>
 
   </div>
 
 
-  <!-- CROSSFADER -->
+  <!-- CROSS FADER -->
+  <div class="card">
 
-  <div class="card crossfadeBox">
-
-    <div class="crossfadeTitle">
-      <span>DECK A</span>
-      <span>CROSSFADER</span>
-      <span>DECK B</span>
-    </div>
+    <h2>↔️ Crossfader</h2>
 
     <input
-      id="crossfade"
-      class="crossfade"
+      class="range"
+      id="cross"
       type="range"
       min="0"
       max="100"
@@ -1482,63 +1173,45 @@ input[type=text],
       oninput="crossfade(this.value)"
     >
 
-    <div class="crossfadeLabels">
+    <div style="display:flex;justify-content:space-between"
+         class="small">
+
       <span>A</span>
-      <span>CENTER</span>
       <span>B</span>
+
     </div>
 
   </div>
 
 
-  <!-- AI TRANSITION -->
-
+  <!-- AI -->
   <div class="card">
 
-    <div class="queueTitle">
+    <h2>🧠 AI Transition</h2>
 
-      <div>
-        <h2>✨ AI Transition</h2>
+    <button
+      class="btn primary"
+      style="width:100%"
+      onclick="aiTransition()">
 
-        <div class="muted">
-          AI analysiert beide Decks
-        </div>
-      </div>
+      ✨ Übergang planen
 
-      <button class="btn primary"
-              onclick="aiTransition()">
-        PLAN
-      </button>
-
-    </div>
-
-    <div id="aiResult"
-         class="aiResult"
-         style="display:none">
-    </div>
+    </button>
 
   </div>
 
 
   <!-- QUEUE -->
-
   <div class="card">
 
-    <div class="queueTitle">
-
-      <h2>📋 Queue</h2>
-
-      <button class="mini"
-              onclick="queue=[];renderQueue()">
-        Leeren
-      </button>
-
-    </div>
+    <h2>📋 Queue</h2>
 
     <div id="queue">
+
       <div class="small">
-        Noch keine Titel.
+        Noch keine Titel
       </div>
+
     </div>
 
   </div>
@@ -1546,8 +1219,7 @@ input[type=text],
 </section>
 
 
-<!-- ================= SETTINGS ================= -->
-
+<!-- SETTINGS -->
 <section id="settings" class="page">
 
   <div class="card">
@@ -1565,8 +1237,7 @@ input[type=text],
       onchange="save()"
     >
 
-    <br>
-    <br>
+    <br><br>
 
     <label class="small">
       Blur
@@ -1578,12 +1249,7 @@ input[type=text],
       min="0"
       max="20"
       value="0"
-      oninput="
-        document.documentElement.style.setProperty(
-          '--blur',
-          this.value+'px'
-        )
-      "
+      oninput="document.documentElement.style.setProperty('--blur',this.value+'px')"
     >
 
   </div>
@@ -1594,12 +1260,10 @@ input[type=text],
     <button
       class="btn danger"
       style="width:100%"
-      onclick="
-        localStorage.clear();
-        location.reload();
-      "
-    >
+      onclick="localStorage.clear();location.reload()">
+
       🗑️ Zurücksetzen
+
     </button>
 
   </div>
@@ -1609,56 +1273,44 @@ input[type=text],
 </main>
 
 
-<!-- ================= NAV ================= -->
-
+<!-- NAVIGATION -->
 <nav class="nav">
 
   <button
     data-p="home"
     class="active"
     onclick="showPage('home')">
-    🏠
-    <br>
-    Home
+    🏠<br>Home
   </button>
 
   <button
     data-p="tv"
     onclick="showPage('tv')">
-    📺
-    <br>
-    TV
+    📺<br>TV
   </button>
 
   <button
     data-p="z906"
     onclick="showPage('z906')">
-    🔊
-    <br>
-    Z906
+    🔊<br>Z906
   </button>
 
   <button
     data-p="mixer"
     onclick="showPage('mixer')">
-    🎵
-    <br>
-    Mixer
+    🎵<br>Mixer
   </button>
 
   <button
     data-p="settings"
     onclick="showPage('settings')">
-    ⚙️
-    <br>
-    Settings
+    ⚙️<br>Settings
   </button>
 
 </nav>
 
 
-<!-- ================= APPLE MUSIC MODAL ================= -->
-
+<!-- APPLE MUSIC MODAL -->
 <div id="appleModal"
      class="modal">
 
@@ -1678,12 +1330,10 @@ input[type=text],
 
     </div>
 
-
     <div id="appleStatus"
          class="status">
       Noch nicht verbunden.
     </div>
-
 
     <input
       id="appleSearch"
@@ -1692,10 +1342,7 @@ input[type=text],
       oninput="filterApple(this.value)"
     >
 
-
-    <div id="appleSongs"
-         style="margin-top:10px">
-    </div>
+    <div id="appleSongs"></div>
 
   </div>
 
@@ -1707,13 +1354,9 @@ input[type=text],
 
 <script>
 
-/* =========================================================
-   STATE
-========================================================= */
-
 const state =
   JSON.parse(
-    localStorage.getItem("smartRemoteV7") || "{}"
+    localStorage.getItem('smartRemoteV6') || '{}'
   );
 
 
@@ -1721,7 +1364,7 @@ const decks = {
 
   A:{
     audio:null,
-    source:"file",
+    source:'file',
     song:null,
     gain:0,
     filter:0,
@@ -1730,7 +1373,7 @@ const decks = {
 
   B:{
     audio:null,
-    source:"file",
+    source:'file',
     song:null,
     gain:0,
     filter:0,
@@ -1750,12 +1393,6 @@ let appleSongs = [];
 
 let targetDeck = null;
 
-let appleActiveDeck = null;
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
 
 const $ = id =>
   document.getElementById(id);
@@ -1763,104 +1400,70 @@ const $ = id =>
 
 function toast(text){
 
-  const element = $("toast");
+  const e = $('toast');
 
-  element.textContent = text;
+  e.textContent = text;
 
-  element.classList.add("showtoast");
+  e.classList.add('showtoast');
 
-  clearTimeout(window.toastTimer);
+  clearTimeout(window.tt);
 
-  window.toastTimer =
+  window.tt =
     setTimeout(
-      () =>
-        element.classList.remove("showtoast"),
-      2000
+      () => e.classList.remove('showtoast'),
+      1800
     );
 
 }
 
-
-function esc(value){
-
-  return String(value ?? "")
-    .replace(
-      /[&<>"']/g,
-      character => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      }[character])
-    );
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function showPage(page){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(
-      element =>
-        element.classList.remove("active")
-    );
-
-  $(page).classList.add("active");
-
-  document
-    .querySelectorAll(".nav button")
-    .forEach(
-      button =>
-        button.classList.toggle(
-          "active",
-          button.dataset.p === page
-        )
-    );
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-/* =========================================================
-   SAVE
-========================================================= */
 
 function save(){
 
   state.xiao =
-    $("xiao").value;
+    $('xiao').value;
 
   localStorage.setItem(
-    "smartRemoteV7",
+    'smartRemoteV6',
     JSON.stringify(state)
   );
 
 }
 
 
-/* =========================================================
-   IR
-========================================================= */
+function showPage(page){
+
+  document
+    .querySelectorAll('.page')
+    .forEach(
+      x => x.classList.remove('active')
+    );
+
+  $(page).classList.add('active');
+
+  document
+    .querySelectorAll('.nav button')
+    .forEach(
+      x =>
+        x.classList.toggle(
+          'active',
+          x.dataset.p === page
+        )
+    );
+
+  window.scrollTo(0,0);
+
+}
+
 
 function sendCommand(command){
 
   console.log(
-    "IR COMMAND:",
+    'IR:',
     command
   );
 
   toast(
-    "📡 " + command
+    '📡 ' + command
   );
 
 }
@@ -1869,18 +1472,14 @@ function sendCommand(command){
 function tvApp(app){
 
   sendCommand(
-    "TV_APP_" +
+    'TV_APP_' +
     app
       .toUpperCase()
-      .replaceAll(" ","_")
+      .replaceAll(' ','_')
   );
 
 }
 
-
-/* =========================================================
-   Z906
-========================================================= */
 
 function z906Volume(delta){
 
@@ -1893,15 +1492,15 @@ function z906Volume(delta){
       )
     );
 
-  $("volumeDial").textContent =
+  $('volumeDial').textContent =
     state.volume;
 
   save();
 
   sendCommand(
     delta > 0
-      ? "Z906_VOL_UP"
-      : "Z906_VOL_DOWN"
+      ? 'Z906_VOL_UP'
+      : 'Z906_VOL_DOWN'
   );
 
 }
@@ -1909,11 +1508,9 @@ function z906Volume(delta){
 
 function changeZ(type,delta){
 
-  if(type === "volume"){
+  if(type === 'volume'){
 
-    z906Volume(delta);
-
-    return;
+    return z906Volume(delta);
 
   }
 
@@ -1926,13 +1523,13 @@ function changeZ(type,delta){
       )
     );
 
-  $(type+"Dial").textContent =
+  $(type+'Dial').textContent =
     state[type];
 
   save();
 
   sendCommand(
-    "Z906_" +
+    'Z906_' +
     type.toUpperCase()
   );
 
@@ -1941,121 +1538,85 @@ function changeZ(type,delta){
 
 function setInput(value){
 
-  state.input = value;
+  state.input =
+    value;
 
   save();
 
   sendCommand(
-    "Z906_INPUT_" +
+    'Z906_INPUT_' +
     value.toUpperCase()
   );
 
 }
 
 
-/* =========================================================
-   MIXER MODE
-========================================================= */
-
-function mode(value){
+function mode(m){
 
   document
-    .querySelectorAll(".mode")
+    .querySelectorAll('.mode')
     .forEach(
-      button =>
-        button.classList.toggle(
-          "active",
-          button.dataset.mode === value
+      b =>
+        b.classList.toggle(
+          'active',
+          b.dataset.mode === m
         )
     );
 
-  state.mode = value;
+  state.mode = m;
 
   save();
 
 }
 
 
-/* =========================================================
-   AI BUTTONS
-========================================================= */
+/* =========================
+   QUELLE WECHSELN
+========================= */
 
-const aiState = {
+function source(deck,src){
 
-  beat:false,
-  gain:false,
-  key:false,
-  energy:false,
-  smooth:false,
-  bass:false
+  decks[deck].source = src;
 
-};
-
-
-function toggleAI(type){
-
-  aiState[type] =
-    !aiState[type];
-
-  const map = {
-
-    beat:"aiBeat",
-    gain:"aiGain",
-    key:"aiKey",
-    energy:"aiEnergy",
-    smooth:"aiSmooth",
-    bass:"aiBass"
-
-  };
-
-  $(map[type])
+  $('src'+deck+'F')
     .classList.toggle(
-      "active",
-      aiState[type]
+      'active',
+      src === 'file'
     );
+
+  $('src'+deck+'A')
+    .classList.toggle(
+      'active',
+      src === 'apple'
+    );
+
+  $('src'+deck+'Y')
+    .classList.toggle(
+      'active',
+      src === 'youtube'
+    );
+
+  $('file'+deck).style.display =
+    src === 'file'
+      ? 'block'
+      : 'none';
+
+  $('apple'+deck).style.display =
+    src === 'apple'
+      ? 'block'
+      : 'none';
+
+  $('youtube'+deck).style.display =
+    src === 'youtube'
+      ? 'block'
+      : 'none';
 
 }
 
 
-/* =========================================================
-   SOURCE
-========================================================= */
-
-function source(deck,sourceType){
-
-  decks[deck].source =
-    sourceType;
-
-  $("src"+deck+"F")
-    .classList.toggle(
-      "active",
-      sourceType === "file"
-    );
-
-  $("src"+deck+"A")
-    .classList.toggle(
-      "active",
-      sourceType === "apple"
-    );
-
-  $("file"+deck).style.display =
-    sourceType === "file"
-      ? "block"
-      : "none";
-
-  $("apple"+deck).style.display =
-    sourceType === "apple"
-      ? "block"
-      : "none";
-
-  updateDeckUI(deck);
-
-}
-
-
-/* =========================================================
-   LOCAL FILE
-========================================================= */
+/* =========================
+   DATEI
+========================= */
 
 function loadFile(deck,input){
 
@@ -2065,99 +1626,297 @@ function loadFile(deck,input){
   const file =
     input.files[0];
 
-  const current =
+  const x =
     decks[deck];
 
-  if(current.audio){
+  if(x.audio)
+    x.audio.pause();
 
-    current.audio.pause();
+  x.source = 'file';
 
-    current.audio.src = "";
+  x.song = null;
 
-  }
-
-  current.source =
-    "file";
-
-  current.song =
-    null;
-
-  current.audio =
+  x.audio =
     new Audio(
       URL.createObjectURL(file)
     );
 
-  current.audio.preload =
-    "metadata";
+  x.audio.preload =
+    'metadata';
 
-  current.audio.addEventListener(
-    "ended",
+  x.audio.addEventListener(
+    'ended',
     () => {
 
-      current.playing = false;
-
-      $("status"+deck)
+      $('status'+deck)
         .textContent =
-        "STOP";
+        'STOP';
 
-      $("play"+deck)
-        .textContent =
-        "▶ PLAY";
+      x.playing = false;
 
     }
   );
 
-  current.audio.addEventListener(
-    "timeupdate",
-    () => {
+  $('track'+deck)
+    .textContent =
+    '📁 ' + file.name;
 
-      if(
-        current.audio &&
-        !current.audio.paused
-      ){
-
-        $("status"+deck)
-          .textContent =
-          "PLAY";
-
-      }
-
-    }
-  );
-
-  current.file =
-    file;
-
-  current.title =
-    file.name;
-
-  current.artist =
-    "Lokale Datei";
-
-  current.artwork =
-    null;
+  $('status'+deck)
+    .textContent =
+    'READY';
 
   source(
     deck,
-    "file"
+    'file'
   );
 
-  updateDeckUI(deck);
-
-  applyGain(deck);
+  apply(deck);
 
   toast(
-    "Deck " +
+    'Deck ' +
     deck +
-    " geladen"
+    ' geladen'
   );
 
 }
 
 
-/* =========================================================
-   LOCAL LIBRARY
-========================================================= */
+function apply(deck){
+
+  const x =
+    decks[deck];
+
+  if(!x.audio)
+    return;
+
+  const gain =
+    Math.pow(
+      10,
+      (x.gain || 0) / 20
+    );
+
+  x.audio.volume =
+    Math.max(
+      0,
+      Math.min(
+        1,
+        .7 * gain
+      )
+    );
+
+}
+
+
+/* =========================
+   PLAY DECK
+========================= */
+
+async function playDeck(deck){
+
+  const x =
+    decks[deck];
+
+  if(x.source === 'apple'){
+
+    if(!x.song)
+      return openApple(deck);
+
+    return playApple(deck);
+
+  }
+
+  if(x.source === 'youtube'){
+
+    return toggleYouTube(deck);
+
+  }
+
+  if(!x.audio)
+    return toast(
+      '📁 Titel laden'
+    );
+
+  if(x.playing){
+
+    x.audio.pause();
+
+    x.playing = false;
+
+    $('status'+deck)
+      .textContent =
+      'PAUSE';
+
+  }else{
+
+    try{
+
+      await x.audio.play();
+
+      x.playing = true;
+
+      $('status'+deck)
+        .textContent =
+        'PLAY';
+
+    }catch(error){
+
+      console.error(error);
+
+      toast(
+        '⚠️ Wiedergabe nicht möglich'
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =========================
+   CUE
+========================= */
+
+function cue(deck){
+
+  const x =
+    decks[deck];
+
+  if(x.source === 'apple'){
+
+    if(mk){
+
+      try{
+        mk.seekToTime(0);
+      }catch{}
+
+    }
+
+    return toast(
+      '🍎 CUE'
+    );
+
+  }
+
+  if(x.source === 'youtube'){
+
+    return youtubeCommand(
+      deck,
+      'seekTo',
+      0
+    );
+
+  }
+
+  if(x.audio){
+
+    x.audio.currentTime =
+      0;
+
+    toast(
+      '🎧 CUE ' +
+      deck
+    );
+
+  }
+
+}
+
+
+/* =========================
+   SYNC
+========================= */
+
+function sync(deck){
+
+  const other =
+    deck === 'A'
+      ? 'B'
+      : 'A';
+
+  if(
+    decks[deck].audio &&
+    decks[other].audio
+  ){
+
+    decks[deck]
+      .audio
+      .currentTime =
+      decks[other]
+        .audio
+        .currentTime;
+
+    toast(
+      '🔄 SYNC ' +
+      deck
+    );
+
+  }else{
+
+    toast(
+      'SYNC nur für lokale Audiodateien'
+    );
+
+  }
+
+}
+
+
+/* =========================
+   GAIN / FILTER
+========================= */
+
+function gain(deck,value){
+
+  decks[deck].gain =
+    Number(value);
+
+  apply(deck);
+
+}
+
+
+function filter(deck,value){
+
+  decks[deck].filter =
+    Number(value);
+
+}
+
+
+/* =========================
+   CROSSFADER
+========================= */
+
+function crossfade(value){
+
+  const x =
+    Number(value) / 100;
+
+  if(decks.A.audio){
+
+    decks.A.audio.volume =
+      Math.cos(
+        x * Math.PI / 2
+      ) * .7;
+
+  }
+
+  if(decks.B.audio){
+
+    decks.B.audio.volume =
+      Math.cos(
+        (1-x) * Math.PI / 2
+      ) * .7;
+
+  }
+
+}
+
+
+/* =========================
+   LOKALE MUSIK
+========================= */
 
 function addLocal(input){
 
@@ -2167,7 +1926,7 @@ function addLocal(input){
     file => {
 
       if(
-        !file.type.startsWith("audio/") &&
+        !file.type.startsWith('audio/') &&
         !/\.(mp3|m4a|wav|aac|flac|ogg)$/i
           .test(file.name)
       ){
@@ -2181,7 +1940,7 @@ function addLocal(input){
     }
   );
 
-  input.value = "";
+  input.value = '';
 
   renderLocal();
 
@@ -2190,52 +1949,45 @@ function addLocal(input){
 
 function renderLocal(){
 
-  $("localList").innerHTML =
-    locals
-      .map(
-        (file,index) => `
+  $('localList')
+    .innerHTML =
+      locals
+        .map(
+          (file,index) => `
 
-        <div class="row">
+            <div class="row">
 
-          <div class="name">
-            🎵 ${esc(file.name)}
-          </div>
+              <div class="name">
+                🎵 ${esc(file.name)}
+              </div>
 
-          <button
-            class="mini"
-            onclick="loadLocal(${index},'A')">
-            A
-          </button>
+              <button
+                class="mini"
+                onclick="loadLocal(${index},'A')">
+                A
+              </button>
 
-          <button
-            class="mini"
-            onclick="loadLocal(${index},'B')">
-            B
-          </button>
+              <button
+                class="mini"
+                onclick="loadLocal(${index},'B')">
+                B
+              </button>
 
-          <button
-            class="mini"
-            onclick="
-              queue.push({
-                type:'file',
-                file:locals[${index}]
-              });
-              renderQueue();
-            ">
-            ＋
-          </button>
+              <button
+                class="mini"
+                onclick="addLocalToQueue(${index})">
+                ＋
+              </button>
 
-        </div>
+            </div>
 
-      `
-      )
-      .join("")
-    ||
-    `
-      <div class="small">
-        Noch keine lokalen Dateien.
-      </div>
-    `;
+          `
+        )
+        .join('')
+
+      ||
+
+      '<div class="small">Noch keine lokalen Dateien.</div>';
 
 }
 
@@ -2254,379 +2006,46 @@ function loadLocal(index,deck){
 }
 
 
-/* =========================================================
-   DECK UI
-========================================================= */
+function addLocalToQueue(index){
 
-function updateDeckUI(deck){
+  queue.push({
+    type:'file',
+    file:locals[index]
+  });
 
-  const data =
-    decks[deck];
-
-  const title =
-    data.source === "apple"
-      ? data.song?.attributes?.name
-      : data.title;
-
-  const artist =
-    data.source === "apple"
-      ? data.song?.attributes?.artistName
-      : data.artist;
-
-  const artwork =
-    data.source === "apple"
-      ? data.song?.attributes?.artwork?.url
-      : data.artwork;
-
-  $("title"+deck)
-    .textContent =
-    title || "Kein Titel";
-
-  $("artist"+deck)
-    .textContent =
-    artist || "—";
-
-  $("badge"+deck)
-    .textContent =
-    data.source === "apple"
-      ? "🍎 Apple Music"
-      : "📁 Datei";
-
-
-  const artworkElement =
-    $("art"+deck);
-
-
-  if(artwork){
-
-    const url =
-      artwork
-        .replace("{w}","500")
-        .replace("{h}","500");
-
-    artworkElement.outerHTML = `
-      <img
-        id="art${deck}"
-        class="artwork"
-        src="${esc(url)}"
-        alt=""
-      >
-    `;
-
-  }else{
-
-    artworkElement.outerHTML = `
-      <div
-        id="art${deck}"
-        class="artworkPlaceholder">
-        🎧
-      </div>
-    `;
-
-  }
+  renderQueue();
 
 }
 
 
-/* =========================================================
-   GAIN
-========================================================= */
-
-function applyGain(deck){
-
-  const data =
-    decks[deck];
-
-  if(!data.audio)
-    return;
-
-  const gain =
-    Math.pow(
-      10,
-      (data.gain || 0) / 20
-    );
-
-  data.audio.volume =
-    Math.max(
-      0,
-      Math.min(
-        1,
-        0.7 * gain
-      )
-    );
-
-}
-
-
-function gain(deck,value){
-
-  decks[deck].gain =
-    Number(value);
-
-  $("gainValue"+deck)
-    .textContent =
-    value + " dB";
-
-  applyGain(deck);
-
-}
-
-
-/* =========================================================
-   FILTER
-========================================================= */
-
-function filter(deck,value){
-
-  decks[deck].filter =
-    Number(value);
-
-  $("filterValue"+deck)
-    .textContent =
-    value;
-
-}
-
-
-/* =========================================================
-   PLAYBACK
-========================================================= */
-
-async function playDeck(deck){
-
-  const data =
-    decks[deck];
-
-  if(data.source === "apple"){
-
-    if(!data.song){
-
-      openApple(deck);
-
-      return;
-
-    }
-
-    await playApple(deck);
-
-    return;
-
-  }
-
-
-  if(!data.audio){
-
-    toast(
-      "📁 Erst eine Datei laden"
-    );
-
-    return;
-
-  }
-
-
-  if(data.playing){
-
-    data.audio.pause();
-
-    data.playing = false;
-
-    $("status"+deck)
-      .textContent =
-      "PAUSE";
-
-    $("play"+deck)
-      .textContent =
-      "▶ PLAY";
-
-    return;
-
-  }
-
-
-  try{
-
-    await data.audio.play();
-
-    data.playing = true;
-
-    $("status"+deck)
-      .textContent =
-      "PLAY";
-
-    $("play"+deck)
-      .textContent =
-      "❚❚ PAUSE";
-
-  }catch(error){
-
-    console.error(error);
-
-    toast(
-      "⚠️ Wiedergabe nicht möglich"
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   CUE
-========================================================= */
-
-async function cue(deck){
-
-  const data =
-    decks[deck];
-
-  if(data.source === "apple"){
-
-    try{
-
-      if(mk)
-        await mk.seekToTime(0);
-
-      toast(
-        "🍎 CUE"
-      );
-
-    }catch(error){
-
-      console.error(error);
-
-    }
-
-    return;
-
-  }
-
-
-  if(data.audio){
-
-    data.audio.currentTime =
-      0;
-
-    toast(
-      "🎧 CUE " + deck
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   SYNC
-========================================================= */
-
-function sync(deck){
-
-  const other =
-    deck === "A"
-      ? "B"
-      : "A";
-
-  if(
-    decks[deck].audio &&
-    decks[other].audio
-  ){
-
-    decks[deck].audio.currentTime =
-      decks[other].audio.currentTime;
-
-    toast(
-      "🔄 SYNC " + deck
-    );
-
-  }else{
-
-    toast(
-      "SYNC ist nur zwischen lokalen Dateien exakt möglich"
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   CROSSFADER
-========================================================= */
-
-function crossfade(value){
-
-  const position =
-    Number(value) / 100;
-
-  const volumeA =
-    Math.cos(
-      position *
-      Math.PI /
-      2
-    ) * 0.7;
-
-  const volumeB =
-    Math.cos(
-      (1-position) *
-      Math.PI /
-      2
-    ) * 0.7;
-
-
-  if(
-    decks.A.audio &&
-    decks.A.source === "file"
-  ){
-
-    decks.A.audio.volume =
-      volumeA;
-
-  }
-
-
-  if(
-    decks.B.audio &&
-    decks.B.source === "file"
-  ){
-
-    decks.B.audio.volume =
-      volumeB;
-
-  }
-
-}
-
-
-/* =========================================================
+/* =========================
    QUEUE
-========================================================= */
+========================= */
 
 function renderQueue(){
 
-  $("queue").innerHTML =
-    queue
-      .map(
-        (item,index) => {
-
-          const isApple =
-            item.type === "apple";
-
-          const title =
-            isApple
-              ? item.name
-              : item.file?.name;
-
-          return `
+  $('queue')
+    .innerHTML =
+      queue
+        .map(
+          (item,index) => `
 
             <div class="row">
 
-              <div class="queueBadge">
-                ${isApple ? "🍎" : "📁"}
-              </div>
-
               <div class="name">
-                ${esc(title || "Titel")}
+
+                ${
+                  item.type === 'apple'
+                    ? '🍎'
+                    : '🎵'
+                }
+
+                ${esc(
+                  item.name ||
+                  item.file?.name ||
+                  'Titel'
+                )}
+
               </div>
 
               <button
@@ -2645,24 +2064,20 @@ function renderQueue(){
                 class="mini"
                 onclick="
                   queue.splice(${index},1);
-                  renderQueue();
+                  renderQueue()
                 ">
                 ×
               </button>
 
             </div>
 
-          `;
+          `
+        )
+        .join('')
 
-        }
-      )
-      .join("")
-    ||
-    `
-      <div class="small">
-        Noch keine Titel.
-      </div>
-    `;
+      ||
+
+      '<div class="small">Noch keine Titel.</div>';
 
 }
 
@@ -2672,30 +2087,27 @@ function queuePlay(index,deck){
   const item =
     queue[index];
 
-  if(item.type === "apple"){
-
-    decks[deck].source =
-      "apple";
+  if(item.type === 'apple'){
 
     decks[deck].song =
       item.song;
 
-    decks[deck].audio =
-      null;
+    decks[deck].source =
+      'apple';
+
+    $('track'+deck)
+      .textContent =
+      '🍎 ' +
+      item.name;
 
     source(
       deck,
-      "apple"
+      'apple'
     );
 
-    updateDeckUI(deck);
-
-    playApple(deck);
-
-    return;
+    return playApple(deck);
 
   }
-
 
   loadFile(
     deck,
@@ -2709,183 +2121,130 @@ function queuePlay(index,deck){
 }
 
 
-/* =========================================================
+function esc(text){
+
+  return String(
+    text ?? ''
+  ).replace(
+    /[&<>"']/g,
+    character => ({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#039;'
+    }[character])
+  );
+
+}
+
+
+/* =========================
    APPLE MUSIC
-========================================================= */
+========================= */
 
 async function getMusicKit(){
 
   if(mk)
     return mk;
 
-
-  if(!window.MusicKit){
-
-    throw new Error(
-      "MusicKit wurde noch nicht geladen."
+  if(!window.MusicKit)
+    throw Error(
+      'MusicKit Script fehlt'
     );
-
-  }
-
 
   const response =
     await fetch(
-      "/api/apple-music-token"
+      '/api/apple-music-token'
     );
 
-
-  if(!response.ok){
-
-    const error =
-      await response
-        .json()
-        .catch(
-          () => ({})
-        );
-
-    throw new Error(
-      error.error ||
-      "Apple Developer Token fehlt."
+  if(!response.ok)
+    throw Error(
+      'Apple Developer Token fehlt'
     );
-
-  }
-
 
   const json =
     await response.json();
 
-
-  /*
-    Wichtig:
-    MusicKit.configure() initialisiert MusicKit.
-    Danach holen wir die Instanz über
-    MusicKit.getInstance().
-  */
-
-  await MusicKit.configure({
-
-    developerToken:
-      json.token,
-
-    app:{
-      name:
-        "Smart Remote AI DJ",
-
-      build:
-        "7.0.0"
-    }
-
-  });
-
-
   mk =
-    MusicKit.getInstance();
+    await MusicKit.configure({
+      developerToken:
+        json.token,
 
+      app:{
+        name:
+          'Smart Remote AI DJ',
+
+        build:
+          '1.0'
+      }
+    });
 
   return mk;
 
 }
 
 
-/* =========================================================
-   APPLE AUTHORIZATION
-========================================================= */
-
-async function authorizeApple(){
+async function authorize(){
 
   const music =
     await getMusicKit();
 
-
-  if(!music.isAuthorized){
-
+  if(!music.isAuthorized)
     await music.authorize();
-
-  }
-
 
   return music;
 
 }
 
 
-/* =========================================================
-   APPLE MUSIC MODAL
-========================================================= */
-
 async function openApple(deck){
 
   targetDeck =
     deck;
 
-  $("appleModal")
-    .classList.add("show");
+  $('appleModal')
+    .classList.add('show');
 
-  $("appleStatus")
+  $('appleStatus')
     .textContent =
-    "🍎 Apple Music verbindet...";
-
+    '🍎 Apple Music verbindet...';
 
   try{
 
     const music =
-      await authorizeApple();
+      await authorize();
 
-
-    $("appleStatus")
+    $('appleStatus')
       .textContent =
-      "🍎 Deine Apple-Music-Bibliothek";
+      '🍎 Deine Musikbibliothek';
 
-
-    const result =
+    const response =
       await music.api.library.songs({
         limit:100
       });
 
-
     appleSongs =
-      result?.data || [];
-
+      response.data || [];
 
     renderApple(
       appleSongs
     );
 
-
   }catch(error){
 
-    console.error(
-      "Apple Music:",
-      error
-    );
+    console.error(error);
 
-
-    $("appleStatus")
+    $('appleStatus')
       .textContent =
-      "⚠️ Apple Music konnte nicht verbunden werden.";
+      '⚠️ Apple Music konnte nicht verbunden werden.';
 
-
-    $("appleSongs")
-      .innerHTML = `
-
+    $('appleSongs')
+      .innerHTML =
+      `
         <div class="small">
-
-          Apple Music benötigt:
-
-          <br><br>
-
-          1. Apple-Music-Anmeldung
-
-          <br>
-
-          2. MusicKit Developer Token
-
-          <br>
-
-          3. korrekt eingerichteten Apple Developer Account
-
+          Apple Music braucht eine korrekt eingerichtete MusicKit-Konfiguration.
         </div>
-
       `;
 
   }
@@ -2895,8 +2254,8 @@ async function openApple(deck){
 
 function closeApple(){
 
-  $("appleModal")
-    .classList.remove("show");
+  $('appleModal')
+    .classList.remove('show');
 
   targetDeck =
     null;
@@ -2904,166 +2263,111 @@ function closeApple(){
 }
 
 
-/* =========================================================
-   APPLE SONG LIST
-========================================================= */
+function renderApple(songs){
 
-function renderApple(list){
+  $('appleSongs')
+    .innerHTML =
+      songs
+        .map(
+          song => {
 
-  $("appleSongs").innerHTML =
-    list
-      .map(song => {
+            const attributes =
+              song.attributes || {};
 
-        const attributes =
-          song.attributes || {};
+            const artwork =
+              attributes.artwork?.url
+                ?.replace(
+                  '{w}',
+                  '100'
+                )
+                ?.replace(
+                  '{h}',
+                  '100'
+                ) || '';
 
-        const artwork =
-          attributes.artwork?.url
-            ?.replace("{w}","100")
-            ?.replace("{h}","100");
+            return `
 
-
-        return `
-
-          <div class="song">
-
-            ${
-              artwork
-                ? `
-                  <img
-                    class="art"
-                    src="${esc(artwork)}"
-                    alt=""
-                  >
-                `
-                : `
-                  <div class="art">
-                    🎵
-                  </div>
-                `
-            }
-
-
-            <div class="songinfo">
-
-              <div class="songtitle">
-                ${esc(
-                  attributes.name ||
-                  "Titel"
-                )}
-              </div>
-
-              <div class="songartist">
-
-                ${esc(
-                  attributes.artistName ||
-                  ""
-                )}
+              <div class="song">
 
                 ${
-                  attributes.albumName
-                    ? " • " +
-                      esc(
-                        attributes.albumName
-                      )
-                    : ""
+                  artwork
+                    ? `<img
+                        class="art"
+                        src="${esc(artwork)}">`
+                    : '<div class="art"></div>'
                 }
+
+                <div class="songinfo">
+
+                  <div class="songtitle">
+                    ${esc(
+                      attributes.name ||
+                      'Titel'
+                    )}
+                  </div>
+
+                  <div class="songartist">
+                    ${esc(
+                      attributes.artistName ||
+                      ''
+                    )}
+                  </div>
+
+                </div>
+
+                <button
+                  class="mini"
+                  onclick="pickApple('${esc(song.id)}')">
+                  ▶
+                </button>
+
+                <button
+                  class="mini"
+                  onclick="addApple('${esc(song.id)}')">
+                  ＋
+                </button>
 
               </div>
 
-            </div>
+            `;
 
+          }
+        )
+        .join('')
 
-            <button
-              class="mini"
-              onclick="
-                pickApple(
-                  '${esc(song.id)}'
-                )
-              ">
-              ▶
-            </button>
+      ||
 
-
-            <button
-              class="mini"
-              onclick="
-                addApple(
-                  '${esc(song.id)}'
-                )
-              ">
-              ＋
-            </button>
-
-          </div>
-
-        `;
-
-      })
-      .join("")
-    ||
-    `
-      <div class="small">
-        Keine Titel gefunden.
-      </div>
-    `;
+      '<div class="small">Keine Titel in deiner Bibliothek.</div>';
 
 }
 
-
-/* =========================================================
-   APPLE SEARCH
-========================================================= */
 
 function filterApple(query){
 
   const q =
-    String(query || "")
-      .toLowerCase()
-      .trim();
-
-
-  if(!q){
-
-    renderApple(
-      appleSongs
-    );
-
-    return;
-
-  }
-
+    query.toLowerCase();
 
   renderApple(
+    appleSongs.filter(
+      song => {
 
-    appleSongs.filter(song => {
+        const a =
+          song.attributes || {};
 
-      const a =
-        song.attributes || {};
+        return `
+          ${a.name}
+          ${a.artistName}
+          ${a.albumName}
+        `
+        .toLowerCase()
+        .includes(q);
 
-      const text =
-        [
-          a.name,
-          a.artistName,
-          a.albumName
-        ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-
-
-      return text.includes(q);
-
-    })
-
+      }
+    )
   );
 
 }
 
-
-/* =========================================================
-   FIND APPLE SONG
-========================================================= */
 
 function findApple(id){
 
@@ -3076,11 +2380,7 @@ function findApple(id){
 }
 
 
-/* =========================================================
-   LOAD APPLE SONG INTO DECK
-========================================================= */
-
-async function pickApple(id){
+function pickApple(id){
 
   const song =
     findApple(id);
@@ -3088,19 +2388,16 @@ async function pickApple(id){
   if(!song)
     return;
 
-
-  const attributes =
+  const a =
     song.attributes || {};
-
 
   if(targetDeck){
 
     const deck =
       targetDeck;
 
-
     decks[deck].source =
-      "apple";
+      'apple';
 
     decks[deck].song =
       song;
@@ -3108,56 +2405,38 @@ async function pickApple(id){
     decks[deck].audio =
       null;
 
-    decks[deck].title =
-      attributes.name;
+    $('track'+deck)
+      .textContent =
+      '🍎 ' +
+      (a.name || 'Titel');
 
-    decks[deck].artist =
-      attributes.artistName;
-
-    decks[deck].artwork =
-      attributes.artwork?.url;
-
+    $('status'+deck)
+      .textContent =
+      'READY';
 
     source(
       deck,
-      "apple"
+      'apple'
     );
-
-
-    updateDeckUI(
-      deck
-    );
-
 
     closeApple();
 
-
     toast(
-      "🍎 Deck " +
+      '🍎 Deck ' +
       deck +
-      " geladen"
+      ' geladen'
     );
 
+    playApple(deck);
 
-    await playApple(
-      deck
-    );
+  }else{
 
-    return;
+    playAppleSong(song);
 
   }
 
-
-  await playAppleSong(
-    song
-  );
-
 }
 
-
-/* =========================================================
-   ADD APPLE TO QUEUE
-========================================================= */
 
 function addApple(id){
 
@@ -3167,149 +2446,87 @@ function addApple(id){
   if(!song)
     return;
 
-
   queue.push({
 
-    type:"apple",
+    type:'apple',
 
-    song,
+    song:song,
 
     name:
       song.attributes?.name ||
-      "Titel"
+      'Titel'
 
   });
 
-
   renderQueue();
 
-
   toast(
-    "🍎 Zur Queue hinzugefügt"
+    '➕ Queue'
   );
 
 }
 
-
-/* =========================================================
-   APPLE PLAY
-========================================================= */
 
 async function playApple(deck){
 
   try{
 
     const music =
-      await authorizeApple();
-
-
-    const song =
-      decks[deck].song;
-
-
-    if(!song){
-
-      toast(
-        "Kein Apple-Music-Titel"
-      );
-
-      return;
-
-    }
-
-
-    /*
-      MusicKit Web besitzt einen
-      gemeinsamen Apple-Music-Player.
-
-      Deshalb wird hier immer
-      der aktuelle Apple-Music-Titel
-      geladen.
-    */
+      await authorize();
 
     await music.setQueue({
-
       song:
-        song.id
-
+        decks[deck]
+          .song
+          .id
     });
 
-
     await music.play();
-
-
-    appleActiveDeck =
-      deck;
-
 
     decks[deck].playing =
       true;
 
-
-    $("status"+deck)
+    $('status'+deck)
       .textContent =
-      "PLAY";
-
-
-    $("play"+deck)
-      .textContent =
-      "❚❚ PAUSE";
-
+      'PLAY';
 
   }catch(error){
 
-    console.error(
-      "Apple Music playback:",
-      error
-    );
-
+    console.error(error);
 
     toast(
-      "⚠️ Apple Music Wiedergabe fehlgeschlagen"
+      '⚠️ Apple Music Wiedergabe fehlgeschlagen'
     );
 
   }
 
 }
 
-
-/* =========================================================
-   APPLE DIRECT PLAY
-========================================================= */
 
 async function playAppleSong(song){
 
   try{
 
     const music =
-      await authorizeApple();
-
+      await authorize();
 
     await music.setQueue({
-
       song:
         song.id
-
     });
-
 
     await music.play();
 
-
     toast(
-      "🍎 Wiedergabe gestartet"
+      '🍎 Wiedergabe gestartet'
     );
-
 
   }catch(error){
 
-    console.error(
-      error
-    );
-
+    console.error(error);
 
     toast(
-      "⚠️ Apple Music Wiedergabe fehlgeschlagen"
+      '⚠️ Apple Music Wiedergabe fehlgeschlagen'
     );
 
   }
@@ -3317,34 +2534,226 @@ async function playAppleSong(song){
 }
 
 
-/* =========================================================
-   AI TRANSITION
-========================================================= */
+/* =========================
+   YOUTUBE
+========================= */
+
+function youtubeId(url){
+
+  try{
+
+    const u =
+      new URL(url);
+
+    if(
+      u.hostname.includes(
+        'youtu.be'
+      )
+    ){
+
+      return u.pathname
+        .slice(1)
+        .split('/')[0];
+
+    }
+
+    if(
+      u.hostname.includes(
+        'youtube.com'
+      )
+    ){
+
+      if(
+        u.pathname ===
+        '/watch'
+      ){
+
+        return u.searchParams
+          .get('v');
+
+      }
+
+      if(
+        u.pathname.startsWith(
+          '/shorts/'
+        )
+      ){
+
+        return u.pathname
+          .split('/')[2];
+
+      }
+
+      if(
+        u.pathname.startsWith(
+          '/embed/'
+        )
+      ){
+
+        return u.pathname
+          .split('/')[2];
+
+      }
+
+    }
+
+  }catch{}
+
+  return null;
+
+}
+
+
+function loadYouTube(deck){
+
+  const url =
+    $('youtubeUrl'+deck)
+      .value
+      .trim();
+
+  const id =
+    youtubeId(url);
+
+  if(!id){
+
+    return toast(
+      '⚠️ Ungültiger YouTube-Link'
+    );
+
+  }
+
+  decks[deck].source =
+    'youtube';
+
+  decks[deck].song = {
+    youtubeId:id,
+    url:url
+  };
+
+  decks[deck].audio =
+    null;
+
+  $('track'+deck)
+    .textContent =
+    '▶️ YouTube • ' +
+    id;
+
+  $('status'+deck)
+    .textContent =
+    'READY';
+
+  source(
+    deck,
+    'youtube'
+  );
+
+  $('ytPlayer'+deck)
+    .innerHTML = `
+
+      <iframe
+        id="ytFrame${deck}"
+        src="https://www.youtube.com/embed/${encodeURIComponent(id)}?enablejsapi=1&playsinline=1&rel=0"
+        title="YouTube Player"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+
+    `;
+
+  toast(
+    '▶️ YouTube Deck ' +
+    deck +
+    ' geladen'
+  );
+
+}
+
+
+function youtubeCommand(
+  deck,
+  func,
+  value
+){
+
+  const frame =
+    $('ytFrame'+deck);
+
+  if(!frame){
+
+    return toast(
+      '▶️ YouTube-Titel laden'
+    );
+
+  }
+
+  frame.contentWindow.postMessage(
+
+    JSON.stringify({
+
+      event:
+        'command',
+
+      func:
+        func,
+
+      args:
+        value === undefined
+          ? []
+          : [value]
+
+    }),
+
+    'https://www.youtube.com'
+
+  );
+
+}
+
+
+function toggleYouTube(deck){
+
+  const x =
+    decks[deck];
+
+  if(!x.song)
+    return loadYouTube(deck);
+
+  youtubeCommand(
+    deck,
+    x.playing
+      ? 'pauseVideo'
+      : 'playVideo'
+  );
+
+  x.playing =
+    !x.playing;
+
+  $('status'+deck)
+    .textContent =
+    x.playing
+      ? 'PLAY'
+      : 'PAUSE';
+
+}
+
+
+/* =========================
+   AI DJ
+========================= */
 
 async function aiTransition(){
-
-  const result =
-    $("aiResult");
-
-
-  result.style.display =
-    "block";
-
-  result.textContent =
-    "✨ AI analysiert die beiden Decks...";
-
 
   try{
 
     const response =
       await fetch(
-        "/api/ai-dj",
+        '/api/ai-dj',
         {
-          method:"POST",
+          method:'POST',
 
           headers:{
-            "Content-Type":
-              "application/json"
+            'Content-Type':
+              'application/json'
           },
 
           body:
@@ -3352,24 +2761,26 @@ async function aiTransition(){
 
               mode:
                 state.mode ||
-                "manual",
-
-              settings:
-                aiState,
+                'manual',
 
               deckA:{
                 source:
                   decks.A.source,
 
                 title:
-                  decks.A.source === "apple"
-                    ? decks.A.song?.attributes?.name
-                    : decks.A.title,
-
-                artist:
-                  decks.A.source === "apple"
-                    ? decks.A.song?.attributes?.artistName
-                    : decks.A.artist
+                  decks.A.source === 'youtube'
+                    ? 'YouTube: ' +
+                      (
+                        decks.A.song
+                          ?.youtubeId ||
+                        ''
+                      )
+                    : decks.A.song
+                        ?.attributes
+                        ?.name ||
+                      decks.A.audio
+                        ?.src ||
+                      null
               },
 
               deckB:{
@@ -3377,14 +2788,19 @@ async function aiTransition(){
                   decks.B.source,
 
                 title:
-                  decks.B.source === "apple"
-                    ? decks.B.song?.attributes?.name
-                    : decks.B.title,
-
-                artist:
-                  decks.B.source === "apple"
-                    ? decks.B.song?.attributes?.artistName
-                    : decks.B.artist
+                  decks.B.source === 'youtube'
+                    ? 'YouTube: ' +
+                      (
+                        decks.B.song
+                          ?.youtubeId ||
+                        ''
+                      )
+                    : decks.B.song
+                        ?.attributes
+                        ?.name ||
+                      decks.B.audio
+                        ?.src ||
+                      null
               }
 
             })
@@ -3392,133 +2808,69 @@ async function aiTransition(){
         }
       );
 
+    if(!response.ok)
+      throw Error();
 
     const json =
       await response.json();
 
+    console.log(
+      json.plan
+    );
 
-    if(!response.ok){
-
-      throw new Error(
-        json.error ||
-        "AI-Server Fehler"
-      );
-
-    }
-
-
-    const plan =
-      json.plan;
-
-
-    if(typeof plan === "string"){
-
-      result.textContent =
-        plan;
-
-    }else{
-
-      result.innerHTML = `
-
-        <b>✨ AI Übergang</b>
-
-        <br><br>
-
-        ${
-          esc(
-            plan?.explanation ||
-            "Übergang geplant."
-          )
-        }
-
-        ${
-          plan?.steps
-            ? `
-              <br><br>
-              ${esc(
-                JSON.stringify(
-                  plan.steps
-                )
-              )}
-            `
-            : ""
-        }
-
-      `;
-
-    }
-
+    toast(
+      '✨ AI-Übergang geplant'
+    );
 
   }catch(error){
 
-    console.error(
-      error
+    console.error(error);
+
+    toast(
+      '⚠️ AI-Server nicht erreichbar'
     );
-
-
-    result.textContent =
-      "⚠️ AI-Server nicht erreichbar. Prüfe server.js und OPENAI_API_KEY.";
 
   }
 
 }
 
 
-/* =========================================================
-   INITIALIZATION
-========================================================= */
+/* =========================
+   START
+========================= */
 
-$("volumeDial")
+$('volumeDial')
   .textContent =
   state.volume ?? 40;
 
-$("bassDial")
+$('bassDial')
   .textContent =
   state.bass ?? 0;
 
-$("centerDial")
+$('centerDial')
   .textContent =
   state.center ?? 0;
 
-$("rearDial")
+$('rearDial')
   .textContent =
   state.rear ?? 0;
 
-$("input")
-  .value =
+$('input').value =
   state.input ||
-  "optical";
+  'optical';
 
-$("xiao")
-  .value =
+$('xiao').value =
   state.xiao ||
-  "";
+  '';
 
 mode(
   state.mode ||
-  "manual"
+  'manual'
 );
-
 
 renderLocal();
 
 renderQueue();
-
-
-/* =========================================================
-   WAIT FOR MUSICKIT
-========================================================= */
-
-document.addEventListener(
-  "musickitloaded",
-  () => {
-
-    console.log(
-      "🍎 MusicKit Web geladen"
-    );
-
-  }
-);
 
 </script>
 
