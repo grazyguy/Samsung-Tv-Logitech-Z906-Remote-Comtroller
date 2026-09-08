@@ -10,6 +10,9 @@
 
 <title>Smart Remote</title>
 
+<!-- Apple MusicKit -->
+<script src="https://js-cdn.music.apple.com/musickit/v3/musickit.js"></script>
+
 <style>
 :root{
   --bg:#080a0f;
@@ -77,8 +80,6 @@ button{
   margin:auto
 }
 
-/* HEADER */
-
 .header{
   display:flex;
   align-items:center;
@@ -109,8 +110,6 @@ button{
   font-size:13px
 }
 
-/* PAGES */
-
 .page{
   display:none
 }
@@ -131,8 +130,6 @@ button{
   }
 }
 
-/* CARDS */
-
 .card{
   background:var(--card);
   border:1px solid var(--line);
@@ -152,8 +149,6 @@ button{
   color:var(--muted);
   font-size:13px
 }
-
-/* DEVICES */
 
 .deviceGrid{
   display:grid;
@@ -183,8 +178,6 @@ button{
   font-size:12px
 }
 
-/* BUTTONS */
-
 .btn{
   min-height:46px;
   border-radius:14px;
@@ -203,6 +196,14 @@ button{
   border-color:transparent
 }
 
+.btn.apple{
+  background:linear-gradient(
+    135deg,
+    rgba(255,255,255,.14),
+    rgba(255,255,255,.07)
+  );
+}
+
 .btn.danger{
   background:rgba(255,82,107,.15);
   color:#ff8394
@@ -213,8 +214,6 @@ button{
   grid-template-columns:repeat(2,1fr);
   gap:9px
 }
-
-/* APP GRID */
 
 .appGrid{
   display:grid;
@@ -244,8 +243,6 @@ button{
   color:#ddd
 }
 
-/* TV */
-
 .remote{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -274,8 +271,6 @@ button{
 .remote .ok{
   background:rgba(77,163,255,.18)
 }
-
-/* Z906 */
 
 .knobGrid{
   display:grid;
@@ -324,8 +319,6 @@ button{
   font-size:13px
 }
 
-/* RANGE */
-
 .range{
   width:100%;
   accent-color:var(--accent)
@@ -359,8 +352,6 @@ input[type=text]{
   color:#fff;
   outline:none
 }
-
-/* NAVIGATION */
 
 .navGrid{
   position:fixed;
@@ -398,8 +389,6 @@ input[type=text]{
   color:#fff;
   background:rgba(77,163,255,.17)
 }
-
-/* MIXER */
 
 .mixerTop{
   display:flex;
@@ -453,8 +442,6 @@ input[type=text]{
   background:var(--accent)
 }
 
-/* DECKS */
-
 .deckGrid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -492,6 +479,26 @@ input[type=text]{
   text-overflow:ellipsis
 }
 
+.deckSource{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:9px
+}
+
+.deckSource button{
+  min-height:42px;
+  border-radius:11px;
+  background:rgba(255,255,255,.08);
+  border:1px solid var(--line);
+  font-size:11px
+}
+
+.deckSource button.active{
+  background:rgba(77,163,255,.18);
+  border-color:var(--accent)
+}
+
 .deckButtons{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -505,8 +512,6 @@ input[type=text]{
   background:rgba(255,255,255,.09);
   font-size:11px
 }
-
-/* FILE BUTTON */
 
 .fileLabel{
   display:block;
@@ -523,7 +528,17 @@ input[type=text]{
   display:none
 }
 
-/* AI */
+.appleLibraryBtn{
+  display:block;
+  width:100%;
+  margin-top:9px;
+  padding:12px;
+  border-radius:11px;
+  background:rgba(255,255,255,.1);
+  color:#fff;
+  font-size:12px;
+  border:1px solid var(--line)
+}
 
 .aiGrid{
   display:grid;
@@ -543,8 +558,6 @@ input[type=text]{
   border-color:var(--accent);
   background:rgba(77,163,255,.12)
 }
-
-/* MUSIC */
 
 .musicRow,
 .queueItem{
@@ -582,7 +595,103 @@ input[type=text]{
   border:1px solid var(--line)
 }
 
-/* TOAST */
+#appleMusicModal{
+  position:fixed;
+  inset:0;
+  z-index:400;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  background:rgba(0,0,0,.62);
+  backdrop-filter:blur(8px)
+}
+
+#appleMusicModal.show{
+  display:flex
+}
+
+.applePanel{
+  width:100%;
+  max-width:700px;
+  max-height:85vh;
+  overflow:auto;
+  background:#11151e;
+  border-radius:25px 25px 0 0;
+  border:1px solid var(--line);
+  padding:18px;
+  padding-bottom:calc(25px + env(safe-area-inset-bottom))
+}
+
+.appleHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:13px
+}
+
+.appleHeader h2{
+  margin:0
+}
+
+.appleSearch{
+  width:100%;
+  padding:13px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.07);
+  color:#fff;
+  outline:none;
+  margin-bottom:10px
+}
+
+.appleSong{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border-radius:13px;
+  margin-bottom:5px;
+  background:rgba(255,255,255,.045)
+}
+
+.appleArtwork{
+  width:46px;
+  height:46px;
+  border-radius:8px;
+  object-fit:cover;
+  background:#202633
+}
+
+.appleSongInfo{
+  flex:1;
+  min-width:0
+}
+
+.appleSongTitle{
+  font-size:13px;
+  font-weight:600;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+
+.appleSongArtist{
+  margin-top:3px;
+  font-size:11px;
+  color:var(--muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+
+#appleStatus{
+  margin-bottom:10px;
+  padding:10px;
+  border-radius:12px;
+  background:rgba(77,163,255,.08);
+  color:#a7d4ff;
+  font-size:12px
+}
 
 #toast{
   position:fixed;
@@ -605,7 +714,11 @@ input[type=text]{
   transform:translate(-50%,0)
 }
 
-/* MOBILE */
+.sceneGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px
+}
 
 @media(max-width:600px){
 
@@ -775,8 +888,7 @@ Fernbedienung
 
 <div class="remote">
 
-<button class="power"
-onclick="sendCommand('TV_POWER')">
+<button class="power" onclick="sendCommand('TV_POWER')">
 ⏻
 </button>
 
@@ -788,20 +900,17 @@ SOURCE
 MENU
 </button>
 
-
 <button onclick="sendCommand('TV_UP')">
 ▲
 </button>
 
-<button class="ok"
-onclick="sendCommand('TV_OK')">
+<button class="ok" onclick="sendCommand('TV_OK')">
 OK
 </button>
 
 <button onclick="sendCommand('TV_DOWN')">
 ▼
 </button>
-
 
 <button onclick="sendCommand('TV_LEFT')">
 ◀
@@ -815,7 +924,6 @@ OK
 ▶
 </button>
 
-
 <button onclick="sendCommand('TV_VOL_DOWN')">
 VOL −
 </button>
@@ -828,9 +936,7 @@ VOL −
 VOL +
 </button>
 
-
-<button class="wide"
-onclick="sendCommand('TV_BACK')">
+<button class="wide" onclick="sendCommand('TV_BACK')">
 ↩ Zurück
 </button>
 
@@ -844,26 +950,22 @@ onclick="sendCommand('TV_BACK')">
 
 <div class="appGrid">
 
-<button class="appBtn"
-onclick="tvApp('Netflix')">
+<button class="appBtn" onclick="tvApp('Netflix')">
 <span>🎬</span>
 <small>Netflix</small>
 </button>
 
-<button class="appBtn"
-onclick="tvApp('YouTube')">
+<button class="appBtn" onclick="tvApp('YouTube')">
 <span>▶️</span>
 <small>YouTube</small>
 </button>
 
-<button class="appBtn"
-onclick="tvApp('Prime Video')">
+<button class="appBtn" onclick="tvApp('Prime Video')">
 <span>📦</span>
 <small>Prime</small>
 </button>
 
-<button class="appBtn"
-onclick="tvApp('Spotify')">
+<button class="appBtn" onclick="tvApp('Spotify')">
 <span>🎵</span>
 <small>Spotify</small>
 </button>
@@ -884,99 +986,66 @@ onclick="tvApp('Spotify')">
 
 <div class="knobGrid">
 
-
 <div class="knobBox">
 
-<button id="volumeKnob"
-class="knob"
+<button id="volumeKnob" class="knob"
 onclick="changeZ('volume',5)">
 
 <div class="dial">
-
-<div id="volumeDial"
-class="dialInner">
-40
-</div>
-
+<div id="volumeDial" class="dialInner">40</div>
 </div>
 
 </button>
 
-<div class="knobName">
-Volume
-</div>
+<div class="knobName">Volume</div>
 
 </div>
 
 
 <div class="knobBox">
 
-<button id="bassKnob"
-class="knob"
+<button id="bassKnob" class="knob"
 onclick="changeZ('bass',1)">
 
 <div class="dial">
-
-<div id="bassDial"
-class="dialInner">
-0
-</div>
-
+<div id="bassDial" class="dialInner">0</div>
 </div>
 
 </button>
 
-<div class="knobName">
-Bass
-</div>
+<div class="knobName">Bass</div>
 
 </div>
 
 
 <div class="knobBox">
 
-<button id="centerKnob"
-class="knob"
+<button id="centerKnob" class="knob"
 onclick="changeZ('center',1)">
 
 <div class="dial">
-
-<div id="centerDial"
-class="dialInner">
-0
-</div>
-
+<div id="centerDial" class="dialInner">0</div>
 </div>
 
 </button>
 
-<div class="knobName">
-Center
-</div>
+<div class="knobName">Center</div>
 
 </div>
 
 
 <div class="knobBox">
 
-<button id="rearKnob"
-class="knob"
+<button id="rearKnob" class="knob"
 onclick="changeZ('rear',1)">
 
 <div class="dial">
-
-<div id="rearDial"
-class="dialInner">
-0
-</div>
-
+<div id="rearDial" class="dialInner">0</div>
 </div>
 
 </button>
 
-<div class="knobName">
-Rear
-</div>
+<div class="knobName">Rear</div>
 
 </div>
 
@@ -990,23 +1059,19 @@ Rear
 
 <div class="btnGrid">
 
-<button class="btn"
-onclick="z906Volume(-5)">
+<button class="btn" onclick="z906Volume(-5)">
 🔉 Leiser
 </button>
 
-<button class="btn"
-onclick="z906Volume(5)">
+<button class="btn" onclick="z906Volume(5)">
 🔊 Lauter
 </button>
 
-<button class="btn"
-onclick="sendCommand('Z906_MUTE')">
+<button class="btn" onclick="sendCommand('Z906_MUTE')">
 🔇 Mute
 </button>
 
-<button class="btn"
-onclick="sendCommand('Z906_3D')">
+<button class="btn" onclick="sendCommand('Z906_3D')">
 🌐 3D
 </button>
 
@@ -1019,25 +1084,13 @@ onclick="sendCommand('Z906_3D')">
 
 <h2>Eingang</h2>
 
-<select id="inputSelect"
-class="select"
+<select id="inputSelect" class="select"
 onchange="setInput(this.value)">
 
-<option value="optical">
-Optical
-</option>
-
-<option value="coax">
-Coax
-</option>
-
-<option value="6ch">
-6 Channel
-</option>
-
-<option value="stereo">
-Stereo
-</option>
+<option value="optical">Optical</option>
+<option value="coax">Coax</option>
+<option value="6ch">6 Channel</option>
+<option value="stereo">Stereo</option>
 
 </select>
 
@@ -1050,23 +1103,19 @@ Stereo
 
 <div class="sceneGrid">
 
-<button class="btn"
-onclick="scene('Movie')">
+<button class="btn" onclick="scene('Movie')">
 🎬 Movie
 </button>
 
-<button class="btn"
-onclick="scene('Music')">
+<button class="btn" onclick="scene('Music')">
 🎵 Music
 </button>
 
-<button class="btn"
-onclick="scene('Gaming')">
+<button class="btn" onclick="scene('Gaming')">
 🎮 Gaming
 </button>
 
-<button class="btn"
-onclick="scene('Night')">
+<button class="btn" onclick="scene('Night')">
 🌙 Night
 </button>
 
@@ -1085,26 +1134,16 @@ onclick="scene('Night')">
 
 <div class="mixerTitle">
 
-<div class="icon">
-🎧
-</div>
+<div class="icon">🎧</div>
 
 <div>
-
-<h2>
-Smart AI DJ
-</h2>
-
-<small>
-Dual Deck Mixer
-</small>
-
+<h2>Smart AI DJ</h2>
+<small>Dual Deck Mixer</small>
 </div>
 
 </div>
 
-<button class="iconBtn"
-onclick="showPage('home')">
+<button class="iconBtn" onclick="showPage('home')">
 ←
 </button>
 
@@ -1115,7 +1154,7 @@ onclick="showPage('home')">
 
 <div class="modeGrid">
 
-<button class="modeBtn active"
+<button class="modeBtn"
 data-mode="manual"
 onclick="setMixerMode('manual')">
 Manual
@@ -1148,22 +1187,13 @@ Player
 
 <div class="card">
 
-<h2>
-🤖 AI Steuerung
-</h2>
+<h2>🤖 AI Steuerung</h2>
 
 <div class="settingRow">
 
 <label>
-
-<span>
-AI Level
-</span>
-
-<span id="aiLevelText">
-70%
-</span>
-
+<span>AI Level</span>
+<span id="aiLevelText">70%</span>
 </label>
 
 <input
@@ -1181,33 +1211,27 @@ oninput="setAILevel(this.value)"
 
 <div class="aiGrid">
 
-<button class="aiOption active"
-onclick="toggleAI(this)">
+<button class="aiOption active" onclick="toggleAI(this)">
 🥁 Beat Match
 </button>
 
-<button class="aiOption active"
-onclick="toggleAI(this)">
+<button class="aiOption active" onclick="toggleAI(this)">
 🎚️ Auto Gain
 </button>
 
-<button class="aiOption active"
-onclick="toggleAI(this)">
+<button class="aiOption active" onclick="toggleAI(this)">
 🎵 Key Match
 </button>
 
-<button class="aiOption"
-onclick="toggleAI(this)">
+<button class="aiOption" onclick="toggleAI(this)">
 🔥 Energy Boost
 </button>
 
-<button class="aiOption"
-onclick="toggleAI(this)">
+<button class="aiOption" onclick="toggleAI(this)">
 🎧 Smooth Mix
 </button>
 
-<button class="aiOption"
-onclick="toggleAI(this)">
+<button class="aiOption" onclick="toggleAI(this)">
 💥 Bass Drop
 </button>
 
@@ -1216,23 +1240,20 @@ onclick="toggleAI(this)">
 </div>
 
 
-<!-- MUSIC LIBRARY -->
+<!-- ALLGEMEINE MUSIK -->
 
 <div class="card">
 
-<h2>
-🎵 Meine Musik
-</h2>
+<h2>🎵 Musik</h2>
 
 <p class="small">
-Musik direkt aus „Dateien“ auf dem iPhone auswählen.
-Mehrere Titel möglich.
+Wähle lokale Audiodateien oder deine Apple-Music-Bibliothek.
+Es werden keine Apple-Music-Titel kopiert oder heruntergeladen.
 </p>
-
 
 <label class="fileLabel">
 
-📂 Musik aus „Dateien“ auswählen
+📂 Dateien öffnen
 
 <input
 id="musicLibraryInput"
@@ -1244,12 +1265,14 @@ onchange="addMusicFiles(this)"
 
 </label>
 
+<button class="appleLibraryBtn" onclick="openAppleMusic('library')">
+🍎 Apple Music öffnen
+</button>
 
-<div id="musicLibrary"
-style="margin-top:12px">
+<div id="musicLibrary" style="margin-top:12px">
 
 <div class="small">
-Noch keine Musik ausgewählt.
+Noch keine lokalen Dateien ausgewählt.
 </div>
 
 </div>
@@ -1262,41 +1285,66 @@ Noch keine Musik ausgewählt.
 <div class="deckGrid">
 
 
-<!-- DECK A -->
+<!-- A -->
 
 <div class="deck">
 
 <div class="deckHead">
 
-<div class="deckLetter">
-A
-</div>
+<div class="deckLetter">A</div>
 
-<div class="small"
-id="deckAStatus">
+<div class="small" id="deckAStatus">
 STOP
 </div>
 
 </div>
 
 
-<div id="trackA"
-class="track">
+<div id="trackA" class="track">
 Keine Musik geladen
 </div>
 
 
+<div class="deckSource">
+
+<button id="deckAFileBtn"
+onclick="chooseDeckSource('A','file')">
+📁 Dateien
+</button>
+
+<button id="deckAAppleBtn"
+onclick="chooseDeckSource('A','apple')">
+🍎 Apple Music
+</button>
+
+</div>
+
+
+<div id="deckAFileArea">
+
 <label class="fileLabel">
 
-📁 Datei direkt auf Deck A
+📁 Datei auf Deck A
 
 <input
 type="file"
-accept="audio/*"
+accept="audio/*,.mp3,.m4a,.wav,.aac,.flac,.ogg"
 onchange="loadDeckFile('A',this)"
 >
 
 </label>
+
+</div>
+
+
+<div id="deckAAppleArea" style="display:none">
+
+<button class="appleLibraryBtn"
+onclick="openAppleMusic('A')">
+🍎 Titel aus Apple Music wählen
+</button>
+
+</div>
 
 
 <div class="deckButtons">
@@ -1354,41 +1402,66 @@ oninput="deckFilter('A',this.value)"
 </div>
 
 
-<!-- DECK B -->
+<!-- B -->
 
 <div class="deck">
 
 <div class="deckHead">
 
-<div class="deckLetter">
-B
-</div>
+<div class="deckLetter">B</div>
 
-<div class="small"
-id="deckBStatus">
+<div class="small" id="deckBStatus">
 STOP
 </div>
 
 </div>
 
 
-<div id="trackB"
-class="track">
+<div id="trackB" class="track">
 Keine Musik geladen
 </div>
 
 
+<div class="deckSource">
+
+<button id="deckBFileBtn"
+onclick="chooseDeckSource('B','file')">
+📁 Dateien
+</button>
+
+<button id="deckBAppleBtn"
+onclick="chooseDeckSource('B','apple')">
+🍎 Apple Music
+</button>
+
+</div>
+
+
+<div id="deckBFileArea">
+
 <label class="fileLabel">
 
-📁 Datei direkt auf Deck B
+📁 Datei auf Deck B
 
 <input
 type="file"
-accept="audio/*"
+accept="audio/*,.mp3,.m4a,.wav,.aac,.flac,.ogg"
 onchange="loadDeckFile('B',this)"
 >
 
 </label>
+
+</div>
+
+
+<div id="deckBAppleArea" style="display:none">
+
+<button class="appleLibraryBtn"
+onclick="openAppleMusic('B')">
+🍎 Titel aus Apple Music wählen
+</button>
+
+</div>
 
 
 <div class="deckButtons">
@@ -1452,9 +1525,7 @@ oninput="deckFilter('B',this.value)"
 
 <div class="card">
 
-<h2>
-↔️ Crossfader
-</h2>
+<h2>↔️ Crossfader</h2>
 
 <input
 id="crossfader"
@@ -1473,13 +1544,8 @@ margin-top:5px;
 color:#777;
 font-size:11px">
 
-<span>
-A
-</span>
-
-<span>
-B
-</span>
+<span>A</span>
+<span>B</span>
 
 </div>
 
@@ -1490,13 +1556,11 @@ B
 
 <div class="card">
 
-<h2>
-🧠 AI Transition
-</h2>
+<h2>🧠 AI Transition</h2>
 
 <p class="small">
-Automatische Übergänge können später mit echter
-BPM-/Beat-Erkennung erweitert werden.
+Die KI plant BPM, Key, Gain, Bass-Swap, Energie
+und Übergangslänge.
 </p>
 
 <button
@@ -1515,9 +1579,7 @@ onclick="planTransition()">
 
 <div class="card">
 
-<h2>
-📋 Queue
-</h2>
+<h2>📋 Queue</h2>
 
 <div id="queue">
 
@@ -1538,17 +1600,12 @@ Noch keine Titel in der Queue
 
 <div class="card">
 
-<h2>
-⚙️ Einstellungen
-</h2>
-
+<h2>⚙️ Einstellungen</h2>
 
 <div class="settingRow">
 
 <label>
-<span>
-XIAO IP-Adresse
-</span>
+<span>XIAO IP-Adresse</span>
 </label>
 
 <input
@@ -1565,9 +1622,7 @@ onchange="saveSettings()"
 
 <label>
 
-<span>
-Hintergrund Blur
-</span>
+<span>Hintergrund Blur</span>
 
 <span id="blurText">
 0 px
@@ -1591,9 +1646,7 @@ oninput="applyBlur(this.value)"
 <div class="settingRow">
 
 <label>
-<span>
-Hintergrundbild
-</span>
+<span>Hintergrundbild</span>
 </label>
 
 <label class="fileLabel">
@@ -1615,17 +1668,15 @@ onchange="setWallpaper(this)"
 
 <div class="card">
 
-<h2>
-ℹ️ Verbindung
-</h2>
+<h2>ℹ️ Verbindung</h2>
 
 <p class="small">
-Aktuell läuft die App im Demo-Modus.
+Aktuell läuft die IR-Steuerung im Demo-Modus.
 </p>
 
 <p class="small">
-Die echte IR-Steuerung wird später über den
-XIAO Smart IR Mate eingebaut.
+Die echte Steuerung wird über den XIAO Smart IR Mate
+eingebaut.
 </p>
 
 </div>
@@ -1659,12 +1710,9 @@ data-page="home"
 onclick="showPage('home')">
 
 🏠
-<span>
-Home
-</span>
+<span>Home</span>
 
 </button>
-
 
 <button
 class="nav"
@@ -1672,12 +1720,9 @@ data-page="tv"
 onclick="showPage('tv')">
 
 📺
-<span>
-TV
-</span>
+<span>TV</span>
 
 </button>
-
 
 <button
 class="nav"
@@ -1685,12 +1730,9 @@ data-page="z906"
 onclick="showPage('z906')">
 
 🔊
-<span>
-Z906
-</span>
+<span>Z906</span>
 
 </button>
-
 
 <button
 class="nav"
@@ -1698,12 +1740,9 @@ data-page="mixer"
 onclick="showPage('mixerPage')">
 
 🎵
-<span>
-Mixer
-</span>
+<span>Mixer</span>
 
 </button>
-
 
 <button
 class="nav"
@@ -1711,13 +1750,54 @@ data-page="settings"
 onclick="showPage('settings')">
 
 ⚙️
-<span>
-Einstellungen
-</span>
+<span>Einstellungen</span>
 
 </button>
 
 </nav>
+
+
+<!-- APPLE MUSIC MODAL -->
+
+<div id="appleMusicModal">
+
+<div class="applePanel">
+
+<div class="appleHeader">
+
+<h2>🍎 Apple Music</h2>
+
+<button
+class="iconBtn"
+onclick="closeAppleMusic()">
+✕
+</button>
+
+</div>
+
+<div id="appleStatus">
+Apple Music wird vorbereitet...
+</div>
+
+<input
+id="appleSearch"
+class="appleSearch"
+type="search"
+placeholder="Titel, Künstler oder Album suchen..."
+oninput="filterAppleSongs(this.value)"
+>
+
+<div id="appleSongs">
+
+<div class="small">
+Apple Music laden...
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 
 <div id="toast"></div>
@@ -1725,11 +1805,11 @@ Einstellungen
 
 <script>
 
-/* =========================
+/* =====================================================
    APP STATE
-========================= */
+===================================================== */
 
-const STORAGE_KEY="smartRemoteV5";
+const STORAGE_KEY="smartRemoteV6";
 
 let state={
   page:"home",
@@ -1746,9 +1826,9 @@ let state={
 };
 
 
-/* =========================
+/* =====================================================
    MIXER
-========================= */
+===================================================== */
 
 const mixer={
 
@@ -1757,7 +1837,9 @@ const mixer={
     file:null,
     playing:false,
     gain:0,
-    filter:0
+    filter:0,
+    source:"file",
+    appleSong:null
   },
 
   B:{
@@ -1765,30 +1847,42 @@ const mixer={
     file:null,
     playing:false,
     gain:0,
-    filter:0
+    filter:0,
+    source:"file",
+    appleSong:null
   }
 
 };
 
 
-/* =========================
-   MUSIC
-========================= */
+/* =====================================================
+   LOCAL MUSIC
+===================================================== */
 
 const musicLibrary=[];
 const musicQueue=[];
 
 
-/* =========================
+/* =====================================================
+   APPLE MUSIC
+===================================================== */
+
+let musicKit=null;
+let appleSongs=[];
+let appleTargetDeck=null;
+let appleMusicReady=false;
+
+
+/* =====================================================
    SHORTCUT
-========================= */
+===================================================== */
 
 const $=id=>document.getElementById(id);
 
 
-/* =========================
+/* =====================================================
    TOAST
-========================= */
+===================================================== */
 
 function toast(msg){
 
@@ -1811,9 +1905,9 @@ function toast(msg){
 }
 
 
-/* =========================
+/* =====================================================
    STORAGE
-========================= */
+===================================================== */
 
 function saveState(){
 
@@ -1851,9 +1945,9 @@ function loadState(){
 }
 
 
-/* =========================
-   PAGE NAVIGATION
-========================= */
+/* =====================================================
+   PAGE
+===================================================== */
 
 function showPage(page){
 
@@ -1895,9 +1989,9 @@ function showPage(page){
 }
 
 
-/* =========================
-   IR DEMO
-========================= */
+/* =====================================================
+   IR
+===================================================== */
 
 function sendCommand(command){
 
@@ -1906,16 +2000,14 @@ function sendCommand(command){
     command
   );
 
-  toast(
-    "📡 "+command
-  );
+  toast("📡 "+command);
 
 }
 
 
-/* =========================
+/* =====================================================
    TV
-========================= */
+===================================================== */
 
 function tvApp(app){
 
@@ -1929,9 +2021,9 @@ function tvApp(app){
 }
 
 
-/* =========================
+/* =====================================================
    Z906
-========================= */
+===================================================== */
 
 function z906Volume(delta){
 
@@ -1957,9 +2049,7 @@ function z906Volume(delta){
 function changeZ(type,delta){
 
   if(type==="volume"){
-
     return z906Volume(delta);
-
   }
 
   state[type]=Math.max(
@@ -1973,8 +2063,7 @@ function changeZ(type,delta){
   updateUI();
 
   sendCommand(
-    "Z906_"+
-    type.toUpperCase()
+    "Z906_"+type.toUpperCase()
   );
 
 }
@@ -2001,23 +2090,16 @@ function scene(name){
     name.toUpperCase()
   );
 
-  toast(
-    "🎬 Szene: "+name
-  );
+  toast("🎬 Szene: "+name);
 
 }
 
 
-/* =========================
+/* =====================================================
    KNOBS
-========================= */
+===================================================== */
 
-function updateDial(
-  id,
-  value,
-  min,
-  max
-){
+function updateDial(id,value,min,max){
 
   const e=$(id);
 
@@ -2046,9 +2128,9 @@ function updateDial(
 }
 
 
-/* =========================
+/* =====================================================
    UPDATE UI
-========================= */
+===================================================== */
 
 function updateUI(){
 
@@ -2080,26 +2162,21 @@ function updateUI(){
     10
   );
 
-
   if($("xiaoIP"))
     $("xiaoIP").value=
       state.xiaoIP||"";
-
 
   if($("blurRange"))
     $("blurRange").value=
       state.blur||0;
 
-
   if($("blurText"))
     $("blurText").textContent=
       (state.blur||0)+" px";
 
-
   if($("inputSelect"))
     $("inputSelect").value=
       state.input||"optical";
-
 
   document.documentElement
     .style
@@ -2108,12 +2185,10 @@ function updateUI(){
       (state.blur||0)+"px"
     );
 
-
   if(state.wallpaper){
 
     $("backgroundLayer")
-      .style
-      .backgroundImage=
+      .style.backgroundImage=
       `url(${state.wallpaper})`;
 
   }
@@ -2121,9 +2196,9 @@ function updateUI(){
 }
 
 
-/* =========================
+/* =====================================================
    SETTINGS
-========================= */
+===================================================== */
 
 function applyBlur(value){
 
@@ -2164,9 +2239,7 @@ function setWallpaper(input){
 
     saveState();
 
-    toast(
-      "🖼️ Hintergrund geändert"
-    );
+    toast("🖼️ Hintergrund geändert");
 
   };
 
@@ -2182,16 +2255,14 @@ function saveSettings(){
 
   saveState();
 
-  toast(
-    "💾 Gespeichert"
-  );
+  toast("💾 Gespeichert");
 
 }
 
 
-/* =========================
+/* =====================================================
    MIXER MODE
-========================= */
+===================================================== */
 
 function setMixerMode(mode){
 
@@ -2210,24 +2281,20 @@ function setMixerMode(mode){
 
   saveState();
 
-  toast(
-    "🎧 Modus: "+mode
-  );
+  toast("🎧 Modus: "+mode);
 
 }
 
 
-/* =========================
+/* =====================================================
    AI
-========================= */
+===================================================== */
 
 function setAILevel(value){
 
-  state.ai=
-    Number(value);
+  state.ai=Number(value);
 
-  $("aiLevelText")
-    .textContent=
+  $("aiLevelText").textContent=
     value+"%";
 
   saveState();
@@ -2237,21 +2304,51 @@ function setAILevel(value){
 
 function toggleAI(button){
 
-  button.classList.toggle(
-    "active"
-  );
+  button.classList.toggle("active");
 
 }
 
 
-/* =========================
-   DECK FILE
-========================= */
+/* =====================================================
+   DECK SOURCE
+===================================================== */
 
-function loadDeckFile(
-  deck,
-  input
-){
+function chooseDeckSource(deck,source){
+
+  mixer[deck].source=source;
+
+  const fileBtn=$("deck"+deck+"FileBtn");
+  const appleBtn=$("deck"+deck+"AppleBtn");
+
+  const fileArea=$("deck"+deck+"FileArea");
+  const appleArea=$("deck"+deck+"AppleArea");
+
+  if(source==="file"){
+
+    fileBtn.classList.add("active");
+    appleBtn.classList.remove("active");
+
+    fileArea.style.display="block";
+    appleArea.style.display="none";
+
+  }else{
+
+    fileBtn.classList.remove("active");
+    appleBtn.classList.add("active");
+
+    fileArea.style.display="none";
+    appleArea.style.display="block";
+
+  }
+
+}
+
+
+/* =====================================================
+   LOCAL FILE DECK
+===================================================== */
+
+function loadDeckFile(deck,input){
 
   const file=
     input.files &&
@@ -2259,22 +2356,16 @@ function loadDeckFile(
 
   if(!file)return;
 
-  loadFileToDeck(
-    deck,
-    file
-  );
+  mixer[deck].source="file";
+
+  chooseDeckSource(deck,"file");
+
+  loadFileToDeck(deck,file);
 
 }
 
 
-/* =========================
-   LOAD FILE TO DECK
-========================= */
-
-function loadFileToDeck(
-  deck,
-  file
-){
+function loadFileToDeck(deck,file){
 
   const d=mixer[deck];
 
@@ -2283,15 +2374,10 @@ function loadFileToDeck(
     d.audio.pause();
 
     try{
-
-      URL.revokeObjectURL(
-        d.audio.src
-      );
-
+      URL.revokeObjectURL(d.audio.src);
     }catch(e){}
 
   }
-
 
   const url=
     URL.createObjectURL(file);
@@ -2303,7 +2389,6 @@ function loadFileToDeck(
 
   audio.volume=.7;
 
-
   audio.addEventListener(
     "ended",
     ()=>{
@@ -2311,27 +2396,21 @@ function loadFileToDeck(
       d.playing=false;
 
       $("deck"+deck+"Status")
-        .textContent=
-        "STOP";
+        .textContent="STOP";
 
     }
   );
 
-
   d.audio=audio;
   d.file=file;
+  d.appleSong=null;
   d.playing=false;
 
-
-  $("track"+deck)
-    .textContent=
+  $("track"+deck).textContent=
     file.name;
 
-
   $("deck"+deck+"Status")
-    .textContent=
-    "READY";
-
+    .textContent="READY";
 
   toast(
     "🎵 Deck "+deck+
@@ -2341,24 +2420,33 @@ function loadFileToDeck(
 }
 
 
-/* =========================
-   PLAY
-========================= */
+/* =====================================================
+   PLAY DECK
+===================================================== */
 
 async function deckPlay(deck){
 
   const d=mixer[deck];
 
-  if(!d.audio){
+  /* APPLE MUSIC */
 
-    toast(
-      "📁 Zuerst Musik laden"
-    );
+  if(d.source==="apple"){
+
+    await playAppleDeck(deck);
 
     return;
 
   }
 
+  /* LOCAL FILE */
+
+  if(!d.audio){
+
+    toast("📁 Zuerst Musik laden");
+
+    return;
+
+  }
 
   if(d.playing){
 
@@ -2367,13 +2455,11 @@ async function deckPlay(deck){
     d.playing=false;
 
     $("deck"+deck+"Status")
-      .textContent=
-      "PAUSE";
+      .textContent="PAUSE";
 
     return;
 
   }
-
 
   try{
 
@@ -2382,33 +2468,54 @@ async function deckPlay(deck){
     d.playing=true;
 
     $("deck"+deck+"Status")
-      .textContent=
-      "PLAY";
+      .textContent="PLAY";
 
   }catch(e){
 
-    toast(
-      "⚠️ Wiedergabe nicht möglich"
-    );
+    toast("⚠️ Wiedergabe nicht möglich");
 
   }
 
 }
 
 
-/* =========================
+/* =====================================================
    CUE
-========================= */
+===================================================== */
 
 function deckCue(deck){
 
   const d=mixer[deck];
 
+  if(d.source==="apple"){
+
+    if(!musicKit){
+
+      toast("🍎 Apple Music nicht bereit");
+
+      return;
+
+    }
+
+    try{
+
+      musicKit.seekToTime(0);
+
+      toast("🎧 CUE Deck "+deck);
+
+    }catch(e){
+
+      toast("⚠️ CUE nicht möglich");
+
+    }
+
+    return;
+
+  }
+
   if(!d.audio){
 
-    toast(
-      "📁 Kein Track geladen"
-    );
+    toast("📁 Kein Track geladen");
 
     return;
 
@@ -2416,16 +2523,14 @@ function deckCue(deck){
 
   d.audio.currentTime=0;
 
-  toast(
-    "🎧 CUE Deck "+deck
-  );
+  toast("🎧 CUE Deck "+deck);
 
 }
 
 
-/* =========================
+/* =====================================================
    SYNC
-========================= */
+===================================================== */
 
 function deckSync(deck){
 
@@ -2434,127 +2539,783 @@ function deckSync(deck){
     ?"B"
     :"A";
 
+  const d=mixer[deck];
+  const o=mixer[other];
+
   if(
-    !mixer[deck].audio ||
-    !mixer[other].audio
+    d.source==="apple" &&
+    o.audio
   ){
 
     toast(
-      "🎵 Beide Decks laden"
+      "⚠️ Apple Music + Datei Sync nur eingeschränkt"
     );
 
     return;
 
   }
 
+  if(
+    d.source==="file" &&
+    o.source==="file" &&
+    d.audio &&
+    o.audio
+  ){
 
-  mixer[deck]
-    .audio
-    .currentTime=
-    mixer[other]
-      .audio
-      .currentTime;
+    d.audio.currentTime=
+      o.audio.currentTime;
 
+    toast(
+      "🔄 Deck "+
+      deck+
+      " synchronisiert"
+    );
 
-  toast(
-    "🔄 Deck "+
-    deck+
-    " synchronisiert"
-  );
+    return;
+
+  }
+
+  if(
+    d.source==="apple" &&
+    o.source==="apple"
+  ){
+
+    toast(
+      "🍎 Zwei Apple-Music-Decks nutzen denselben Player"
+    );
+
+    return;
+
+  }
+
+  toast("🎵 Beide Decks prüfen");
 
 }
 
 
-/* =========================
+/* =====================================================
    GAIN
-========================= */
+===================================================== */
 
-function deckGain(
-  deck,
-  value
-){
+function deckGain(deck,value){
 
   mixer[deck].gain=
     Number(value);
 
+  applyLocalAudioSettings(deck);
+
 }
 
 
-/* =========================
+/* =====================================================
    FILTER
-========================= */
+===================================================== */
 
-function deckFilter(
-  deck,
-  value
-){
+function deckFilter(deck,value){
 
   mixer[deck].filter=
     Number(value);
 
+  applyLocalAudioSettings(deck);
+
 }
 
 
-/* =========================
-   CROSSFADER
-========================= */
+/* =====================================================
+   SIMPLE AUDIO SETTINGS
+===================================================== */
+
+function applyLocalAudioSettings(deck){
+
+  const d=mixer[deck];
+
+  if(!d.audio)return;
+
+  /*
+    Gain als einfache Lautstärkeskalierung.
+    Der echte Web-Audio-Mixer kann später
+    mit GainNode/BiquadFilter erweitert werden.
+  */
+
+  const gainDb=
+    Number(d.gain)||0;
+
+  const gain=
+    Math.pow(10,gainDb/20);
+
+  const base=.7;
+
+  d.audio.volume=
+    Math.max(
+      0,
+      Math.min(
+        1,
+        base*gain
+      )
+    );
+
+}
+
+
+/* =====================================================
+   CROSSFADE
+===================================================== */
 
 function crossfade(value){
 
   const x=
     Number(value)/100;
 
-
   if(mixer.A.audio){
 
+    const gain=
+      Math.cos(x*Math.PI/2)*.7;
+
     mixer.A.audio.volume=
-      Math.cos(
-        x*Math.PI/2
-      )*.7;
+      Math.max(
+        0,
+        Math.min(
+          1,
+          gain*
+          Math.pow(
+            10,
+            mixer.A.gain/20
+          )
+        )
+      );
 
   }
 
-
   if(mixer.B.audio){
 
-    mixer.B.audio.volume=
+    const gain=
       Math.cos(
         (1-x)*Math.PI/2
       )*.7;
 
+    mixer.B.audio.volume=
+      Math.max(
+        0,
+        Math.min(
+          1,
+          gain*
+          Math.pow(
+            10,
+            mixer.B.gain/20
+          )
+        )
+      );
+
   }
 
 }
 
 
-/* =========================
-   AI TRANSITION
-========================= */
+/* =====================================================
+   APPLE MUSIC INITIALIZATION
+===================================================== */
 
-function planTransition(){
+async function initAppleMusic(){
 
-  toast(
-    "🧠 AI analysiert Übergang..."
-  );
+  const status=$("appleStatus");
 
+  try{
 
-  setTimeout(
-    ()=>{
+    if(!window.MusicKit){
 
-      toast(
-        "✨ Übergang bereit"
+      status.textContent=
+        "Apple MusicKit konnte nicht geladen werden.";
+
+      return;
+
+    }
+
+    status.textContent=
+      "Apple MusicKit wird verbunden...";
+
+    /*
+      Der Token kommt NICHT in den HTML-Code.
+
+      server.js stellt ihn sicher über:
+      /api/apple-music-token
+    */
+
+    const response=
+      await fetch(
+        "/api/apple-music-token"
       );
 
-    },
-    900
+    if(!response.ok){
+
+      throw new Error(
+        "Apple Music Developer Token fehlt."
+      );
+
+    }
+
+    const data=
+      await response.json();
+
+    if(!data.token){
+
+      throw new Error(
+        "Kein Developer Token erhalten."
+      );
+
+    }
+
+    musicKit=
+      MusicKit.configure({
+
+        developerToken:data.token,
+
+        app:{
+          name:"Smart Remote AI DJ",
+          build:"1.0.0"
+        }
+
+      });
+
+    appleMusicReady=true;
+
+    status.textContent=
+      "🍎 Apple Music bereit.";
+
+    console.log(
+      "Apple MusicKit bereit"
+    );
+
+  }catch(error){
+
+    console.error(
+      "Apple Music:",
+      error
+    );
+
+    appleMusicReady=false;
+
+    status.textContent=
+      "🍎 Apple Music muss zuerst eingerichtet werden.";
+
+  }
+
+}
+
+
+/* =====================================================
+   APPLE MUSIC AUTH
+===================================================== */
+
+async function authorizeAppleMusic(){
+
+  if(!musicKit){
+
+    await initAppleMusic();
+
+  }
+
+  if(!musicKit){
+
+    toast(
+      "🍎 Apple MusicKit nicht eingerichtet"
+    );
+
+    return false;
+
+  }
+
+  try{
+
+    if(!musicKit.isAuthorized){
+
+      await musicKit.authorize();
+
+    }
+
+    return true;
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "⚠️ Apple-Music-Anmeldung abgebrochen"
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =====================================================
+   OPEN APPLE MUSIC
+===================================================== */
+
+async function openAppleMusic(target){
+
+  appleTargetDeck=
+    target==="A" ||
+    target==="B"
+    ?target
+    :null;
+
+  $("appleMusicModal")
+    .classList
+    .add("show");
+
+  $("appleSearch").value="";
+
+  $("appleSongs").innerHTML=
+    '<div class="small">Apple Music wird geladen...</div>';
+
+  const ok=
+    await authorizeAppleMusic();
+
+  if(!ok){
+
+    $("appleSongs").innerHTML=
+      `
+      <div class="small">
+      Apple MusicKit ist noch nicht eingerichtet.
+      <br><br>
+      Sobald der Developer Token auf dem Server
+      eingerichtet ist, kannst du hier deine
+      Apple-Music-Bibliothek auswählen.
+      </div>
+      `;
+
+    return;
+
+  }
+
+  await loadAppleLibrary();
+
+}
+
+
+/* =====================================================
+   CLOSE APPLE MUSIC
+===================================================== */
+
+function closeAppleMusic(){
+
+  $("appleMusicModal")
+    .classList
+    .remove("show");
+
+  appleTargetDeck=null;
+
+}
+
+
+/* =====================================================
+   LOAD USER LIBRARY
+===================================================== */
+
+async function loadAppleLibrary(){
+
+  const box=
+    $("appleSongs");
+
+  try{
+
+    /*
+      MusicKit API:
+      persönliche Musikbibliothek
+    */
+
+    const response=
+      await musicKit.api.library.songs({
+        limit:100
+      });
+
+    appleSongs=
+      response.data || [];
+
+    renderAppleSongs(
+      appleSongs
+    );
+
+    $("appleStatus").textContent=
+      "🍎 Deine Apple-Music-Bibliothek";
+
+  }catch(error){
+
+    console.error(
+      "Library:",
+      error
+    );
+
+    box.innerHTML=
+      `
+      <div class="small">
+      Deine Apple-Music-Bibliothek konnte
+      nicht geladen werden.
+      </div>
+      `;
+
+  }
+
+}
+
+
+/* =====================================================
+   SEARCH / FILTER
+===================================================== */
+
+function filterAppleSongs(query){
+
+  const q=
+    String(query||"")
+      .toLowerCase()
+      .trim();
+
+  if(!q){
+
+    renderAppleSongs(
+      appleSongs
+    );
+
+    return;
+
+  }
+
+  const filtered=
+    appleSongs.filter(song=>{
+
+      const attr=
+        song.attributes || {};
+
+      return(
+        String(attr.name||"")
+          .toLowerCase()
+          .includes(q)
+        ||
+        String(attr.artistName||"")
+          .toLowerCase()
+          .includes(q)
+        ||
+        String(attr.albumName||"")
+          .toLowerCase()
+          .includes(q)
+      );
+
+    });
+
+  renderAppleSongs(
+    filtered
   );
 
 }
 
 
-/* =========================
-   HTML SECURITY
-========================= */
+/* =====================================================
+   RENDER APPLE SONGS
+===================================================== */
+
+function renderAppleSongs(songs){
+
+  const box=
+    $("appleSongs");
+
+  if(!songs.length){
+
+    box.innerHTML=
+      `
+      <div class="small">
+      Keine Titel gefunden.
+      </div>
+      `;
+
+    return;
+
+  }
+
+  box.innerHTML=
+    songs.map(
+      song=>{
+
+        const attr=
+          song.attributes || {};
+
+        const title=
+          escapeHTML(
+            attr.name ||
+            "Unbekannter Titel"
+          );
+
+        const artist=
+          escapeHTML(
+            attr.artistName ||
+            ""
+          );
+
+        const artwork=
+          attr.artwork;
+
+        let image="";
+
+        if(artwork && artwork.url){
+
+          image=
+            artwork.url
+              .replace(
+                "{w}",
+                "100"
+              )
+              .replace(
+                "{h}",
+                "100"
+              );
+
+        }
+
+        return `
+
+        <div class="appleSong">
+
+          ${
+            image
+            ?
+            `<img
+              class="appleArtwork"
+              src="${escapeHTML(image)}"
+              alt=""
+            >`
+            :
+            `<div class="appleArtwork"></div>`
+          }
+
+          <div class="appleSongInfo">
+
+            <div class="appleSongTitle">
+              ${title}
+            </div>
+
+            <div class="appleSongArtist">
+              ${artist}
+            </div>
+
+          </div>
+
+          <button
+            class="miniBtn"
+            onclick="selectAppleSong('${escapeJS(song.id)}')">
+
+            ▶
+
+          </button>
+
+        </div>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+/* =====================================================
+   SELECT APPLE SONG
+===================================================== */
+
+async function selectAppleSong(id){
+
+  const song=
+    appleSongs.find(
+      s=>String(s.id)===String(id)
+    );
+
+  if(!song){
+
+    toast(
+      "⚠️ Titel nicht gefunden"
+    );
+
+    return;
+
+  }
+
+  const attr=
+    song.attributes || {};
+
+  const title=
+    attr.name ||
+    "Apple Music";
+
+  /*
+    Falls ein Deck ausgewählt wurde:
+    Track dort zuweisen.
+  */
+
+  if(
+    appleTargetDeck==="A" ||
+    appleTargetDeck==="B"
+  ){
+
+    const deck=
+      appleTargetDeck;
+
+    mixer[deck].source="apple";
+    mixer[deck].appleSong=song;
+    mixer[deck].file=null;
+    mixer[deck].playing=false;
+
+    chooseDeckSource(
+      deck,
+      "apple"
+    );
+
+    $("track"+deck).textContent=
+      "🍎 "+title;
+
+    $("deck"+deck+"Status")
+      .textContent=
+      "READY";
+
+    closeAppleMusic();
+
+    toast(
+      "🍎 Deck "+deck+
+      ": "+title
+    );
+
+    /*
+      Direkt abspielen.
+    */
+
+    await playAppleDeck(
+      deck
+    );
+
+    return;
+
+  }
+
+  /*
+    Allgemeiner Apple-Music-Player.
+  */
+
+  await playAppleSong(
+    song
+  );
+
+}
+
+
+/* =====================================================
+   PLAY APPLE DECK
+===================================================== */
+
+async function playAppleDeck(deck){
+
+  const d=
+    mixer[deck];
+
+  if(
+    !d.appleSong
+  ){
+
+    toast(
+      "🍎 Kein Apple-Music-Titel geladen"
+    );
+
+    return;
+
+  }
+
+  const ok=
+    await authorizeAppleMusic();
+
+  if(!ok)return;
+
+  try{
+
+    const id=
+      d.appleSong.id;
+
+    await musicKit.setQueue({
+      song:id
+    });
+
+    await musicKit.play();
+
+    d.playing=true;
+
+    $("deck"+deck+"Status")
+      .textContent=
+      "PLAY";
+
+    /*
+      Wichtig:
+      MusicKit hat einen gemeinsamen Player.
+      Deshalb kann Apple Music nicht wie zwei
+      unabhängige HTML-Audio-Decks laufen.
+    */
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+    d.playing=false;
+
+    $("deck"+deck+"Status")
+      .textContent=
+      "ERROR";
+
+    toast(
+      "⚠️ Apple Music Wiedergabe fehlgeschlagen"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   PLAY GENERAL APPLE SONG
+===================================================== */
+
+async function playAppleSong(song){
+
+  const ok=
+    await authorizeAppleMusic();
+
+  if(!ok)return;
+
+  try{
+
+    await musicKit.setQueue({
+      song:song.id
+    });
+
+    await musicKit.play();
+
+    toast(
+      "🍎 Wiedergabe gestartet"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "⚠️ Apple Music konnte nicht starten"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
 
 function escapeHTML(text){
 
@@ -2575,19 +3336,33 @@ function escapeHTML(text){
 }
 
 
-/* =========================
-   ADD MUSIC
-========================= */
+function escapeJS(text){
+
+  return String(text)
+    .replace(
+      /\\/g,
+      "\\\\"
+    )
+    .replace(
+      /'/g,
+      "\\'"
+    );
+
+}
+
+
+/* =====================================================
+   LOCAL MUSIC LIBRARY
+===================================================== */
 
 function addMusicFiles(input){
 
   const files=
-    [
-      ...input.files || []
-    ];
+    [...input.files || []];
 
   if(!files.length)return;
 
+  let added=0;
 
   files.forEach(file=>{
 
@@ -2596,9 +3371,7 @@ function addMusicFiles(input){
       /\.(mp3|m4a|wav|aac|flac|ogg)$/i
         .test(file.name);
 
-
     if(!valid)return;
-
 
     const exists=
       musicLibrary.some(
@@ -2607,7 +3380,6 @@ function addMusicFiles(input){
           track.size===file.size
       );
 
-
     if(!exists){
 
       musicLibrary.push({
@@ -2615,9 +3387,7 @@ function addMusicFiles(input){
         file:file,
 
         url:
-          URL.createObjectURL(
-            file
-          ),
+          URL.createObjectURL(file),
 
         name:file.name,
 
@@ -2625,27 +3395,27 @@ function addMusicFiles(input){
 
       });
 
+      added++;
+
     }
 
   });
-
 
   input.value="";
 
   renderMusicLibrary();
 
   toast(
-    "🎵 "+
-    files.length+
+    "🎵 "+added+
     " Datei(en) geladen"
   );
 
 }
 
 
-/* =========================
-   MUSIC LIBRARY
-========================= */
+/* =====================================================
+   RENDER LOCAL MUSIC
+===================================================== */
 
 function renderMusicLibrary(){
 
@@ -2654,18 +3424,18 @@ function renderMusicLibrary(){
 
   if(!box)return;
 
-
   if(!musicLibrary.length){
 
     box.innerHTML=
-      '<div class="small">'+
-      'Noch keine Musik ausgewählt.'+
-      '</div>';
+      `
+      <div class="small">
+      Noch keine lokalen Dateien ausgewählt.
+      </div>
+      `;
 
     return;
 
   }
-
 
   box.innerHTML=
     musicLibrary
@@ -2710,33 +3480,33 @@ function renderMusicLibrary(){
 }
 
 
-/* =========================
-   LIBRARY -> DECK
-========================= */
+/* =====================================================
+   LIBRARY TO DECK
+===================================================== */
 
-function libraryToDeck(
-  index,
-  deck
-){
+function libraryToDeck(index,deck){
 
   const track=
     musicLibrary[index];
 
-  if(track){
+  if(!track)return;
 
-    loadFileToDeck(
-      deck,
-      track.file
-    );
+  chooseDeckSource(
+    deck,
+    "file"
+  );
 
-  }
+  loadFileToDeck(
+    deck,
+    track.file
+  );
 
 }
 
 
-/* =========================
+/* =====================================================
    QUEUE
-========================= */
+===================================================== */
 
 function addToQueue(index){
 
@@ -2745,9 +3515,7 @@ function addToQueue(index){
 
   if(!track)return;
 
-  musicQueue.push(
-    track
-  );
+  musicQueue.push(track);
 
   renderQueue();
 
@@ -2789,10 +3557,7 @@ function playQueueTrack(index){
 }
 
 
-function queueToDeck(
-  index,
-  deck
-){
+function queueToDeck(index,deck){
 
   const track=
     musicQueue[index];
@@ -2809,9 +3574,9 @@ function queueToDeck(
 }
 
 
-/* =========================
-   RENDER QUEUE
-========================= */
+/* =====================================================
+   QUEUE RENDER
+===================================================== */
 
 function renderQueue(){
 
@@ -2820,18 +3585,18 @@ function renderQueue(){
 
   if(!box)return;
 
-
   if(!musicQueue.length){
 
     box.innerHTML=
-      '<div class="small">'+
-      'Noch keine Titel in der Queue'+
-      '</div>';
+      `
+      <div class="small">
+      Noch keine Titel in der Queue
+      </div>
+      `;
 
     return;
 
   }
-
 
   box.innerHTML=
     musicQueue
@@ -2881,9 +3646,102 @@ function renderQueue(){
 }
 
 
-/* =========================
+/* =====================================================
+   AI DJ
+===================================================== */
+
+async function planTransition(){
+
+  toast(
+    "🧠 AI analysiert Übergang..."
+  );
+
+  try{
+
+    const response=
+      await fetch(
+        "/api/ai-dj",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+
+            aiLevel:state.ai,
+
+            mode:state.mixerMode,
+
+            deckA:{
+              source:mixer.A.source,
+              track:
+                mixer.A.file
+                ?mixer.A.file.name
+                :mixer.A.appleSong
+                ?.attributes
+                ?.name || null,
+
+              gain:mixer.A.gain,
+              filter:mixer.A.filter
+            },
+
+            deckB:{
+              source:mixer.B.source,
+              track:
+                mixer.B.file
+                ?mixer.B.file.name
+                :mixer.B.appleSong
+                ?.attributes
+                ?.name || null,
+
+              gain:mixer.B.gain,
+              filter:mixer.B.filter
+            }
+
+          })
+
+        }
+      );
+
+    if(!response.ok){
+
+      throw new Error(
+        "AI Server Fehler"
+      );
+
+    }
+
+    const data=
+      await response.json();
+
+    console.log(
+      "AI DJ PLAN:",
+      data.plan
+    );
+
+    toast(
+      "✨ AI-Übergang geplant"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "⚠️ AI Server nicht erreichbar"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
    RESET
-========================= */
+===================================================== */
 
 function resetApp(){
 
@@ -2906,9 +3764,9 @@ function resetApp(){
 }
 
 
-/* =========================
-   START APP
-========================= */
+/* =====================================================
+   START
+===================================================== */
 
 loadState();
 
@@ -2940,6 +3798,17 @@ document
   });
 
 
+chooseDeckSource(
+  "A",
+  mixer.A.source
+);
+
+chooseDeckSource(
+  "B",
+  mixer.B.source
+);
+
+
 renderMusicLibrary();
 
 renderQueue();
@@ -2952,14 +3821,32 @@ let startPage=
 
 
 if(!$(startPage)){
-
   startPage="home";
-
 }
 
 
 showPage(
   startPage
+);
+
+
+/* =====================================================
+   APPLE MUSIC READY EVENT
+===================================================== */
+
+document.addEventListener(
+  "musickitloaded",
+  ()=>{
+    console.log(
+      "MusicKit Script geladen"
+    );
+
+    /*
+      Noch nicht zwingend konfigurieren.
+      initAppleMusic() holt den sicheren Token
+      vom Server.
+    */
+  }
 );
 
 </script>
