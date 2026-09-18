@@ -2,8 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
 <meta name="theme-color" content="#090b10">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,11 +32,8 @@ html,body{
   background:
     radial-gradient(circle at top,#1a2940 0,#090b10 48%);
   color:var(--text);
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "SF Pro Display",
-    Arial,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,
+  "SF Pro Display",Arial,sans-serif;
 }
 
 body{
@@ -157,6 +153,18 @@ h3{
   font-size:13px;
 }
 
+.status.connected{
+  color:#42d392;
+}
+
+.status.error{
+  color:#ff6478;
+}
+
+.status.searching{
+  color:#59a8ff;
+}
+
 .bigVolume{
   text-align:center;
   padding:7px 0 15px;
@@ -186,16 +194,10 @@ h3{
   bottom:0;
   left:0;
   right:0;
-
   display:flex;
   justify-content:center;
   gap:4px;
-
-  padding:
-    8px
-    8px
-    calc(8px + env(safe-area-inset-bottom));
-
+  padding:8px 8px calc(8px + env(safe-area-inset-bottom));
   background:rgba(10,13,19,.96);
   border-top:1px solid rgba(255,255,255,.08);
   backdrop-filter:blur(18px);
@@ -295,33 +297,51 @@ h3{
   z-index:100;
   left:50%;
   bottom:100px;
-
-  transform:
-    translateX(-50%)
-    translateY(20px);
-
+  transform:translateX(-50%) translateY(20px);
   max-width:90%;
-
   background:#f5f7fb;
   color:#10131a;
-
   padding:11px 15px;
   border-radius:14px;
-
   font-weight:700;
   text-align:center;
-
   opacity:0;
   pointer-events:none;
-
   transition:.2s;
 }
 
 .toast.show{
   opacity:1;
-  transform:
-    translateX(-50%)
-    translateY(0);
+  transform:translateX(-50%) translateY(0);
+}
+
+.connectionDot{
+  display:inline-block;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#777;
+  margin-right:6px;
+}
+
+.connectionDot.green{
+  background:#42d392;
+}
+
+.connectionDot.blue{
+  background:#59a8ff;
+}
+
+.connectionDot.red{
+  background:#ff6478;
+}
+
+.autoBox{
+  border:1px solid rgba(89,168,255,.2);
+  background:rgba(89,168,255,.06);
+  border-radius:15px;
+  padding:13px;
+  margin-top:12px;
 }
 
 @media(max-width:650px){
@@ -341,10 +361,7 @@ h3{
 
 <div class="wrap">
 
-<!-- HEADER -->
-
 <div class="top">
-
   <div>
     <div class="title">🎛️ Smart Remote</div>
     <div class="small">
@@ -353,2231 +370,2131 @@ h3{
   </div>
 
   <div class="logo">⚡</div>
-
 </div>
 
 
-<!-- ================= HOME ================= -->
+<!-- HOME -->
 
 <section id="home" class="page active">
 
-  <div class="card">
+<div class="card">
 
-    <h2>🏠 Steuerzentrale</h2>
+<h2>🏠 Steuerzentrale</h2>
 
-    <div class="grid2">
+<div class="grid2">
 
-      <button class="btn"
-              onclick="showPage('tv')">
-        📺 Samsung TV
-      </button>
+<button class="btn" onclick="showPage('tv')">
+📺 Samsung TV
+</button>
 
-      <button class="btn"
-              onclick="showPage('z906')">
-        🔊 Logitech Z906
-      </button>
+<button class="btn" onclick="showPage('z906')">
+🔊 Logitech Z906
+</button>
 
-      <button class="btn"
-              onclick="showPage('mixer')">
-        🎧 DJ Mixer
-      </button>
+<button class="btn" onclick="showPage('mixer')">
+🎧 DJ Mixer
+</button>
 
-      <button class="btn"
-              onclick="showPage('settings')">
-        ⚙️ Einstellungen
-      </button>
+<button class="btn" onclick="showPage('settings')">
+⚙️ Einstellungen
+</button>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 
-  <div class="card">
+<div class="card">
 
-    <h2>📡 XIAO Verbindung</h2>
+<h2>📡 XIAO Verbindung</h2>
 
-    <div id="connectionStatus"
-         class="status">
-      XIAO: nicht getestet
-    </div>
+<div id="connectionStatus" class="status searching">
+<span class="connectionDot blue"></span>
+XIAO: Suche läuft...
+</div>
 
-    <button class="btn"
-            onclick="testXiao()">
-      🔌 Verbindung testen
-    </button>
+<button class="btn green" onclick="autoFindXiao()">
+🔎 XIAO automatisch suchen
+</button>
 
-  </div>
+<button class="btn" style="margin-top:8px"
+onclick="testXiao()">
+🔌 Verbindung testen
+</button>
+
+<div class="autoBox">
+
+<div>
+<b>Automatische Suche</b>
+</div>
+
+<div class="small" style="margin-top:6px">
+
+Die App versucht zuerst:
+
+<br><br>
+
+1. gespeicherte XIAO-IP<br>
+2. <b>xiao-remote.local</b><br>
+3. weitere bekannte Adressen
+
+</div>
+
+</div>
+
+</div>
 
 </section>
 
 
-
-<!-- ================= SAMSUNG TV ================= -->
+<!-- TV -->
 
 <section id="tv" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h2>📺 Samsung TV</h2>
+<h2>📺 Samsung TV</h2>
 
-    <div class="status">
-      Samsung TV Fernbedienung
-    </div>
+<div class="status">
+Samsung TV Fernbedienung
+</div>
 
-    <div class="remote">
+<div class="remote">
 
-      <button class="btn"
-              onclick="sendCommand('TV_POWER')">
-        ⏻ Power
-      </button>
+<button class="btn"
+onclick="sendCommand('TV_POWER')">
+⏻ Power
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('TV_SOURCE')">
-        📺 Source
-      </button>
+<button class="btn"
+onclick="sendCommand('TV_SOURCE')">
+📺 Source
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('TV_MUTE')">
-        🔇 Mute
-      </button>
+<button class="btn"
+onclick="sendCommand('TV_MUTE')">
+🔇 Mute
+</button>
 
+<button class="btn"
+onclick="sendCommand('TV_VOL_DOWN')">
+🔉 Vol −
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('TV_VOL_DOWN')">
-        🔉 Vol −
-      </button>
+<button class="btn"
+onclick="sendCommand('TV_VOL_UP')">
+🔊 Vol +
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('TV_VOL_UP')">
-        🔊 Vol +
-      </button>
+<button class="btn"
+onclick="sendCommand('TV_CH_DOWN')">
+CH −
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('TV_CH_DOWN')">
-        CH −
-      </button>
+<button class="btn"
+onclick="sendCommand('TV_CH_UP')">
+CH +
+</button>
 
+<button class="btn circle"
+onclick="sendCommand('TV_ENTER')">
+OK
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('TV_CH_UP')">
-        CH +
-      </button>
+<button class="btn"
+onclick="sendCommand('TV_BACK')">
+↩ Zurück
+</button>
 
-      <button class="btn circle"
-              onclick="sendCommand('TV_ENTER')">
-        OK
-      </button>
+<button class="btn"
+onclick="sendCommand('TV_LEFT')">
+◀
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('TV_BACK')">
-        ↩ Zurück
-      </button>
+<button class="btn"
+onclick="sendCommand('TV_UP')">
+▲
+</button>
 
+<button class="btn"
+onclick="sendCommand('TV_RIGHT')">
+▶
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('TV_LEFT')">
-        ◀
-      </button>
+<button class="btn center"
+onclick="sendCommand('TV_DOWN')">
+▼
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('TV_UP')">
-        ▲
-      </button>
+<button class="btn"
+onclick="sendCommand('TV_PLAY')">
+▶/Ⅱ
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('TV_RIGHT')">
-        ▶
-      </button>
+<button class="btn"
+onclick="sendCommand('TV_HOME')">
+⌂ Home
+</button>
 
+</div>
 
-      <button class="btn center"
-              onclick="sendCommand('TV_DOWN')">
-        ▼
-      </button>
-
-      <button class="btn"
-              onclick="sendCommand('TV_PLAY')">
-        ▶/Ⅱ
-      </button>
-
-      <button class="btn"
-              onclick="sendCommand('TV_HOME')">
-        ⌂ Home
-      </button>
-
-    </div>
-
-  </div>
+</div>
 
 </section>
 
 
-
-<!-- ================= Z906 ================= -->
+<!-- Z906 -->
 
 <section id="z906" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h2>🔊 Logitech Z906</h2>
+<h2>🔊 Logitech Z906</h2>
 
-    <div class="bigVolume">
+<div class="bigVolume">
 
-      <div class="small">
-        LAUTSTÄRKE
-      </div>
+<div class="small">
+LAUTSTÄRKE
+</div>
 
-      <div id="volumeValue"
-           class="number">
-        40
-      </div>
+<div id="volumeValue" class="number">
+40
+</div>
 
-    </div>
+</div>
 
+<div class="grid2">
 
-    <div class="grid2">
+<button class="btn"
+onclick="z906Volume(-1)">
+🔉 Leiser −1
+</button>
 
-      <button class="btn"
-              onclick="z906Volume(-1)">
-        🔉 Leiser −1
-      </button>
+<button class="btn"
+onclick="z906Volume(1)">
+🔊 Lauter +1
+</button>
 
-      <button class="btn"
-              onclick="z906Volume(1)">
-        🔊 Lauter +1
-      </button>
+<button class="btn"
+onclick="sendCommand('Z906_MUTE')">
+🔇 Mute
+</button>
 
-      <button class="btn"
-              onclick="sendCommand('Z906_MUTE')">
-        🔇 Mute
-      </button>
+</div>
 
-    </div>
-
-  </div>
+</div>
 
 
-  <div class="card">
+<div class="card">
 
-    <h2>🎛️ Sound-Modus</h2>
+<h2>🎛️ Sound-Modus</h2>
 
-    <div class="grid2">
+<div class="grid2">
 
-      <button id="zmode_3d"
-              class="btn"
-              onclick="z906Effect('3d')">
-        🌐 3D
-      </button>
+<button id="zmode_3d"
+class="btn zmode"
+onclick="z906Effect('3d')">
+🌐 3D
+</button>
 
-      <button id="zmode_4_1"
-              class="btn"
-              onclick="z906Effect('4.1')">
-        🔊 4.1
-      </button>
+<button id="zmode_4_1"
+class="btn zmode"
+onclick="z906Effect('4.1')">
+🔊 4.1
+</button>
 
-      <button id="zmode_2_1"
-              class="btn"
-              onclick="z906Effect('2.1')">
-        🔈 2.1
-      </button>
+<button id="zmode_2_1"
+class="btn zmode"
+onclick="z906Effect('2.1')">
+🔈 2.1
+</button>
 
-      <button id="zmode_none"
-              class="btn"
-              onclick="z906Effect('none')">
-        🎚️ Kein Effekt
-      </button>
+<button id="zmode_none"
+class="btn zmode"
+onclick="z906Effect('none')">
+🎚️ Kein Effekt
+</button>
 
-    </div>
+</div>
 
-    <div class="small"
-         style="margin-top:10px">
-
-      „Kein Effekt“ ist beim Z906
-      für 6-Kanal-Eingang vorgesehen.
-
-    </div>
-
-  </div>
+</div>
 
 
-  <div class="card">
+<div class="card">
 
-    <h2>🎚️ Eingang</h2>
+<h2>🎚️ Eingang</h2>
 
-    <select id="input"
-            class="select"
-            onchange="setInput(this.value)">
+<select id="input"
+class="select"
+onchange="setInput(this.value)">
 
-      <option value="optical">
-        Optical
-      </option>
+<option value="optical">Optical</option>
+<option value="coax">Coax</option>
+<option value="6ch">6 Channel</option>
+<option value="stereo">Stereo</option>
+<option value="aux">AUX</option>
 
-      <option value="coax">
-        Coax
-      </option>
+</select>
 
-      <option value="6ch">
-        6 Channel
-      </option>
-
-      <option value="stereo">
-        Stereo
-      </option>
-
-      <option value="aux">
-        AUX
-      </option>
-
-    </select>
-
-  </div>
+</div>
 
 </section>
 
 
-
-<!-- ================= MIXER ================= -->
+<!-- MIXER -->
 
 <section id="mixer" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h2>🎧 DJ Mixer</h2>
+<h2>🎧 DJ Mixer</h2>
 
-    <div class="small">
+<div class="small">
+YouTube Deck A + Deck B.
+Crossfader und automatischer Übergang.
+</div>
 
-      YouTube Deck A + Deck B.
-      Crossfader und automatischer Übergang.
+<div style="margin-top:14px">
 
-    </div>
+<div style="display:flex;gap:10px;align-items:center">
 
+<span class="small">A</span>
 
-    <div style="margin-top:14px">
+<input id="cross"
+class="slider"
+type="range"
+min="0"
+max="100"
+value="50"
+oninput="applyCrossfade(this.value)">
 
-      <div class="row">
+<span class="small">B</span>
 
-        <span class="small">A</span>
+</div>
 
-        <input id="cross"
-               class="slider"
-               type="range"
-               min="0"
-               max="100"
-               value="50"
-               oninput="applyCrossfade(this.value)">
+</div>
 
-        <span class="small">B</span>
+<button class="btn green"
+style="margin-top:12px"
+onclick="aiTransition()">
 
-      </div>
+🤖 KI-Übergang A → B
 
-    </div>
+</button>
 
+</div>
 
-    <button class="btn green"
-            style="margin-top:12px"
-            onclick="aiTransition()">
 
-      🤖 KI-Übergang A → B
+<div class="deckgrid">
 
-    </button>
+<!-- DECK A -->
 
-  </div>
+<div class="deck">
 
+<h3>🅰️ Deck A</h3>
 
+<div id="trackA" class="status">
+Kein Titel
+</div>
 
-  <!-- DECKS -->
+<div id="statusA" class="status">
+STOP
+</div>
 
-  <div class="deckgrid">
+<input id="youtubeUrlA"
+class="input"
+placeholder="YouTube-Link für Deck A">
 
+<button class="btn"
+style="margin-top:8px"
+onclick="loadYouTube('A')">
+▶️ YouTube laden
+</button>
 
-    <!-- DECK A -->
+<div id="ytPlayerA" class="ytbox"></div>
 
-    <div class="deck">
+<div class="grid2" style="margin-top:8px">
 
-      <h3>🅰️ Deck A</h3>
+<button class="btn"
+onclick="toggleYouTube('A')">
+▶/Ⅱ
+</button>
 
-      <div id="trackA"
-           class="status">
-        Kein Titel
-      </div>
+<button class="btn"
+onclick="youtubeMute('A')">
+🔇
+</button>
 
-      <div id="statusA"
-           class="status">
-        STOP
-      </div>
+<button class="btn"
+onclick="changeDeckGain('A',-1)">
+🔉 −
+</button>
 
+<button class="btn"
+onclick="changeDeckGain('A',1)">
+🔊 +
+</button>
 
-      <input id="youtubeUrlA"
-             class="input"
-             placeholder="YouTube-Link für Deck A">
+<button class="btn"
+onclick="addYouTubeToQueue('A')">
+➕ Queue
+</button>
 
+</div>
 
-      <button class="btn"
-              style="margin-top:8px"
-              onclick="loadYouTube('A')">
+<div class="small" style="margin-top:8px">
+Gain: <span id="gainA">0</span> dB
+</div>
 
-        ▶️ YouTube laden
+</div>
 
-      </button>
 
+<!-- DECK B -->
 
-      <div id="ytPlayerA"
-           class="ytbox">
-      </div>
+<div class="deck">
 
+<h3>🅱️ Deck B</h3>
 
-      <div class="grid2"
-           style="margin-top:8px">
+<div id="trackB" class="status">
+Kein Titel
+</div>
 
-        <button class="btn"
-                onclick="toggleYouTube('A')">
-          ▶/Ⅱ
-        </button>
+<div id="statusB" class="status">
+STOP
+</div>
 
-        <button class="btn"
-                onclick="youtubeMute('A')">
-          🔇
-        </button>
+<input id="youtubeUrlB"
+class="input"
+placeholder="YouTube-Link für Deck B">
 
-        <button class="btn"
-                onclick="changeDeckGain('A',-1)">
-          🔉 −
-        </button>
+<button class="btn"
+style="margin-top:8px"
+onclick="loadYouTube('B')">
+▶️ YouTube laden
+</button>
 
-        <button class="btn"
-                onclick="changeDeckGain('A',1)">
-          🔊 +
-        </button>
+<div id="ytPlayerB" class="ytbox"></div>
 
-        <button class="btn"
-                onclick="addYouTubeToQueue('A')">
-          ➕ Queue
-        </button>
+<div class="grid2" style="margin-top:8px">
 
-      </div>
+<button class="btn"
+onclick="toggleYouTube('B')">
+▶/Ⅱ
+</button>
 
+<button class="btn"
+onclick="youtubeMute('B')">
+🔇
+</button>
 
-      <div class="small"
-           style="margin-top:8px">
+<button class="btn"
+onclick="changeDeckGain('B',-1)">
+🔉 −
+</button>
 
-        Gain:
-        <span id="gainA">0</span> dB
+<button class="btn"
+onclick="changeDeckGain('B',1)">
+🔊 +
+</button>
 
-      </div>
+<button class="btn"
+onclick="addYouTubeToQueue('B')">
+➕ Queue
+</button>
 
-    </div>
+</div>
 
+<div class="small" style="margin-top:8px">
+Gain: <span id="gainB">0</span> dB
+</div>
 
+</div>
 
-    <!-- DECK B -->
+</div>
 
-    <div class="deck">
 
-      <h3>🅱️ Deck B</h3>
+<div class="card">
 
-      <div id="trackB"
-           class="status">
-        Kein Titel
-      </div>
+<h2>📁 Lokale Musik</h2>
 
-      <div id="statusB"
-           class="status">
-        STOP
-      </div>
+<input id="fileInput"
+class="input"
+type="file"
+accept="audio/*"
+multiple
+onchange="handleFiles(this.files)">
 
+<div id="localStatus" class="status">
+Keine Dateien geladen
+</div>
 
-      <input id="youtubeUrlB"
-             class="input"
-             placeholder="YouTube-Link für Deck B">
+</div>
 
 
-      <button class="btn"
-              style="margin-top:8px"
-              onclick="loadYouTube('B')">
+<div class="card">
 
-        ▶️ YouTube laden
+<h2>🍎 Apple Music</h2>
 
-      </button>
+<div class="status">
+Apple MusicKit braucht eine korrekt konfigurierte MusicKit-Umgebung.
+</div>
 
+<button class="btn"
+onclick="toast('🍎 Apple MusicKit muss noch konfiguriert werden.')">
+🍎 Apple Music
+</button>
 
-      <div id="ytPlayerB"
-           class="ytbox">
-      </div>
+</div>
 
 
-      <div class="grid2"
-           style="margin-top:8px">
+<div class="card">
 
-        <button class="btn"
-                onclick="toggleYouTube('B')">
-          ▶/Ⅱ
-        </button>
+<h2>🔊 Audio-Ausgabe</h2>
 
-        <button class="btn"
-                onclick="youtubeMute('B')">
-          🔇
-        </button>
+<div id="audioOutputStatus" class="status">
+📱 iPhone / iOS-Standardausgabe
+</div>
 
-        <button class="btn"
-                onclick="changeDeckGain('B',-1)">
-          🔉 −
-        </button>
+<button class="btn"
+onclick="chooseAudioOutput()">
+🔄 Ausgabegerät wählen
+</button>
 
-        <button class="btn"
-                onclick="changeDeckGain('B',1)">
-          🔊 +
-        </button>
+<button class="btn"
+style="margin-top:8px"
+onclick="showIOSAudioHelp()">
+📱 iPhone-Ausgabe wechseln
+</button>
 
-        <button class="btn"
-                onclick="addYouTubeToQueue('B')">
-          ➕ Queue
-        </button>
+</div>
 
-      </div>
 
+<div class="card">
 
-      <div class="small"
-           style="margin-top:8px">
+<h2>📋 Queue</h2>
 
-        Gain:
-        <span id="gainB">0</span> dB
+<div id="queue">
+<div class="small">
+Queue ist leer.
+</div>
+</div>
 
-      </div>
+<button class="btn red"
+onclick="clearQueue()">
+🗑️ Queue leeren
+</button>
 
-    </div>
-
-  </div>
-
-
-
-  <!-- LOCAL FILES -->
-
-  <div class="card">
-
-    <h2>📁 Lokale Musik</h2>
-
-    <input id="fileInput"
-           class="input"
-           type="file"
-           accept="audio/*"
-           multiple
-           onchange="handleFiles(this.files)">
-
-    <div id="localStatus"
-         class="status">
-
-      Keine Dateien geladen
-
-    </div>
-
-  </div>
-
-
-
-  <!-- APPLE MUSIC -->
-
-  <div class="card">
-
-    <h2>🍎 Apple Music</h2>
-
-    <div class="status">
-
-      Apple MusicKit braucht eine
-      korrekt konfigurierte MusicKit-Umgebung.
-
-    </div>
-
-    <button class="btn"
-            onclick="toast('🍎 Apple MusicKit muss noch konfiguriert werden.')">
-
-      🍎 Apple Music
-
-    </button>
-
-  </div>
-
-
-
-  <!-- AUDIO OUTPUT -->
-
-  <div class="card">
-
-    <h2>🔊 Audio-Ausgabe</h2>
-
-    <div id="audioOutputStatus"
-         class="status">
-
-      📱 iPhone / iOS-Standardausgabe
-
-    </div>
-
-    <button class="btn"
-            onclick="chooseAudioOutput()">
-
-      🔄 Ausgabegerät wählen
-
-    </button>
-
-
-    <button class="btn"
-            style="margin-top:8px"
-            onclick="showIOSAudioHelp()">
-
-      📱 iPhone-Ausgabe wechseln
-
-    </button>
-
-
-    <div class="small"
-         style="margin-top:8px">
-
-      Kontrollzentrum →
-      AirPlay/Ausgabe →
-      gewünschtes Gerät auswählen.
-
-    </div>
-
-  </div>
-
-
-
-  <!-- QUEUE -->
-
-  <div class="card">
-
-    <h2>📋 Queue</h2>
-
-    <div id="queue">
-
-      <div class="small">
-        Queue ist leer.
-      </div>
-
-    </div>
-
-
-    <button class="btn red"
-            onclick="clearQueue()">
-
-      🗑️ Queue leeren
-
-    </button>
-
-  </div>
+</div>
 
 </section>
 
 
-
-<!-- ================= SETTINGS ================= -->
+<!-- SETTINGS -->
 
 <section id="settings" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h2>⚙️ XIAO Smart IR Mate</h2>
+<h2>⚙️ XIAO Smart IR Mate</h2>
 
-    <div class="small">
+<div id="settingsStatus" class="status">
+Noch keine Verbindung
+</div>
 
-      IP-Adresse des XIAO eingeben.
+<div class="small">
+Automatische Adresse:
+</div>
 
-      Beispiel:
-      192.168.1.50
+<div class="status">
+http://xiao-remote.local
+</div>
 
-    </div>
+<button class="btn green"
+onclick="autoFindXiao()">
+🔎 XIAO automatisch suchen
+</button>
 
+<br><br>
 
-    <input id="xiaoIp"
-           class="input"
-           style="margin-top:10px"
-           placeholder="http://192.168.1.50">
+<div class="small">
+Manuelle IP als Fallback:
+</div>
 
+<input id="xiaoIp"
+class="input"
+style="margin-top:10px"
+placeholder="192.168.x.x">
 
-    <button class="btn"
-            style="margin-top:9px"
-            onclick="saveSettings()">
+<button class="btn"
+style="margin-top:9px"
+onclick="saveSettings()">
+💾 IP speichern
+</button>
 
-      💾 Speichern
+<button class="btn"
+style="margin-top:9px"
+onclick="testXiao()">
+🔌 Verbindung testen
+</button>
 
-    </button>
-
-
-    <button class="btn"
-            style="margin-top:9px"
-            onclick="testXiao()">
-
-      🔌 Verbindung testen
-
-    </button>
-
-
-    <div class="status">
-
-      Die App sendet Befehle an:
-
-      <br><br>
-
-      <b>POST /command</b>
-
-      <br><br>
-
-      mit:
-
-      <br>
-
-      {"command":"TV_POWER"}
-
-    </div>
-
-  </div>
+</div>
 
 
-  <div class="card">
+<div class="card">
 
-    <h2>📱 iPhone</h2>
+<h2>📡 Aktuelle Verbindung</h2>
 
-    <div class="small">
+<div id="currentXiao" class="status">
+Keine XIAO-Adresse gefunden
+</div>
 
-      Diese Datei kannst du später als
-      GitHub Pages Web-App verwenden und
-      zum Home-Bildschirm hinzufügen.
+<div class="small">
+Die gefundene Adresse wird automatisch gespeichert.
+</div>
 
-    </div>
+</div>
 
-  </div>
+
+<div class="card">
+
+<h2>📱 iPhone</h2>
+
+<div class="small">
+
+Die App kann später als GitHub-Pages-Web-App
+zum Home-Bildschirm hinzugefügt werden.
+
+</div>
+
+</div>
 
 </section>
 
 </div>
 
 
-
-<!-- ================= NAVIGATION ================= -->
+<!-- NAV -->
 
 <div class="nav">
 
-  <button id="nav_home"
-          class="active"
-          onclick="showPage('home')">
+<button id="nav_home"
+class="active"
+onclick="showPage('home')">
+<span>🏠</span>
+Home
+</button>
 
-    <span>🏠</span>
-    Home
+<button id="nav_tv"
+onclick="showPage('tv')">
+<span>📺</span>
+TV
+</button>
 
-  </button>
+<button id="nav_z906"
+onclick="showPage('z906')">
+<span>🔊</span>
+Z906
+</button>
 
+<button id="nav_mixer"
+onclick="showPage('mixer')">
+<span>🎧</span>
+Mixer
+</button>
 
-  <button id="nav_tv"
-          onclick="showPage('tv')">
-
-    <span>📺</span>
-    TV
-
-  </button>
-
-
-  <button id="nav_z906"
-          onclick="showPage('z906')">
-
-    <span>🔊</span>
-    Z906
-
-  </button>
-
-
-  <button id="nav_mixer"
-          onclick="showPage('mixer')">
-
-    <span>🎧</span>
-    Mixer
-
-  </button>
-
-
-  <button id="nav_settings"
-          onclick="showPage('settings')">
-
-    <span>⚙️</span>
-    Settings
-
-  </button>
+<button id="nav_settings"
+onclick="showPage('settings')">
+<span>⚙️</span>
+Settings
+</button>
 
 </div>
 
 
-<div id="toast"
-     class="toast">
-</div>
+<div id="toast" class="toast"></div>
 
-
-
-<!-- ================= JAVASCRIPT ================= -->
 
 <script>
 
-const STORAGE = "smartRemoteV6";
-
+const STORAGE = "smartRemoteV7";
 
 let state = {
 
-  volume:40,
+volume:40,
 
-  z906Effect:"3d",
+z906Effect:"3d",
 
-  xiaoIp:"",
+xiaoIp:"",
 
-  audioSinkId:""
+xiaoFound:false,
+
+audioSinkId:""
 
 };
 
 
 try{
 
-  state = {
+state = {
 
-    ...state,
+...state,
 
-    ...JSON.parse(
-      localStorage.getItem(STORAGE) || "{}"
-    )
+...JSON.parse(
+localStorage.getItem(STORAGE) || "{}"
+)
 
-  };
+};
 
 }catch(e){}
 
 
-
 const decks = {
 
-  A:{
-    source:"youtube",
-    song:null,
-    audio:null,
-    gain:0,
-    playing:false,
-    ytReady:false,
-    ytPending:[]
-  },
+A:{
+source:"youtube",
+song:null,
+audio:null,
+gain:0,
+playing:false,
+ytReady:false,
+ytPending:[]
+},
 
-  B:{
-    source:"youtube",
-    song:null,
-    audio:null,
-    gain:0,
-    playing:false,
-    ytReady:false,
-    ytPending:[]
-  }
+B:{
+source:"youtube",
+song:null,
+audio:null,
+gain:0,
+playing:false,
+ytReady:false,
+ytPending:[]
+}
 
 };
 
 
 let queue = [];
 
+let localAudio = [];
 
+
+/* ================= GENERAL ================= */
 
 function $(id){
-
-  return document.getElementById(id);
-
+return document.getElementById(id);
 }
-
 
 
 function save(){
 
-  localStorage.setItem(
-    STORAGE,
-    JSON.stringify(state)
-  );
+localStorage.setItem(
+STORAGE,
+JSON.stringify(state)
+);
 
 }
-
 
 
 function toast(message){
 
-  const t = $("toast");
+const t=$("toast");
 
-  t.textContent = message;
+t.textContent=message;
 
-  t.classList.add("show");
+t.classList.add("show");
 
-  clearTimeout(window.__toast);
+clearTimeout(window.__toast);
 
-  window.__toast = setTimeout(()=>{
+window.__toast=setTimeout(()=>{
 
-    t.classList.remove("show");
+t.classList.remove("show");
 
-  },2300);
+},2300);
 
 }
-
 
 
 function showPage(id){
 
-  document
-    .querySelectorAll(".page")
-    .forEach(p =>
-      p.classList.remove("active")
-    );
+document
+.querySelectorAll(".page")
+.forEach(p=>p.classList.remove("active"));
 
+$(id).classList.add("active");
 
-  $(id).classList.add("active");
+document
+.querySelectorAll(".nav button")
+.forEach(b=>b.classList.remove("active"));
 
+const nav=$("nav_"+id);
 
-  document
-    .querySelectorAll(".nav button")
-    .forEach(b =>
-      b.classList.remove("active")
-    );
+if(nav){
+nav.classList.add("active");
+}
 
-
-  const nav = $("nav_"+id);
-
-  if(nav){
-
-    nav.classList.add("active");
-
-  }
-
-
-  window.scrollTo({
-
-    top:0,
-
-    behavior:"smooth"
-
-  });
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
 
 }
 
 
+/* ================================================= */
+/*                  XIAO AUTO FIND                   */
+/* ================================================= */
 
-/* ================= XIAO ================= */
+const XIAO_HOSTNAMES = [
 
+"http://xiao-remote.local",
 
-function sendCommand(command){
+"http://xiao.local"
 
-  let base =
-    (state.xiaoIp || "")
-    .trim()
-    .replace(/\/+$/,"");
-
-
-  if(!base){
-
-    toast(
-      "⚠️ Zuerst XIAO-IP eintragen"
-    );
-
-    return;
-
-  }
+];
 
 
-  fetch(
-    base + "/command",
-    {
+function normalizeUrl(url){
 
-      method:"POST",
-
-      headers:{
-        "Content-Type":
-          "application/json"
-      },
-
-      body:JSON.stringify({
-
-        command:command
-
-      })
-
-    }
-
-  )
-
-  .then(r=>{
-
-    if(!r.ok){
-
-      throw new Error(
-        "HTTP "+r.status
-      );
-
-    }
-
-    toast("✅ "+command);
-
-  })
-
-  .catch(()=>{
-
-    toast(
-      "❌ XIAO nicht erreichbar"
-    );
-
-  });
+return String(url || "")
+.trim()
+.replace(/\/+$/,"");
 
 }
 
 
+async function checkXiao(url){
+
+url=normalizeUrl(url);
+
+if(!url){
+return false;
+}
+
+try{
+
+const controller=new AbortController();
+
+const timeout=setTimeout(
+()=>controller.abort(),
+1800
+);
+
+const response=await fetch(
+url+"/ping",
+{
+method:"GET",
+cache:"no-store",
+signal:controller.signal
+}
+);
+
+clearTimeout(timeout);
+
+if(!response.ok){
+return false;
+}
+
+return true;
+
+}catch(e){
+
+return false;
+
+}
+
+}
+
+
+function setXiaoConnected(url){
+
+url=normalizeUrl(url);
+
+state.xiaoIp=url;
+state.xiaoFound=true;
+
+save();
+
+$("connectionStatus").innerHTML=
+'<span class="connectionDot green"></span>'+
+"XIAO: ✅ verbunden";
+
+$("connectionStatus").className=
+"status connected";
+
+$("settingsStatus").innerHTML=
+'<span class="connectionDot green"></span>'+
+"Verbunden mit "+url;
+
+$("currentXiao").textContent=
+url;
+
+$("xiaoIp").value=url;
+
+}
+
+
+function setXiaoSearching(){
+
+$("connectionStatus").innerHTML=
+'<span class="connectionDot blue"></span>'+
+"XIAO: 🔎 Suche läuft...";
+
+$("connectionStatus").className=
+"status searching";
+
+}
+
+
+function setXiaoError(){
+
+state.xiaoFound=false;
+save();
+
+$("connectionStatus").innerHTML=
+'<span class="connectionDot red"></span>'+
+"XIAO: ❌ nicht gefunden";
+
+$("connectionStatus").className=
+"status error";
+
+$("settingsStatus").innerHTML=
+'<span class="connectionDot red"></span>'+
+"XIAO nicht erreichbar";
+
+}
+
+
+async function autoFindXiao(){
+
+setXiaoSearching();
+
+toast("🔎 Suche XIAO...");
+
+
+const candidates=[];
+
+
+/* gespeicherte IP zuerst */
+
+if(state.xiaoIp){
+
+candidates.push(
+normalizeUrl(state.xiaoIp)
+);
+
+}
+
+
+/* mDNS */
+
+XIAO_HOSTNAMES.forEach(
+host=>{
+
+if(
+!candidates.includes(host)
+){
+
+candidates.push(host);
+
+}
+
+});
+
+
+/*
+Weitere bekannte lokale
+Hotspot-Adressen.
+
+Diese funktionieren nur,
+wenn der XIAO tatsächlich
+diese Adresse bekommen hat.
+*/
+
+const commonIps=[
+
+"172.20.10.2",
+"172.20.10.3",
+"172.20.10.4",
+"172.20.10.5",
+"172.20.10.6",
+"172.20.10.7",
+"172.20.10.8",
+"172.20.10.9",
+"172.20.10.10",
+"172.20.10.11",
+"172.20.10.12",
+"172.20.10.13",
+"172.20.10.14",
+"172.20.10.15",
+"172.20.10.16",
+"172.20.10.17",
+"172.20.10.18",
+"172.20.10.19",
+"172.20.10.20"
+];
+
+
+commonIps.forEach(ip=>{
+
+const url="http://"+ip;
+
+if(!candidates.includes(url)){
+
+candidates.push(url);
+
+}
+
+});
+
+
+/*
+Nicht alles gleichzeitig,
+damit Safari nicht mit
+zu vielen Requests belastet wird.
+*/
+
+for(
+const candidate of candidates
+){
+
+const found=
+await checkXiao(candidate);
+
+if(found){
+
+setXiaoConnected(candidate);
+
+toast(
+"✅ XIAO gefunden!"
+);
+
+return;
+
+}
+
+}
+
+
+setXiaoError();
+
+toast(
+"❌ XIAO nicht gefunden"
+);
+
+}
+
+
+/* ================= SEND COMMAND ================= */
+
+async function sendCommand(command){
+
+let base=
+normalizeUrl(state.xiaoIp);
+
+
+if(!base){
+
+await autoFindXiao();
+
+base=
+normalizeUrl(state.xiaoIp);
+
+}
+
+
+if(!base){
+
+toast(
+"❌ XIAO nicht gefunden"
+);
+
+return;
+
+}
+
+
+try{
+
+const response=await fetch(
+base+"/command",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+command:command
+})
+
+});
+
+
+if(!response.ok){
+
+throw new Error(
+"HTTP "+response.status
+);
+
+}
+
+
+toast("✅ "+command);
+
+}catch(e){
+
+state.xiaoFound=false;
+save();
+
+toast(
+"❌ XIAO Verbindung verloren"
+);
+
+setTimeout(
+autoFindXiao,
+300
+);
+
+}
+
+}
+
+
+/* ================= TEST ================= */
 
 async function testXiao(){
 
-  const base =
-    (state.xiaoIp || "")
-    .trim()
-    .replace(/\/+$/,"");
+const base=
+normalizeUrl(state.xiaoIp);
 
 
-  if(!base){
+if(!base){
 
-    toast(
-      "⚠️ Keine XIAO-IP eingetragen"
-    );
+await autoFindXiao();
 
-    return;
-
-  }
-
-
-  $("connectionStatus")
-    .textContent =
-    "XIAO: teste...";
-
-
-  try{
-
-    const r =
-      await fetch(
-        base + "/ping"
-      );
-
-
-    if(!r.ok){
-
-      throw new Error();
-
-    }
-
-
-    $("connectionStatus")
-      .textContent =
-      "XIAO: ✅ verbunden";
-
-
-    toast(
-      "✅ XIAO erreichbar"
-    );
-
-  }catch(e){
-
-    $("connectionStatus")
-      .textContent =
-      "XIAO: ❌ nicht erreichbar";
-
-
-    toast(
-      "❌ XIAO nicht erreichbar"
-    );
-
-  }
+return;
 
 }
 
 
+$("connectionStatus").innerHTML=
+'<span class="connectionDot blue"></span>'+
+"XIAO: teste...";
+
+
+const found=
+await checkXiao(base);
+
+
+if(found){
+
+setXiaoConnected(base);
+
+toast(
+"✅ XIAO erreichbar"
+);
+
+}else{
+
+setXiaoError();
+
+toast(
+"❌ XIAO nicht erreichbar"
+);
+
+}
+
+}
+
+
+/* ================= SETTINGS ================= */
 
 function saveSettings(){
 
-  let ip =
-    $("xiaoIp")
-    .value
-    .trim();
+let ip=
+$("xiaoIp").value.trim();
 
 
-  if(
-    ip &&
-    !/^https?:\/\//i.test(ip)
-  ){
+if(
+ip &&
+!/^https?:\/\//i.test(ip)
+){
 
-    ip = "http://" + ip;
-
-  }
-
-
-  state.xiaoIp = ip;
-
-  save();
-
-  toast(
-    "💾 XIAO-IP gespeichert"
-  );
+ip="http://"+ip;
 
 }
 
+
+state.xiaoIp=ip;
+state.xiaoFound=false;
+
+save();
+
+toast(
+"💾 XIAO-Adresse gespeichert"
+);
+
+testXiao();
+
+}
 
 
 /* ================= Z906 ================= */
 
-
 function z906Volume(delta){
 
-  state.volume =
-    Math.max(
-      0,
-      Math.min(
-        100,
-        (state.volume ?? 40) + delta
-      )
-    );
+state.volume=
+Math.max(
+0,
+Math.min(
+100,
+(state.volume ?? 40)+delta
+)
+);
 
+$("volumeValue").textContent=
+state.volume;
 
-  $("volumeValue")
-    .textContent =
-    state.volume;
+save();
 
-
-  save();
-
-
-  sendCommand(
-    delta > 0
-      ? "Z906_VOL_UP"
-      : "Z906_VOL_DOWN"
-  );
+sendCommand(
+delta>0
+?"Z906_VOL_UP"
+:"Z906_VOL_DOWN"
+);
 
 }
-
 
 
 function z906Effect(effect){
 
-  const commands = {
+const commands={
 
-    "3d":"Z906_3D",
+"3d":"Z906_3D",
+"4.1":"Z906_4_1",
+"2.1":"Z906_2_1",
+"none":"Z906_NO_EFFECT"
 
-    "4.1":"Z906_4_1",
-
-    "2.1":"Z906_2_1",
-
-    "none":"Z906_NO_EFFECT"
-
-  };
+};
 
 
-  if(!commands[effect]){
-
-    return;
-
-  }
-
-
-  sendCommand(
-    commands[effect]
-  );
-
-
-  document
-    .querySelectorAll(".zmode")
-    .forEach(
-      b => b.classList.remove("active")
-    );
-
-
-  let id;
-
-
-  if(effect === "3d")
-    id = "zmode_3d";
-
-  if(effect === "4.1")
-    id = "zmode_4_1";
-
-  if(effect === "2.1")
-    id = "zmode_2_1";
-
-  if(effect === "none")
-    id = "zmode_none";
-
-
-  $(id).classList.add("active");
-
-
-  state.z906Effect =
-    effect;
-
-
-  save();
-
+if(!commands[effect]){
+return;
 }
 
+sendCommand(
+commands[effect]
+);
+
+
+document
+.querySelectorAll(".zmode")
+.forEach(
+b=>b.classList.remove("active")
+);
+
+
+const ids={
+
+"3d":"zmode_3d",
+"4.1":"zmode_4_1",
+"2.1":"zmode_2_1",
+"none":"zmode_none"
+
+};
+
+
+$(ids[effect]).classList.add("active");
+
+state.z906Effect=effect;
+
+save();
+
+}
 
 
 function setInput(value){
 
-  sendCommand(
-    "Z906_INPUT_" +
-    value.toUpperCase()
-  );
+sendCommand(
+"Z906_INPUT_"+
+value.toUpperCase()
+);
 
 }
-
 
 
 /* ================= YOUTUBE ================= */
 
-
 function youtubeId(url){
 
-  try{
+try{
 
-    const u =
-      new URL(
-        url.trim()
-      );
+const u=new URL(
+url.trim()
+);
 
-
-    const host =
-      u.hostname.toLowerCase();
+const host=
+u.hostname.toLowerCase();
 
 
-    if(
-      host === "youtu.be" ||
-      host === "www.youtu.be"
-    ){
+if(
+host==="youtu.be" ||
+host==="www.youtu.be"
+){
 
-      return (
-        u.pathname
-        .split("/")
-        .filter(Boolean)[0]
-        || null
-      );
-
-    }
-
-
-    if(
-      host.includes("youtube.com") ||
-      host.includes("youtube-nocookie.com")
-    ){
-
-      if(
-        u.pathname === "/watch"
-      ){
-
-        return u.searchParams
-          .get("v");
-
-      }
-
-
-      if(
-        u.pathname.startsWith(
-          "/shorts/"
-        )
-      ){
-
-        return u.pathname
-          .split("/")[2];
-
-      }
-
-
-      if(
-        u.pathname.startsWith(
-          "/embed/"
-        )
-      ){
-
-        return u.pathname
-          .split("/")[2];
-
-      }
-
-
-      if(
-        u.pathname.startsWith(
-          "/live/"
-        )
-      ){
-
-        return u.pathname
-          .split("/")[2];
-
-      }
-
-    }
-
-  }catch(e){
-
-    return null;
-
-  }
-
-
-  return null;
+return(
+u.pathname
+.split("/")
+.filter(Boolean)[0]
+||null
+);
 
 }
 
+
+if(
+host.includes("youtube.com") ||
+host.includes("youtube-nocookie.com")
+){
+
+if(u.pathname==="/watch"){
+
+return u.searchParams.get("v");
+
+}
+
+if(
+u.pathname.startsWith("/shorts/")
+){
+
+return u.pathname
+.split("/")[2];
+
+}
+
+if(
+u.pathname.startsWith("/embed/")
+){
+
+return u.pathname
+.split("/")[2];
+
+}
+
+if(
+u.pathname.startsWith("/live/")
+){
+
+return u.pathname
+.split("/")[2];
+
+}
+
+}
+
+}catch(e){
+
+return null;
+
+}
+
+return null;
+
+}
 
 
 function loadYouTube(deck){
 
-  const input =
-    $("youtubeUrl"+deck);
+const input=
+$("youtubeUrl"+deck);
+
+const url=
+input.value.trim();
+
+const id=
+youtubeId(url);
+
+const x=decks[deck];
 
 
-  const url =
-    input.value.trim();
+if(!id){
 
+toast(
+"⚠️ Ungültiger YouTube-Link"
+);
 
-  const id =
-    youtubeId(url);
-
-
-  const x =
-    decks[deck];
-
-
-  if(!id){
-
-    toast(
-      "⚠️ Ungültiger YouTube-Link"
-    );
-
-    return;
-
-  }
-
-
-  x.source = "youtube";
-
-  x.song = {
-
-    youtubeId:id,
-
-    url:url
-
-  };
-
-
-  x.playing = false;
-
-  x.ytReady = false;
-
-  x.ytPending = [];
-
-
-  $("track"+deck)
-    .textContent =
-    "▶️ YouTube • "+id;
-
-
-  $("status"+deck)
-    .textContent =
-    "LADE...";
-
-
-  let origin = "";
-
-
-  if(
-    location.protocol === "http:" ||
-    location.protocol === "https:"
-  ){
-
-    origin =
-      "&origin=" +
-      encodeURIComponent(
-        location.origin
-      );
-
-  }
-
-
-  $("ytPlayer"+deck)
-    .innerHTML = `
-
-      <iframe
-
-        id="ytFrame${deck}"
-
-        src=
-        "https://www.youtube.com/embed/${encodeURIComponent(id)}?enablejsapi=1&playsinline=1&rel=0${origin}"
-
-        title="YouTube Player ${deck}"
-
-        allow=
-        "autoplay; encrypted-media; picture-in-picture; fullscreen"
-
-        allowfullscreen>
-
-      </iframe>
-
-    `;
-
-
-  const frame =
-    $("ytFrame"+deck);
-
-
-  frame.addEventListener(
-    "load",
-    ()=>{
-
-      x.ytReady = true;
-
-
-      $("status"+deck)
-        .textContent =
-        "READY";
-
-
-      const pending =
-        [...x.ytPending];
-
-
-      x.ytPending = [];
-
-
-      pending.forEach(
-        cmd =>
-          youtubeCommand(
-            deck,
-            cmd.func,
-            cmd.value
-          )
-      );
-
-
-      applyCrossfade();
-
-      toast(
-        "▶️ YouTube Deck "+
-        deck+
-        " bereit"
-      );
-
-    },
-    {once:true}
-  );
+return;
 
 }
 
+
+x.source="youtube";
+
+x.song={
+youtubeId:id,
+url:url
+};
+
+x.playing=false;
+
+x.ytReady=false;
+
+x.ytPending=[];
+
+
+$("track"+deck).textContent=
+"▶️ YouTube • "+id;
+
+$("status"+deck).textContent=
+"LADE...";
+
+
+let origin="";
+
+
+if(
+location.protocol==="http:" ||
+location.protocol==="https:"
+){
+
+origin=
+"&origin="+
+encodeURIComponent(
+location.origin
+);
+
+}
+
+
+$("ytPlayer"+deck).innerHTML=`
+
+<iframe
+id="ytFrame${deck}"
+src="https://www.youtube.com/embed/${encodeURIComponent(id)}?enablejsapi=1&playsinline=1&rel=0${origin}"
+title="YouTube Player ${deck}"
+allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+allowfullscreen>
+</iframe>
+
+`;
+
+
+const frame=
+$("ytFrame"+deck);
+
+
+frame.addEventListener(
+"load",
+()=>{
+
+x.ytReady=true;
+
+$("status"+deck).textContent=
+"READY";
+
+const pending=
+[...x.ytPending];
+
+x.ytPending=[];
+
+pending.forEach(
+cmd=>
+youtubeCommand(
+deck,
+cmd.func,
+cmd.value
+)
+);
+
+applyCrossfade();
+
+toast(
+"▶️ Deck "+deck+" bereit"
+);
+
+},
+{once:true}
+);
+
+}
 
 
 function youtubeCommand(
-  deck,
-  func,
-  value
+deck,
+func,
+value
 ){
 
-  const x =
-    decks[deck];
+const x=decks[deck];
+
+const frame=
+$("ytFrame"+deck);
 
 
-  const frame =
-    $("ytFrame"+deck);
+if(!frame){
 
+toast(
+"▶️ Zuerst YouTube laden"
+);
 
-  if(!frame){
-
-    toast(
-      "▶️ Zuerst YouTube laden"
-    );
-
-    return;
-
-  }
-
-
-  if(!x.ytReady){
-
-    x.ytPending.push({
-
-      func:func,
-
-      value:value
-
-    });
-
-    return;
-
-  }
-
-
-  const args =
-    value === undefined
-      ? []
-      : Array.isArray(value)
-        ? value
-        : [value];
-
-
-  frame.contentWindow.postMessage(
-
-    JSON.stringify({
-
-      event:"command",
-
-      func:func,
-
-      args:args
-
-    }),
-
-    "https://www.youtube.com"
-
-  );
+return;
 
 }
 
+
+if(!x.ytReady){
+
+x.ytPending.push({
+func:func,
+value:value
+});
+
+return;
+
+}
+
+
+const args=
+value===undefined
+?[]
+:Array.isArray(value)
+?value
+:[value];
+
+
+frame.contentWindow.postMessage(
+
+JSON.stringify({
+
+event:"command",
+func:func,
+args:args
+
+}),
+
+"https://www.youtube.com"
+
+);
+
+}
 
 
 function youtubeSetVolume(
-  deck,
-  volume
+deck,
+volume
 ){
 
-  youtubeCommand(
-    deck,
-    "setVolume",
-    Math.max(
-      0,
-      Math.min(
-        100,
-        volume
-      )
-    )
-  );
+youtubeCommand(
+deck,
+"setVolume",
+Math.max(
+0,
+Math.min(
+100,
+volume
+)
+)
+);
 
 }
-
 
 
 function youtubeMute(deck){
 
-  youtubeCommand(
-    deck,
-    "mute"
-  );
+youtubeCommand(
+deck,
+"mute"
+);
 
+decks[deck].playing=false;
 
-  decks[deck].playing =
-    false;
-
-
-  $("status"+deck)
-    .textContent =
-    "MUTE";
+$("status"+deck).textContent=
+"MUTE";
 
 }
-
 
 
 function toggleYouTube(deck){
 
-  const x =
-    decks[deck];
+const x=decks[deck];
 
 
-  if(!x.song){
+if(!x.song){
 
-    loadYouTube(deck);
-
-    return;
-
-  }
-
-
-  if(x.playing){
-
-    youtubeCommand(
-      deck,
-      "pauseVideo"
-    );
-
-
-    x.playing = false;
-
-
-    $("status"+deck)
-      .textContent =
-      "PAUSE";
-
-  }else{
-
-    youtubeCommand(
-      deck,
-      "playVideo"
-    );
-
-
-    x.playing = true;
-
-
-    $("status"+deck)
-      .textContent =
-      "PLAY";
-
-  }
-
-
-  applyCrossfade();
+loadYouTube(deck);
+return;
 
 }
 
+
+if(x.playing){
+
+youtubeCommand(
+deck,
+"pauseVideo"
+);
+
+x.playing=false;
+
+$("status"+deck).textContent=
+"PAUSE";
+
+}else{
+
+youtubeCommand(
+deck,
+"playVideo"
+);
+
+x.playing=true;
+
+$("status"+deck).textContent=
+"PLAY";
+
+}
+
+applyCrossfade();
+
+}
 
 
 function changeDeckGain(
-  deck,
-  delta
+deck,
+delta
 ){
 
-  const x =
-    decks[deck];
+const x=decks[deck];
 
+x.gain=
+Math.max(
+-12,
+Math.min(
+12,
+x.gain+delta
+)
+);
 
-  x.gain =
-    Math.max(
-      -12,
-      Math.min(
-        12,
-        x.gain + delta
-      )
-    );
+$("gain"+deck).textContent=
+x.gain;
 
-
-  $("gain"+deck)
-    .textContent =
-    x.gain;
-
-
-  applyCrossfade();
+applyCrossfade();
 
 }
 
 
-
-/* ================= CROSSFADER ================= */
-
+/* ================= CROSSFADE ================= */
 
 function getDeckVolume(deck){
 
-  const x =
-    decks[deck];
+const x=decks[deck];
 
+const gainFactor=
+Math.pow(
+10,
+(x.gain||0)/20
+);
 
-  const gainFactor =
-    Math.pow(
-      10,
-      (x.gain || 0) / 20
-    );
-
-
-  return Math.max(
-    0,
-    Math.min(
-      1,
-      .7 * gainFactor
-    )
-  );
+return Math.max(
+0,
+Math.min(
+1,
+.7*gainFactor
+)
+);
 
 }
-
 
 
 function applyCrossfade(value){
 
-  const slider =
-    $("cross");
+const slider=$("cross");
+
+const v=
+value===undefined
+?+slider.value
+:+value;
+
+const x=v/100;
+
+const volumeA=
+Math.cos(
+x*Math.PI/2
+)*
+getDeckVolume("A");
+
+const volumeB=
+Math.cos(
+(1-x)*Math.PI/2
+)*
+getDeckVolume("B");
 
 
-  const v =
-    value === undefined
-      ? +slider.value
-      : +value;
+if(decks.A.audio){
 
-
-  const x =
-    v / 100;
-
-
-  const volumeA =
-    Math.cos(
-      x * Math.PI / 2
-    ) *
-    getDeckVolume("A");
-
-
-  const volumeB =
-    Math.cos(
-      (1-x) *
-      Math.PI / 2
-    ) *
-    getDeckVolume("B");
-
-
-  if(
-    decks.A.audio
-  ){
-
-    decks.A.audio.volume =
-      Math.max(
-        0,
-        Math.min(
-          1,
-          volumeA
-        )
-      );
-
-  }
-
-
-  if(
-    decks.B.audio
-  ){
-
-    decks.B.audio.volume =
-      Math.max(
-        0,
-        Math.min(
-          1,
-          volumeB
-        )
-      );
-
-  }
-
-
-  if(
-    decks.A.source === "youtube" &&
-    decks.A.song
-  ){
-
-    youtubeSetVolume(
-      "A",
-      volumeA * 100
-    );
-
-  }
-
-
-  if(
-    decks.B.source === "youtube" &&
-    decks.B.song
-  ){
-
-    youtubeSetVolume(
-      "B",
-      volumeB * 100
-    );
-
-  }
+decks.A.audio.volume=
+Math.max(
+0,
+Math.min(
+1,
+volumeA
+)
+);
 
 }
 
 
+if(decks.B.audio){
 
-/* ================= KI ÜBERGANG ================= */
+decks.B.audio.volume=
+Math.max(
+0,
+Math.min(
+1,
+volumeB
+)
+);
 
+}
+
+
+if(
+decks.A.source==="youtube" &&
+decks.A.song
+){
+
+youtubeSetVolume(
+"A",
+volumeA*100
+);
+
+}
+
+
+if(
+decks.B.source==="youtube" &&
+decks.B.song
+){
+
+youtubeSetVolume(
+"B",
+volumeB*100
+);
+
+}
+
+}
+
+
+/* ================= AI TRANSITION ================= */
 
 async function aiTransition(){
 
-  const a =
-    decks.A;
-
-  const b =
-    decks.B;
+const a=decks.A;
+const b=decks.B;
 
 
-  if(
-    !a.song ||
-    !b.song
-  ){
+if(
+!a.song ||
+!b.song
+){
 
-    toast(
-      "🤖 Beide Decks zuerst laden"
-    );
+toast(
+"🤖 Beide Decks zuerst laden"
+);
 
-    return;
-
-  }
-
-
-  toast(
-    "🤖 Übergang startet"
-  );
-
-
-  if(!b.playing){
-
-    youtubeCommand(
-      "B",
-      "playVideo"
-    );
-
-
-    b.playing = true;
-
-
-    $("statusB")
-      .textContent =
-      "PLAY";
-
-  }
-
-
-  const start =
-    +$("cross").value;
-
-
-  let progress = 0;
-
-
-  const duration =
-    8000;
-
-
-  const interval =
-    100;
-
-
-  const timer =
-    setInterval(()=>{
-
-      progress += interval;
-
-
-      const t =
-        Math.min(
-          1,
-          progress / duration
-        );
-
-
-      const eased =
-        t*t*(3-2*t);
-
-
-      const cross =
-        start +
-        (100-start) *
-        eased;
-
-
-      $("cross").value =
-        cross;
-
-
-      applyCrossfade(
-        cross
-      );
-
-
-      if(t >= 1){
-
-        clearInterval(timer);
-
-
-        youtubeCommand(
-          "A",
-          "pauseVideo"
-        );
-
-
-        a.playing =
-          false;
-
-
-        $("statusA")
-          .textContent =
-          "STOP";
-
-
-        $("cross").value =
-          100;
-
-
-        applyCrossfade(
-          100
-        );
-
-
-        toast(
-          "✨ Übergang fertig"
-        );
-
-      }
-
-    },interval);
+return;
 
 }
 
+
+toast(
+"🤖 Übergang startet"
+);
+
+
+if(!b.playing){
+
+youtubeCommand(
+"B",
+"playVideo"
+);
+
+b.playing=true;
+
+$("statusB").textContent=
+"PLAY";
+
+}
+
+
+const start=
++$("cross").value;
+
+let progress=0;
+
+const duration=8000;
+
+const interval=100;
+
+
+const timer=
+setInterval(()=>{
+
+progress+=interval;
+
+const t=
+Math.min(
+1,
+progress/duration
+);
+
+const eased=
+t*t*(3-2*t);
+
+const cross=
+start+
+(100-start)*eased;
+
+$("cross").value=cross;
+
+applyCrossfade(cross);
+
+
+if(t>=1){
+
+clearInterval(timer);
+
+youtubeCommand(
+"A",
+"pauseVideo"
+);
+
+a.playing=false;
+
+$("statusA").textContent=
+"STOP";
+
+$("cross").value=100;
+
+applyCrossfade(100);
+
+toast(
+"✨ Übergang fertig"
+);
+
+}
+
+},interval);
+
+}
 
 
 /* ================= QUEUE ================= */
 
+function addYouTubeToQueue(deck){
 
-function addYouTubeToQueue(
-  deck
+const x=decks[deck];
+
+
+if(
+!x.song ||
+x.source!=="youtube"
 ){
 
-  const x =
-    decks[deck];
+toast(
+"▶️ Zuerst YouTube laden"
+);
 
-
-  if(
-    !x.song ||
-    x.source !== "youtube"
-  ){
-
-    toast(
-      "▶️ Zuerst YouTube laden"
-    );
-
-    return;
-
-  }
-
-
-  queue.push({
-
-    type:"youtube",
-
-    url:x.song.url,
-
-    name:
-      "YouTube • "+
-      x.song.youtubeId
-
-  });
-
-
-  renderQueue();
-
-
-  toast(
-    "➕ Zur Queue hinzugefügt"
-  );
+return;
 
 }
 
 
+queue.push({
 
-function queuePlay(
-  index,
-  deck
-){
+type:"youtube",
 
-  const item =
-    queue[index];
+url:x.song.url,
 
+name:
+"YouTube • "+
+x.song.youtubeId
 
-  if(!item)
-    return;
-
-
-  if(
-    item.type === "youtube"
-  ){
-
-    $("youtubeUrl"+deck)
-      .value =
-      item.url;
+});
 
 
-    loadYouTube(deck);
+renderQueue();
 
-  }
+toast(
+"➕ Zur Queue hinzugefügt"
+);
 
 }
 
+
+function queuePlay(index,deck){
+
+const item=queue[index];
+
+if(!item){
+return;
+}
+
+
+if(item.type==="youtube"){
+
+$("youtubeUrl"+deck).value=
+item.url;
+
+loadYouTube(deck);
+
+}
+
+}
 
 
 function renderQueue(){
 
-  const container =
-    $("queue");
+const container=$("queue");
+
+container.innerHTML="";
 
 
-  container.innerHTML = "";
+if(!queue.length){
 
+container.innerHTML=
+'<div class="small">Queue ist leer.</div>';
 
-  if(!queue.length){
-
-    container.innerHTML =
-      '<div class="small">Queue ist leer.</div>';
-
-    return;
-
-  }
-
-
-  queue.forEach(
-    (item,index)=>{
-
-      const row =
-        document.createElement(
-          "div"
-        );
-
-
-      row.className =
-        "queueItem";
-
-
-      row.innerHTML = `
-
-        <div class="queueName">
-
-          ${index+1}.
-          ${escapeHtml(item.name)}
-
-        </div>
-
-        <button
-          class="btn"
-          onclick=
-          "queuePlay(${index},'A')">
-
-          A
-
-        </button>
-
-        <button
-          class="btn"
-          onclick=
-          "queuePlay(${index},'B')">
-
-          B
-
-        </button>
-
-        <button
-          class="btn red"
-          onclick=
-          "queue.splice(${index},1);renderQueue()">
-
-          ×
-
-        </button>
-
-      `;
-
-
-      container.appendChild(
-        row
-      );
-
-    }
-  );
+return;
 
 }
 
+
+queue.forEach(
+(item,index)=>{
+
+const row=
+document.createElement("div");
+
+row.className=
+"queueItem";
+
+row.innerHTML=`
+
+<div class="queueName">
+
+${index+1}.
+${escapeHtml(item.name)}
+
+</div>
+
+<button
+class="btn"
+onclick="queuePlay(${index},'A')">
+A
+</button>
+
+<button
+class="btn"
+onclick="queuePlay(${index},'B')">
+B
+</button>
+
+<button
+class="btn red"
+onclick="queue.splice(${index},1);renderQueue()">
+×
+</button>
+
+`;
+
+container.appendChild(row);
+
+});
+
+}
 
 
 function clearQueue(){
 
-  queue = [];
+queue=[];
 
-  renderQueue();
+renderQueue();
 
-  toast(
-    "🗑️ Queue geleert"
-  );
+toast(
+"🗑️ Queue geleert"
+);
 
 }
-
 
 
 function escapeHtml(text){
 
-  return String(text)
-    .replace(
-      /[&<>"']/g,
-      char => ({
+return String(text)
+.replace(
+/[&<>"']/g,
+char=>({
 
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#39;"
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
 
-      }[char])
-    );
+}[char])
+);
 
 }
 
 
-
-/* ================= LOKALE MUSIK ================= */
-
-
-let localAudio = [];
-
+/* ================= LOCAL MUSIC ================= */
 
 function handleFiles(files){
 
-  localAudio =
-    [...files];
+localAudio=[...files];
 
+$("localStatus").textContent=
+localAudio.length+
+" Datei(en) geladen";
 
-  $("localStatus")
-    .textContent =
-    localAudio.length +
-    " Datei(en) geladen";
-
-
-  toast(
-    "📁 "+
-    localAudio.length+
-    " Datei(en) bereit"
-  );
+toast(
+"📁 "+
+localAudio.length+
+" Datei(en) bereit"
+);
 
 }
 
 
-
-/* ================= AUDIO OUTPUT ================= */
-
+/* ================= AUDIO ================= */
 
 async function chooseAudioOutput(){
 
-  if(
-    navigator.mediaDevices &&
-    typeof
-      navigator.mediaDevices
-        .selectAudioOutput ===
-      "function"
-  ){
+if(
+navigator.mediaDevices &&
+typeof navigator.mediaDevices.selectAudioOutput===
+"function"
+){
 
-    try{
+try{
 
-      const device =
-        await navigator
-          .mediaDevices
-          .selectAudioOutput();
+const device=
+await navigator.mediaDevices.selectAudioOutput();
 
+state.audioSinkId=
+device.deviceId;
 
-      state.audioSinkId =
-        device.deviceId;
+save();
 
+for(
+const deck of ["A","B"]
+){
 
-      save();
+if(
+decks[deck].audio &&
+typeof decks[deck].audio.setSinkId===
+"function"
+){
 
-
-      for(
-        const deck of ["A","B"]
-      ){
-
-        if(
-          decks[deck].audio &&
-          typeof
-            decks[deck].audio
-              .setSinkId ===
-            "function"
-        ){
-
-          await decks[deck]
-            .audio
-            .setSinkId(
-              device.deviceId
-            );
-
-        }
-
-      }
-
-
-      $("audioOutputStatus")
-        .textContent =
-        "🔊 "+
-        (
-          device.label ||
-          "Ausgabegerät gewählt"
-        );
-
-
-      toast(
-        "🔊 Audioausgabe gewählt"
-      );
-
-
-      return;
-
-    }catch(e){}
-
-  }
-
-
-  showIOSAudioHelp();
+await decks[deck]
+.audio
+.setSinkId(
+device.deviceId
+);
 
 }
 
+}
+
+
+$("audioOutputStatus").textContent=
+"🔊 "+
+(
+device.label||
+"Ausgabegerät gewählt"
+);
+
+toast(
+"🔊 Audioausgabe gewählt"
+);
+
+return;
+
+}catch(e){}
+
+}
+
+showIOSAudioHelp();
+
+}
 
 
 function showIOSAudioHelp(){
 
-  toast(
-    "📱 Kontrollzentrum → AirPlay/Ausgabe → gewünschtes Gerät"
-  );
+toast(
+"📱 Kontrollzentrum → AirPlay/Ausgabe → Gerät auswählen"
+);
 
 }
 
 
-
 /* ================= START ================= */
 
+$("xiaoIp").value=
+state.xiaoIp||"";
 
-$("xiaoIp").value =
-  state.xiaoIp || "";
-
-
-$("volumeValue")
-  .textContent =
-  state.volume ?? 40;
+$("volumeValue").textContent=
+state.volume??40;
 
 
-const initialEffect =
-  state.z906Effect || "3d";
+const initialEffect=
+state.z906Effect||"3d";
 
-
-/*
-  Aktiven Z906-Modus nur
-  optisch setzen, ohne beim
-  Start einen Befehl zu senden.
-*/
 
 document
-  .querySelectorAll(".zmode")
-  .forEach(
-    b => b.classList.remove("active")
-  );
+.querySelectorAll(".zmode")
+.forEach(
+b=>b.classList.remove("active")
+);
 
 
-let initialButton;
+const initialButton=$(
+{
+
+"3d":"zmode_3d",
+"4.1":"zmode_4_1",
+"2.1":"zmode_2_1",
+"none":"zmode_none"
+
+}[initialEffect]
+);
 
 
-if(initialEffect === "3d")
-  initialButton = $("zmode_3d");
+if(initialButton){
 
-if(initialEffect === "4.1")
-  initialButton = $("zmode_4_1");
+initialButton.classList.add("active");
 
-if(initialEffect === "2.1")
-  initialButton = $("zmode_2_1");
-
-if(initialEffect === "none")
-  initialButton = $("zmode_none");
-
-
-if(initialButton)
-  initialButton.classList.add("active");
+}
 
 
 renderQueue();
+
+
+/*
+Automatische Suche beim
+Start der App.
+
+Mit kurzer Verzögerung,
+damit Safari zuerst die
+Seite vollständig laden kann.
+*/
+
+setTimeout(
+()=>autoFindXiao(),
+500
+);
 
 </script>
 
